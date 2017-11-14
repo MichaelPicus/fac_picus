@@ -122,7 +122,7 @@ def list(request):
     )
 
 def jingbai_ds(request):
-    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_jingbai.pkl'))
+    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_jingbai.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/jingbai_ready.csv'))
 
     train_y = df_ready.M.values
@@ -192,7 +192,7 @@ def tbo_ds(request):
 
 
 def bilang_ds(request):
-    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_bilang.pkl'))
+    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_bilang.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv')) 
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
