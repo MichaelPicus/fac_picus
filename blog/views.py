@@ -187,7 +187,7 @@ def jingbai_ds(request):
 
 
 def tbo_ds(request):
-    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_tbo.pkl'))
+    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_tbo.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/tbo_ready.csv'))
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
