@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Django Girls blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">Factory Picus</a></h1>
+        </div>
+
+        <div>
+           <h2> 上传csv格式的文件</h2>
+
+   
+               
+            {% if documents %}
+                <ul>
+                {% for document in documents %}
+                    <!-- <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li> -->
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No documents.</p>
+            {% endif %}
+
+                <!-- Upload form. Note enctype attribute! -->
+                <form action="{% url 'jingbai' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p>{{ form.non_field_errors }}</p>
+                    <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+                    <p>
+                        {{ form.docfile.errors }}  
+                        {{ form.docfile }}
+                    </p>
+                    <p><input type="submit" value="上传文件" /></p>
+                </form>
+                <p><a href="/bilang_ds"><input type="button" value="分析数据" /></a></p>
+        </div>
+    </body>
+</html>

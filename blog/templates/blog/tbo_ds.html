@@ -1,0 +1,57 @@
+
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Django Girls blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">Factory Picus</a></h1>
+        
+
+        
+           <h2> 系统分析结果：</h2>
+
+           <!-- <ul>
+			{% for train in train_pred %}
+			    <li>{{ train}}</li>
+			{% endfor %}
+			</ul> -->
+		</div>
+			{% for res in final_com %}
+			<!-- {% for res0 in res %}
+				{{res0}}
+			{% endfor %} -->
+			<TABLE border="3"
+          			summary="This table gives some statistics about fruit
+                   			flies: average height and weight, and percentage
+                   			with red eyes (for both males and females).">
+				<CAPTION><EM>Picus 智能分析系统</EM></CAPTION>
+				<TR><TH rowspan="1"><TH colspan="1">能耗值
+					<TH rowspan="1">AirOutTemp
+				    <TH rowspan="1">BasePowderTemp
+				    <TH rowspan="1">AirInTemp_1
+				    <TH rowspan="1">SlurryTemp
+				    <TH rowspan="1">TowerTopNegativePressure
+				    <TH rowspan="1">AgingTankFlow
+				    <TH rowspan="1">SecondInputAirTemp
+				    <TH rowspan="1">SlurryPipelineLowerLayerPressure
+				    <TH rowspan="1">OutAirMotorFreq
+				    <TH rowspan="1">SecondAirMotorFreq
+				    <TH rowspan="1">HighPressurePumpFreq
+				    <TH rowspan="1">GasFlow
+				    
+
+
+				<TR><TH>实际参数： 
+
+
+					<TD >{{res.0}}<TD align="center">{{res.1}}<TD align="center">{{res.2}}<TD align="center">{{res.3}}<TD align="center">{{res.4}}<TD align="center">{{res.5}}<TD align="center">{{res.6}}<TD align="center">{{res.7}}<TD align="center">{{res.8}}<TD align="center">{{res.9}}<TD align="center">{{res.10}}<TD align="center">{{res.11}}<TD align="center">{{res.12}}
+				<TR><TH>修改后的参数：<TD align="center">{{res.13}}<TD align="center">{{res.14}}<TD align="center">{{res.15}}<TD align="center">{{res.16}}<TD align="center">{{res.17}}<TD align="center">{{res.18}}<TD align="center">{{res.19}}<TD align="center">{{res.20}}<TD align="center">{{res.21}}<TD align="center">{{res.22}}<TD align="center">{{res.23}}<TD align="center">{{res.24}}<TD align="center">{{res.25}}
+			</TABLE>
+            {% endfor %}
+    </body>
+</html>
