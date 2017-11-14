@@ -120,8 +120,8 @@ def list(request):
     )
 
 def jingbai_ds(request):
-    lgb_model = joblib.load('/Users/michael/workspace/python/django/fac_picus/ml_models/lgb_model_jingbai.pkl')
-    df_ready = pd.read_csv("/Users/michael/workspace/python/django/fac_picus/media/documents/jingbai_ready.csv")
+    lgb_model = joblib.load('../ml_models/lgb_model_jingbai.pkl')
+    df_ready = pd.read_csv("../media/documents/jingbai_ready.csv")
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
@@ -131,7 +131,7 @@ def jingbai_ds(request):
     combine = np.column_stack((train_pred, train))
     
     # need to delete the origin upload file
-    os.remove("/Users/michael/workspace/python/django/fac_picus/media/documents/jingbai_ready.csv")
+    os.remove("../media/documents/jingbai_ready.csv")
 
     rows = combine.shape[0]
     cols = combine.shape[1]
@@ -155,8 +155,8 @@ def jingbai_ds(request):
 
 
 def tbo_ds(request):
-    lgb_model = joblib.load('/Users/michael/workspace/python/django/fac_picus/ml_models/lgb_model_tbo.pkl')
-    df_ready = pd.read_csv("/Users/michael/workspace/python/django/fac_picus/media/documents/tbo_ready.csv")
+    lgb_model = joblib.load('../ml_models/lgb_model_tbo.pkl')
+    df_ready = pd.read_csv("../media/documents/tbo_ready.csv")
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
@@ -166,7 +166,7 @@ def tbo_ds(request):
     combine = np.column_stack((train_pred, train))
     
     # need to delete the origin upload file
-    os.remove("/Users/michael/workspace/python/django/fac_picus/media/documents/tbo_ready.csv")
+    os.remove("../media/documents/tbo_ready.csv")
 
     rows = combine.shape[0]
     cols = combine.shape[1]
