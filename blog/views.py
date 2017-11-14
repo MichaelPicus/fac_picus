@@ -232,7 +232,7 @@ def tbo_ds(request):
         #     modified_res[x, 0] = combine[x, 0] * (1 - randint(9800, 10000) / 100000.0)
 
         #     modified_res[x, cols -1] = combine[x, cols-1] * 0.9994448 *randint(980, 999) / 1000
-        if combine[x, 0] > 33 :
+        while modified_res[x, 0] > 32.5 :
             # AirOutTemp
             modified_res[x, 1] = combine[x, 1]  * 0.98
             # BasePowderTemp
