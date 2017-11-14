@@ -20,6 +20,8 @@ from random import randint
 import copy
 import os, sys
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Create your views here.
 def post_list(request):
@@ -120,8 +122,9 @@ def list(request):
     )
 
 def jingbai_ds(request):
-    lgb_model = joblib.load('../ml_models/lgb_model_jingbai.pkl')
-    df_ready = pd.read_csv("../media/documents/jingbai_ready.csv")
+    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_jingbai.pkl'))
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/jingbai_ready.csv'))
+
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
@@ -131,7 +134,7 @@ def jingbai_ds(request):
     combine = np.column_stack((train_pred, train))
     
     # need to delete the origin upload file
-    os.remove("../media/documents/jingbai_ready.csv")
+    os.remove(os.path.join(BASE_DIR, 'media/documents/jingbai_ready.csv'))
 
     rows = combine.shape[0]
     cols = combine.shape[1]
@@ -155,8 +158,8 @@ def jingbai_ds(request):
 
 
 def tbo_ds(request):
-    lgb_model = joblib.load('../ml_models/lgb_model_tbo.pkl')
-    df_ready = pd.read_csv("../media/documents/tbo_ready.csv")
+    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_tbo.pkl'))
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/tbo_ready.csv'))
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
@@ -166,7 +169,7 @@ def tbo_ds(request):
     combine = np.column_stack((train_pred, train))
     
     # need to delete the origin upload file
-    os.remove("../media/documents/tbo_ready.csv")
+    os.remove(os.path.join(BASE_DIR, 'media/documents/tbo_ready.csv'))
 
     rows = combine.shape[0]
     cols = combine.shape[1]
@@ -189,8 +192,8 @@ def tbo_ds(request):
 
 
 def bilang_ds(request):
-    lgb_model = joblib.load(BASE_DIR + 'fac_picus/ml_models/lgb_model_bilang.pkl')
-    df_ready = pd.read_csv(BASE_DIR + "fac_picus/media/documents/bilang_ready.csv")
+    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_bilang.pkl'))
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv')) 
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
@@ -200,7 +203,7 @@ def bilang_ds(request):
     combine = np.column_stack((train_pred, train))
 	
 	# need to delete the origin upload file
-    os.remove(BASE_DIR + "fac_picus/media/documents/bilang_ready.csv")
+    os.remove(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv'))
 
     rows = combine.shape[0]
     cols = combine.shape[1]
