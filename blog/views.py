@@ -122,14 +122,14 @@ def list(request):
     )
 
 def jingbai_ds(request):
-    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_jingbai.pkl'))
+    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_jingbai.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/jingbai_ready.csv'))
 
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
     train = df_ready.values
-    train_pred = lgb_model.predict(train)
+    train_pred = lasso_model.predict(train)
 
     combine = np.column_stack((train_pred, train))
     
@@ -158,13 +158,13 @@ def jingbai_ds(request):
 
 
 def tbo_ds(request):
-    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_tbo.pkl'))
+    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lgb_model_tbo.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/tbo_ready.csv'))
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
     train = df_ready.values
-    train_pred = lgb_model.predict(train)
+    train_pred = lasso_model.predict(train)
 
     combine = np.column_stack((train_pred, train))
     
@@ -192,13 +192,13 @@ def tbo_ds(request):
 
 
 def bilang_ds(request):
-    lgb_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_bilang.pkl'))
+    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_bilang.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv')) 
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
     train = df_ready.values
-    train_pred = lgb_model.predict(train)
+    train_pred = lasso_model.predict(train)
 
     combine = np.column_stack((train_pred, train))
 	
