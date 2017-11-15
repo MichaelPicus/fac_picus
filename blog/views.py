@@ -179,6 +179,7 @@ def jingbai_ds(request):
             modified_res[x, 12] = combine[x, 12] * 0.99
 
             modified_res[x, 0] = lasso_model.predict(np.reshape(modified_res[x][1:], (-1, 12)))
+            modified_res[x, 4] = combine[x, 4]  * 1.03568
 
     final_com = np.column_stack((combine, modified_res))
  
@@ -260,6 +261,7 @@ def tbo_ds(request):
             modified_res[x, 12] = combine[x, 12] * 0.988
 
             modified_res[x, 0] = lasso_model.predict(np.reshape(modified_res[x][1:], (-1, 12)))
+            modified_res[x, 4] = combine[x, 4]  * 1.03568
 
     final_com = np.column_stack((combine, modified_res))
     return render(request, 'blog/tbo_ds.html', {'final_com': final_com})
