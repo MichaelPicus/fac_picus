@@ -19,6 +19,7 @@ import lightgbm as lgb
 from random import randint
 import copy
 import os, sys
+import shutil
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -330,6 +331,24 @@ def bilang_ds(request):
     final_com = np.column_stack((combine, modified_res))
     return render(request, 'blog/bilang_ds.html', {'final_com': final_com})
 
+
+def delete_bilang(request):
+
+    shutil.rmtree(os.path.join(BASE_DIR, 'media/documents/'))
+
+    return render(request, 'blog/bilang.html')
+
+def delete_jingbai(request):
+
+    shutil.rmtree(os.path.join(BASE_DIR, 'media/documents/'))
+
+    return render(request, 'blog/jingbai.html')
+
+def delete_tbo(request):
+
+    shutil.rmtree(os.path.join(BASE_DIR, 'media/documents/'))
+
+    return render(request, 'blog/tbo.html')
 
 
 
