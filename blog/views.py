@@ -157,31 +157,31 @@ def jingbai_ds(request):
             # AirOutTemp
             modified_res[x, 1] = combine[x, 1]  * 0.98
             # BasePowderTemp
-            modified_res[x, 2] = combine[x, 2]  * 1.035
+            modified_res[x, 2] = combine[x, 2]  * 0.99123
             # AirInTemp_1
-            modified_res[x, 3] = combine[x, 3]  * 0.973
+            modified_res[x, 3] = combine[x, 3]  * 1.0456
             # SlurryTemp
-            modified_res[x, 4] = combine[x, 4]  * 0.96
+            modified_res[x, 4] = combine[x, 4]  * 1.0678
 
             # TowerTopNegativePressure
-            modified_res[x, 5] = combine[x, 5] * 1.001
+            modified_res[x, 5] = combine[x, 5] * 1.078
             # AgingTankFlow
-            modified_res[x, 6] = combine[x, 6] * 1.028
+            modified_res[x, 6] = combine[x, 6] * 1.09678
             # SecondInputAirTemp
-            modified_res[x, 7] = combine[x, 7] * 1.05
+            modified_res[x, 7] = combine[x, 7] * 1.00234
             # SlurryPipelineLowerLayerPressure
-            modified_res[x, 8] = combine[x, 8] * 0.99
+            modified_res[x, 8] = combine[x, 8] * 1.0285
             # OutAirMotorFreq
-            modified_res[x, 9] = combine[x, 9] * 1.09
+            modified_res[x, 9] = combine[x, 9] * 0.9645
             # SecondAirMotorFreq
-            modified_res[x, 10] = combine[x, 10] * 0.97
+            modified_res[x, 10] = combine[x, 10] * 0.98235
             # HighPressurePumpFreq
-            modified_res[x, 11] = combine[x, 11] * 1.034
+            modified_res[x, 11] = combine[x, 11] * 1.054
             # GasFlow
-            modified_res[x, 12] = combine[x, 12] * 0.99
+            modified_res[x, 12] = combine[x, 12] * 0.98667
 
             modified_res[x, 0] = np.expm1(lasso_model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 4] = combine[x, 4]  * 1.03568
+            
 
     final_com = np.column_stack((combine, modified_res))
  
