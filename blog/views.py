@@ -164,7 +164,7 @@ def jingbai_ds(request):
             modified_res[x, 4] = combine[x, 4]  * 1.0678
 
             # TowerTopNegativePressure
-            modified_res[x, 5] = combine[x, 5] * 1.078
+            modified_res[x, 5] = combine[x, 5] * 0.9877
             # AgingTankFlow
             modified_res[x, 6] = combine[x, 6] * 1.09678
             # SecondInputAirTemp
