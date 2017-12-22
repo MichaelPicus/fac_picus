@@ -123,16 +123,17 @@ def list(request):
     )
 
 def jingbai_ds(request):
-    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_jingbai.pkl'))
+    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/jingbai_ready.csv'))
 
     train_y = df_ready.M.values
+
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
     train = df_ready.values
     train_pred = lasso_model.predict(train)
 
-    combine = np.column_stack((train_pred, train))
+    combine = np.column_stack((np.expm1(train_pred), train))
     
     # need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/jingbai_ready.csv'))
@@ -179,7 +180,7 @@ def jingbai_ds(request):
             # GasFlow
             modified_res[x, 12] = combine[x, 12] * 0.99
 
-            modified_res[x, 0] = lasso_model.predict(np.reshape(modified_res[x][1:], (-1, 12)))
+            modified_res[x, 0] = np.expm1(lasso_model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             modified_res[x, 4] = combine[x, 4]  * 1.03568
 
     final_com = np.column_stack((combine, modified_res))
@@ -269,7 +270,7 @@ def tbo_ds(request):
 
 
 def bilang_ds(request):
-    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/lasso_model_bilang.pkl'))
+    lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
     df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv')) 
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
