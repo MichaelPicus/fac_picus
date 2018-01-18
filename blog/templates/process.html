@@ -1,0 +1,57 @@
+ 
+{% load staticfiles %}
+ <html>
+ <head>
+  	<title>Factory Picus 人工智能分析系统</title>
+  
+	<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+</head>
+ <body>
+ <h1 align="center">Factory Picus 人工智能分析系统</h1>	
+ <p>
+ 	初始参数： 
+ </p>
+
+					<form action="/process/" method="POST">
+					    {% csrf_token %}
+					    <table border="2" bgcolor="#ccccff">
+					    {{ form }}
+						</table>
+						<br>
+					    <input type="submit" value="提&nbsp;&nbsp;交" style="font-size: 18px;"/>
+					</form>
+<hr>
+
+<div><h2>当前能耗值：{{m.0}}</h2></div>
+
+ <TABLE width="100%" border="1" 
+          			summary="">
+				<CAPTION><EM>Factory Picus 智能分析结果</EM></CAPTION>
+				<TR><TH rowspan="1" ><TH colspan="1" bgcolor="#ccccff">能耗值
+					<TH rowspan="1" bgcolor="#ccccff">AirOutTemp
+				    <TH rowspan="1" bgcolor="#ccccff">BasePowderTemp
+				    <TH rowspan="1" bgcolor="#ccccff">AirInTemp_1
+				    <TH rowspan="1" bgcolor="#ccccff">SlurryTemp
+				    <TH rowspan="1" bgcolor="#ccccff">TowerTopNegativePressure
+				    <TH rowspan="1" bgcolor="#ccccff">AgingTankFlow
+				    <TH rowspan="1" bgcolor="#ccccff">SecondInputAirTemp
+				    <TH rowspan="1" bgcolor="#ccccff">SlurryPipelineLowerLayerPressure
+				    <TH rowspan="1" bgcolor="#ccccff">OutAirMotorFreq
+				    <TH rowspan="1" bgcolor="#ccccff">SecondAirMotorFreq
+				    <TH rowspan="1" bgcolor="#ccccff">HighPressurePumpFreq
+				    <TH rowspan="1" bgcolor="#ccccff">GasFlow
+
+				<TR><TH>
+				
+ 					
+
+ 					{% for res in results %}
+					修改后的参数：<TD align="center">{{res.12}}<TD align="center">{{res.0}}<TD align="center">{{res.1}}<TD align="center">{{res.2}}<TD align="center">{{res.3}}<TD align="center">{{res.4}}<TD align="center">{{res.5}}<TD align="center">{{res.6}}<TD align="center">{{res.7}}<TD align="center">{{res.8}}<TD align="center">{{res.9}}<TD align="center">{{res.10}}<TD align="center">{{res.11}}
+					<TR><TH>
+					{% endfor %}
+					
+
+</TABLE> 
+<!-- </div> -->
+</body>
+</html>
