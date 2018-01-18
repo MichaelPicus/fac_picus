@@ -7,3 +7,9 @@ div {
     padding-left: 35%;
 }
 
+
+
+input[type=submit] {
+    width: 15em;  height: 5em;
+    background-color: #009900;
+}
