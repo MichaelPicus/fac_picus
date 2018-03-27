@@ -960,7 +960,13 @@ def value_data_process(request, format=None):
             print json_body
             con.write_points(json_body)
             print "post sucessfully!"
+            con.close()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+    elif request.method == 'GET':
+        pass
+
     else:
         print "post failure!!!"
         return Response("error! sorry!")
