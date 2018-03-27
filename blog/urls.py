@@ -5,6 +5,9 @@ urlpatterns = [
     url(r'^signup/$', views.SignUpView.as_view(), name='signup'),
 ]
 
+
+
+
 urlpatterns = [
     url(r'^$', views.post_list, name='post_list'),
     url(r'^jingbai$', views.jingbai, name='jingbai'),
@@ -30,6 +33,9 @@ urlpatterns = [
     url(r'^get_name/$', views.get_name, name='get_name'),
     url(r'^thanks/$', views.thanks, name='thanks'),
     url(r'^process/$', views.process, name='process'),
+    url(r'^snippets/$', views.snippet_list),
+    url(r'^snippets/(?P<pk>[0-9]+)$', views.snippet_detail),
+    url(r'^valuedata/$', views.value_data_process),
 
     # url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
 ]

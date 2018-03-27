@@ -1,0 +1,46 @@
+
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Factory Picus</title>
+       
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">Factory Picus</a></h1>
+        
+
+        
+           <h2> 系统分析结果：</h2>
+
+           <!-- <ul>
+			{% for train in train_pred %}
+			    <li>{{ train}}</li>
+			{% endfor %}
+			</ul> -->
+		</div>
+			{% for res in final_com %}
+			<!-- {% for res0 in res %}
+				{{res0}}
+			{% endfor %} -->
+			<TABLE border="3"
+          			summary="This table gives some statistics about fruit
+                   			flies: average height and weight, and percentage
+                   			with red eyes (for both males and females).">
+				
+				<TR><TH rowspan="1">
+					<TH colspan="1">HighPressurePumpFreq
+				    <TH rowspan="1">GasFlow
+				    
+
+
+				<TR><TH>结果： 
+
+
+					<TD align="center">{{res.1}}<TD align="center">{{res.0}}
+				<!-- <TR><TH>修改后的参数：<TD align="center">{{res.13}}<TD align="center">{{res.14}}<TD align="center">{{res.15}}<TD align="center">{{res.16}}<TD align="center">{{res.17}}<TD align="center">{{res.18}}<TD align="center">{{res.19}}<TD align="center">{{res.20}}<TD align="center">{{res.21}}<TD align="center">{{res.22}}<TD align="center">{{res.23}}<TD align="center">{{res.24}}<TD align="center">{{res.25}} -->
+			</TABLE>
+            {% endfor %}
+    </body>
+</html>

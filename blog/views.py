@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.utils import timezone
@@ -20,6 +21,7 @@ from random import randint
 import copy
 import os, sys
 import shutil
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -785,6 +787,325 @@ def tbo_gasflow_highppf(request):
 
     final_com = combine
     return render(request, 'blog/tbo_gasflow_highppf.html', {'final_com': final_com})
+
+
+
+
+from django.shortcuts import render
+
+# Create your views here.
+# from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from blog.models import Snippet
+from blog.serializers import SnippetSerializer, ValuedataSerializer
+
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework import mixins
+from rest_framework import generics
+
+
+@api_view(['GET', 'POST'])
+def snippet_list(request, format=None):
+    """
+    List all code snippets, or create a new snippet.
+    """
+    if request.method == 'GET':
+        snippets = Snippet.objects.all()
+        serializer = SnippetSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = SnippetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def snippet_detail(request, pk, format=None):
+    """
+    Retrieve, update or delete a code snippet.
+    """
+    try:
+        snippet = Snippet.objects.get(pk=pk)
+    except Snippet.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = SnippetSerializer(snippet)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = SnippetSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+from influxdb import InfluxDBClient
+hostname = '127.0.0.1' #'143.35.218.66'
+port_num = 8086
+db_user_name = 'root'
+db_password = 'root'
+database_name = 'picus_db'
+#setup the connection with influx db
+con = InfluxDBClient(hostname, port_num, db_user_name, db_user_name, database_name)
+# con.write_points(json_body)
+
+# process value data from OPC via restful API call
+@api_view(['GET', 'POST'])
+def value_data_process(request, format=None):
+
+    # return Response("hello world!!! michael is here for you, haha ~~")
+    if request.method == 'POST':
+        serializer = ValuedataSerializer(data=request.data)
+        if serializer.is_valid():
+            # print serializer.data.get("aging_tank_flow")
+            # print serializer.data.get("air_in_temp_1")
+            d = {
+                'air_out_temp': [serializer.data.get("air_out_temp")], 
+                'base_powder_temp': [serializer.data.get("base_powder_temp")], 
+                'air_in_temp_1': [serializer.data.get("air_in_temp_1")], 
+                'slurry_temp': [serializer.data.get("slurry_temp")], 
+                'tower_top_negative_pressure':[serializer.data.get("tower_top_negative_pressure")],
+                'aging_tank_flow': [serializer.data.get("aging_tank_flow")], 
+                'second_input_air_temp': [serializer.data.get("second_input_air_temp")], 
+                'slurry_pipeline_lower_layer_pressure': [serializer.data.get("slurry_pipeline_lower_layer_pressure")], 
+                'out_air_motor_freq': [serializer.data.get("out_air_motor_freq")], 
+                'second_air_motor_freq': [serializer.data.get("second_air_motor_freq")], 
+                'high_pressure_pump_freq': [serializer.data.get("high_pressure_pump_freq")], 
+                'gas_flow':[serializer.data.get("gas_flow")],
+                'brand' : [serializer.data.get("brand")],
+            }
+
+            data = pd.DataFrame(data=d, columns=['air_out_temp', 'base_powder_temp', 'air_in_temp_1', 'slurry_temp', 'tower_top_negative_pressure',
+                    'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
+                    'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand'])
+            pred_m = 0
+            if data['brand'][0].lower() == "jingbai":
+                print "processing jingbai!"
+                res, pred_m = jingbai_process(data)
+            elif data['brand'][0].lower() == "bilang":
+                print "processing bilang!"
+                res, pred_m = bilang_process(data)
+            else:
+                print "processing tbo or others!"
+                res, pred_m = tbo_process(data)
+
+            
+            # print "+++++++++++++++++++++"
+            # print res[0][0]
+            # print pred_m[0]
+            # print "====================="
+            # print float(res[0][1])
+            measurement = "value_data"
+            host_name = "127.0.0.1"
+            region_value = "us_west"
+
+            json_body = [
+                {
+                    "measurement": measurement,
+                    "tags": {
+                        "host": host_name,
+                        "region": region_value
+                    },
+                    "fields": {
+                        "brand": serializer.data.get("brand"),
+                        "air_out_temp": float(serializer.data.get("air_out_temp")),
+                        "base_powder_temp": float(serializer.data.get("base_powder_temp")),
+                        "air_in_temp_1": float(serializer.data.get("air_in_temp_1")),
+                        "slurry_temp": float(serializer.data.get("slurry_temp")),
+                        "tower_top_negative_pressure": float(serializer.data.get("tower_top_negative_pressure")),
+                        "aging_tank_flow": float(serializer.data.get("aging_tank_flow")),
+                        "second_input_air_temp": float(serializer.data.get("second_input_air_temp")),
+                        "slurry_pipeline_lower_layer_pressure":float(serializer.data.get("slurry_pipeline_lower_layer_pressure")),
+                        "out_air_motor_freq": float(serializer.data.get("out_air_motor_freq")),
+                        "second_air_motor_freq": float(serializer.data.get("second_air_motor_freq")),
+                        "high_pressure_pump_freq": float(serializer.data.get("high_pressure_pump_freq")),
+                        "gas_flow": float(serializer.data.get("gas_flow")),
+                        "p_air_out_temp": float(res[0][1]),
+                        "p_base_powder_temp": float(res[0][2]),
+                        "p_air_in_temp_1": float(res[0][3]),
+                        "p_slurry_temp": float(res[0][4]),
+                        "p_tower_top_negative_pressure": float(res[0][5]),
+                        "p_aging_tank_flow": float(res[0][6]),
+                        "p_second_input_air_temp": float(res[0][7]),
+                        "p_slurry_pipeline_lower_layer_pressure": float(res[0][8]),
+                        "p_out_air_motor_freq": float(res[0][9]),
+                        "p_second_air_motor_freq": float(res[0][10]),
+                        "p_high_pressure_pump_freq": float(res[0][11]),
+                        "p_gas_flow": float(res[0][12]),
+                        "f_m" : float(serializer.data.get("f_m")),
+                        "pred_m" : float(pred_m[0]),
+                        "modified_m" :float(res[0][0]),
+                        "slurry_density" : float(serializer.data.get("slurry_density")),
+                        "host": serializer.data.get("host"),
+                    }
+                }
+            ]
+            print json_body
+            con.write_points(json_body)
+            print "post sucessfully!"
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        print "post failure!!!"
+        return Response("error! sorry!")
+
+
+
+def jingbai_process(data):
+    model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
+    del data['brand']
+    df_ready = data 
+   
+    train = df_ready.values
+    train_pred = np.expm1(model.predict(train))
+    print train_pred
+    combine = np.column_stack((train_pred, train))
+   
+    rows = combine.shape[0]
+    cols = combine.shape[1]
+    modified_res = copy.deepcopy(combine)
+    for x in range(0, rows):
+        
+        if combine[x, 0] > 33 :
+            # AirOutTemp
+            modified_res[x, 1] = combine[x, 1]  * 0.98
+            # BasePowderTemp
+            modified_res[x, 2] = combine[x, 2]  * 0.99123
+            # AirInTemp_1
+            modified_res[x, 3] = combine[x, 3]  * 1.0456
+            # SlurryTemp
+            modified_res[x, 4] = combine[x, 4]  * 1.0678
+
+            # TowerTopNegativePressure
+            modified_res[x, 5] = combine[x, 5] * 0.9877
+            # AgingTankFlow
+            modified_res[x, 6] = combine[x, 6] * 1.09678
+            # SecondInputAirTemp
+            modified_res[x, 7] = combine[x, 7] * 1.00234
+            # SlurryPipelineLowerLayerPressure
+            modified_res[x, 8] = combine[x, 8] * 1.0285
+            # OutAirMotorFreq
+            modified_res[x, 9] = combine[x, 9] * 0.9645
+            # SecondAirMotorFreq
+            modified_res[x, 10] = combine[x, 10] * 0.98235
+            # HighPressurePumpFreq
+            modified_res[x, 11] = combine[x, 11] * 1.054
+            # GasFlow
+            modified_res[x, 12] = combine[x, 12] * 0.98667
+
+            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+         
+    return modified_res, train_pred
+def tbo_process(data):
+    model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
+    del data['brand']
+    df_ready = data 
+   
+    train = df_ready.values
+    train_pred = np.expm1(model.predict(train))
+
+    combine = np.column_stack((train_pred, train))
+   
+    rows = combine.shape[0]
+    cols = combine.shape[1]
+    modified_res = copy.deepcopy(combine)
+    for x in range(0, rows):
+        
+        if combine[x, 0] > 33 :
+            # AirOutTemp
+            modified_res[x, 1] = combine[x, 1]  * 0.98
+            # BasePowderTemp
+            modified_res[x, 2] = combine[x, 2]  * 0.99123
+            # AirInTemp_1
+            modified_res[x, 3] = combine[x, 3]  * 1.0456
+            # SlurryTemp
+            modified_res[x, 4] = combine[x, 4]  * 1.0678
+
+            # TowerTopNegativePressure
+            modified_res[x, 5] = combine[x, 5] * 0.9877
+            # AgingTankFlow
+            modified_res[x, 6] = combine[x, 6] * 1.09678
+            # SecondInputAirTemp
+            modified_res[x, 7] = combine[x, 7] * 1.00234
+            # SlurryPipelineLowerLayerPressure
+            modified_res[x, 8] = combine[x, 8] * 1.0285
+            # OutAirMotorFreq
+            modified_res[x, 9] = combine[x, 9] * 0.9645
+            # SecondAirMotorFreq
+            modified_res[x, 10] = combine[x, 10] * 0.98235
+            # HighPressurePumpFreq
+            modified_res[x, 11] = combine[x, 11] * 1.054
+            # GasFlow
+            modified_res[x, 12] = combine[x, 12] * 0.98667
+
+            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            
+    return modified_res, train_pred
+
+def bilang_process(data):
+    model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
+    del data['brand']
+    df_ready = data 
+    # train_y = df_ready.M.values
+    
+    train = df_ready.values
+    train_pred = np.expm1(model.predict(train))
+
+    combine = np.column_stack((train_pred, train))
+   
+    rows = combine.shape[0]
+    cols = combine.shape[1]
+    modified_res = copy.deepcopy(combine)
+    for x in range(0, rows):
+        
+        if combine[x, 0] > 33 :
+            # AirOutTemp
+            modified_res[x, 1] = combine[x, 1]  * 0.98
+            # BasePowderTemp
+            modified_res[x, 2] = combine[x, 2]  * 0.99123
+            # AirInTemp_1
+            modified_res[x, 3] = combine[x, 3]  * 1.0456
+            # SlurryTemp
+            modified_res[x, 4] = combine[x, 4]  * 1.0678
+
+            # TowerTopNegativePressure
+            modified_res[x, 5] = combine[x, 5] * 0.9877
+            # AgingTankFlow
+            modified_res[x, 6] = combine[x, 6] * 1.09678
+            # SecondInputAirTemp
+            modified_res[x, 7] = combine[x, 7] * 1.00234
+            # SlurryPipelineLowerLayerPressure
+            modified_res[x, 8] = combine[x, 8] * 1.0285
+            # OutAirMotorFreq
+            modified_res[x, 9] = combine[x, 9] * 0.9645
+            # SecondAirMotorFreq
+            modified_res[x, 10] = combine[x, 10] * 0.98235
+            # HighPressurePumpFreq
+            modified_res[x, 11] = combine[x, 11] * 1.054
+            # GasFlow
+            modified_res[x, 12] = combine[x, 12] * 0.98667
+
+            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+
+    # final_com = np.column_stack((combine, modified_res))
+
+    return modified_res, train_pred
 
 
 

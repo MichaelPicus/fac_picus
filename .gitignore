@@ -1,2 +1,7 @@
 media/
+ml_models/
+blog/views.pyc
+db.sqlite3
+mysite/settings.pyc
+*.pyc
 
