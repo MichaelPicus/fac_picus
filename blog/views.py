@@ -896,22 +896,9 @@ def value_data_process(request, format=None):
                     'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
                     'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand'])
             pred_m = 0
-            if data['brand'][0].lower() == "jingbai":
-                print "processing jingbai!"
-                res, pred_m = jingbai_process(data)
-            elif data['brand'][0].lower() == "bilang":
-                print "processing bilang!"
-                res, pred_m = bilang_process(data)
-            else:
-                print "processing tbo or others!"
-                res, pred_m = tbo_process(data)
-
+          
+            res, pred_m = data_process(data)
             
-            # print "+++++++++++++++++++++"
-            # print res[0][0]
-            # print pred_m[0]
-            # print "====================="
-            # print float(res[0][1])
             measurement = "value_data"
             host_name = "127.0.0.1"
             region_value = "us_west"
@@ -970,6 +957,19 @@ def value_data_process(request, format=None):
     else:
         print "post failure!!!"
         return Response("error! sorry!")
+
+
+def data_process(data):
+    if data['brand'][0].lower() == "jingbai":
+                print "processing jingbai!"
+                res, pred_m = jingbai_process(data)
+    elif data['brand'][0].lower() == "bilang":
+                print "processing bilang!"
+                res, pred_m = bilang_process(data)
+    else:
+                print "processing tbo or others!"
+                res, pred_m = tbo_process(data)
+    return res, pred_m
 
 
 
