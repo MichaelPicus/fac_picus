@@ -69,7 +69,7 @@ class Valuedata(models.Model):
     air_in_temp_1 = models.FloatField(default='0')
     air_out_temp = models.FloatField(default='0')
     base_powder_temp = models.FloatField(default='0')
-    brand = models.CharField(default='', max_length=100)
+    brand = models.FloatField(default='0')
     f_m = models.FloatField(default='0')
     gas_flow = models.FloatField(default='0')
     high_pressure_pump_freq = models.FloatField(default='0')

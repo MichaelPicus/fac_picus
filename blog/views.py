@@ -1041,10 +1041,10 @@ def value_data_process(request, format=None):
 
 
 def data_process(data):
-    if data['brand'][0].lower() == "jingbai":
+    if data['brand'][0] == 2.0:
                 print "processing jingbai!"
                 res, pred_m = jingbai_process(data)
-    elif data['brand'][0].lower() == "bilang":
+    elif data['brand'][0] == 3.0:
                 print "processing bilang!"
                 res, pred_m = bilang_process(data)
     else:
