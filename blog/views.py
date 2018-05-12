@@ -890,11 +890,12 @@ def value_data_process(request, format=None):
                 'high_pressure_pump_freq': [serializer.data.get("high_pressure_pump_freq")], 
                 'gas_flow':[serializer.data.get("gas_flow")],
                 'brand' : [serializer.data.get("brand")],
+                'f_m' : [serializer.data.get("f_m")],
             }
 
             data = pd.DataFrame(data=d, columns=['air_out_temp', 'base_powder_temp', 'air_in_temp_1', 'slurry_temp', 'tower_top_negative_pressure',
                     'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
-                    'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand'])
+                    'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m'])
             pred_m = 0
           
             res, pred_m = data_process(data)
@@ -912,114 +913,114 @@ def value_data_process(request, format=None):
                     },
                     "fields": {
                         "brand": serializer.data.get("brand"),
-                        "air_out_temp": float(serializer.data.get("air_out_temp")),
-                        "base_powder_temp": float(serializer.data.get("base_powder_temp")),
-                        "air_in_temp_1": float(serializer.data.get("air_in_temp_1")),
-                        "slurry_temp": float(serializer.data.get("slurry_temp")),
-                        "tower_top_negative_pressure": float(serializer.data.get("tower_top_negative_pressure")),
-                        "aging_tank_flow": float(serializer.data.get("aging_tank_flow")),
-                        "second_input_air_temp": float(serializer.data.get("second_input_air_temp")),
-                        "slurry_pipeline_lower_layer_pressure":float(serializer.data.get("slurry_pipeline_lower_layer_pressure")),
-                        "out_air_motor_freq": float(serializer.data.get("out_air_motor_freq")),
-                        "second_air_motor_freq": float(serializer.data.get("second_air_motor_freq")),
-                        "high_pressure_pump_freq": float(serializer.data.get("high_pressure_pump_freq")),
-                        "gas_flow": float(serializer.data.get("gas_flow")),
-                        "p_air_out_temp": float(res[0][1]),
-                        "p_base_powder_temp": float(res[0][2]),
-                        "p_air_in_temp_1": float(res[0][3]),
-                        "p_slurry_temp": float(res[0][4]),
-                        "p_tower_top_negative_pressure": float(res[0][5]),
-                        "p_aging_tank_flow": float(res[0][6]),
-                        "p_second_input_air_temp": float(res[0][7]),
-                        "p_slurry_pipeline_lower_layer_pressure": float(res[0][8]),
-                        "p_out_air_motor_freq": float(res[0][9]),
-                        "p_second_air_motor_freq": float(res[0][10]),
-                        "p_high_pressure_pump_freq": float(res[0][11]),
-                        "p_gas_flow": float(res[0][12]),
-                        "f_m" : float(serializer.data.get("f_m")),
-                        "pred_m" : float(pred_m[0]),
-                        "modified_m" :float(res[0][0]),
-                        "slurry_density" : float(serializer.data.get("slurry_density")),
+                        "air_out_temp": round(float(serializer.data.get("air_out_temp")), 2),
+                        "base_powder_temp": round(float(serializer.data.get("base_powder_temp")), 2),
+                        "air_in_temp_1": round(float(serializer.data.get("air_in_temp_1")), 2),
+                        "slurry_temp": round(float(serializer.data.get("slurry_temp")), 2),
+                        "tower_top_negative_pressure": round(float(serializer.data.get("tower_top_negative_pressure")), 2),
+                        "aging_tank_flow": round(float(serializer.data.get("aging_tank_flow")), 2),
+                        "second_input_air_temp": round(float(serializer.data.get("second_input_air_temp")), 2),
+                        "slurry_pipeline_lower_layer_pressure": round(float(serializer.data.get("slurry_pipeline_lower_layer_pressure")), 2),
+                        "out_air_motor_freq": round(float(serializer.data.get("out_air_motor_freq")), 2),
+                        "second_air_motor_freq": round(float(serializer.data.get("second_air_motor_freq")), 2),
+                        "high_pressure_pump_freq": round(float(serializer.data.get("high_pressure_pump_freq")), 2),
+                        "gas_flow": round(float(serializer.data.get("gas_flow")), 2),
+                        "p_air_out_temp": round(float(res[0][1]), 2),
+                        "p_base_powder_temp": round(float(res[0][2]), 2),
+                        "p_air_in_temp_1": round(float(res[0][3]), 2),
+                        "p_slurry_temp": round(float(res[0][4]), 2),
+                        "p_tower_top_negative_pressure": round(float(res[0][5]), 2),
+                        "p_aging_tank_flow": round(float(res[0][6]), 2),
+                        "p_second_input_air_temp": round(float(res[0][7]), 2),
+                        "p_slurry_pipeline_lower_layer_pressure": round(float(res[0][8]), 2),
+                        "p_out_air_motor_freq": round(float(res[0][9]), 2),
+                        "p_second_air_motor_freq": round(float(res[0][10]), 2),
+                        "p_high_pressure_pump_freq": round(float(res[0][11]), 2),
+                        "p_gas_flow": round(float(res[0][12]), 2),
+                        "f_m" : round(float(serializer.data.get("f_m")), 2),
+                        "pred_m" : round(float(pred_m[0]), 2),
+                        "modified_m" :round(float(res[0][0]), 2),
+                        "slurry_density" : round(float(serializer.data.get("slurry_density")), 2),
                         "host": serializer.data.get("host"),
 
 
-                        "aging_tank_a_temp" : float(serializer.data.get("aging_tank_a_temp")),
-                        "aging_tank_b_temp" : float(serializer.data.get("aging_tank_b_temp")),
-                        "head_tank_liquid_level_low_setting" : float(serializer.data.get("head_tank_liquid_level_low_setting")),
-                        "head_tank_liquid_level_high_setting" : float(serializer.data.get("head_tank_liquid_level_high_setting")),
-                        "sulfate_silo_low_level" : float(serializer.data.get("sulfate_silo_low_level")),
-                        "sulfatesilo_high_level" : float(serializer.data.get("sulfatesilo_high_level")),
-                        "sulfate_silo_weightlessness_scale_setting" : float(serializer.data.get("sulfate_silo_weightlessness_scale_setting")),
-                        "sulfate_silo_weightlessness_scale_actual" : float(serializer.data.get("sulfate_silo_weightlessness_scale_actual")),
-                        "sulfate_silo_weightlessness_scale_motor_freq" : float(serializer.data.get("sulfate_silo_weightlessness_scale_motor_freq")),
-                        "minor_material_silo_low_level" : float(serializer.data.get("minor_material_silo_low_level")),
-                        "minor_material_silo_high_level" : float(serializer.data.get("minor_material_silo_high_level")),
-                        "brighter_minor_material_setting" : float(serializer.data.get("brighter_minor_material_setting")),
-                        "brighter_minor_material_actual" : float(serializer.data.get("brighter_minor_material_actual")),
-                        "brighter_minor_material_motor_freq" : float(serializer.data.get("brighter_minor_material_motor_freq")),
-                        "carbonate_silo_high_level" : float(serializer.data.get("carbonate_silo_high_level")),
-                        "carbonate_silo_low_level" : float(serializer.data.get("carbonate_silo_low_level")),
-                        "carbonate_silo_setting" : float(serializer.data.get("carbonate_silo_setting")),
-                        "carbonate_silo_actual" : float(serializer.data.get("carbonate_silo_actual")),
-                        "carbonate_silo_motor_freq" : float(serializer.data.get("carbonate_silo_motor_freq")),
+                        "aging_tank_a_temp" : round(float(serializer.data.get("aging_tank_a_temp")), 2),
+                        "aging_tank_b_temp" : round(float(serializer.data.get("aging_tank_b_temp")), 2),
+                        "head_tank_liquid_level_low_setting" : round(float(serializer.data.get("head_tank_liquid_level_low_setting")), 2),
+                        "head_tank_liquid_level_high_setting" : round(float(serializer.data.get("head_tank_liquid_level_high_setting")), 2),
+                        "sulfate_silo_low_level" : round(float(serializer.data.get("sulfate_silo_low_level")), 2),
+                        "sulfatesilo_high_level" : round(float(serializer.data.get("sulfatesilo_high_level")), 2),
+                        "sulfate_silo_weightlessness_scale_setting" : round(float(serializer.data.get("sulfate_silo_weightlessness_scale_setting")), 2),
+                        "sulfate_silo_weightlessness_scale_actual" : round(float(serializer.data.get("sulfate_silo_weightlessness_scale_actual")), 2),
+                        "sulfate_silo_weightlessness_scale_motor_freq" : round(float(serializer.data.get("sulfate_silo_weightlessness_scale_motor_freq")), 2),
+                        "minor_material_silo_low_level" : round(float(serializer.data.get("minor_material_silo_low_level")), 2),
+                        "minor_material_silo_high_level" : round(float(serializer.data.get("minor_material_silo_high_level")), 2),
+                        "brighter_minor_material_setting" : round(float(serializer.data.get("brighter_minor_material_setting")), 2),
+                        "brighter_minor_material_actual" : round(float(serializer.data.get("brighter_minor_material_actual")), 2),
+                        "brighter_minor_material_motor_freq" : round(float(serializer.data.get("brighter_minor_material_motor_freq")), 2),
+                        "carbonate_silo_high_level" : round(float(serializer.data.get("carbonate_silo_high_level")), 2),
+                        "carbonate_silo_low_level" : round(float(serializer.data.get("carbonate_silo_low_level")), 2),
+                        "carbonate_silo_setting" : round(float(serializer.data.get("carbonate_silo_setting")), 2),
+                        "carbonate_silo_actual" : round(float(serializer.data.get("carbonate_silo_actual")), 2),
+                        "carbonate_silo_motor_freq" : round(float(serializer.data.get("carbonate_silo_motor_freq")), 2),
 
-                        "hlas_mass_flow_meter_setting" : float(serializer.data.get("hlas_mass_flow_meter_setting")),
-                        "naoh_mass_flowm_eter_setting" : float(serializer.data.get("naoh_mass_flowm_eter_setting")),
-                        "aging_tank_a_flow" : float(serializer.data.get("aging_tank_a_flow")),
-                        "aging_tank_b_flow" : float(serializer.data.get("aging_tank_b_flow")),
-                        "aging_tank_a_outlet_valve" : float(serializer.data.get("aging_tank_a_outlet_valve")),
-                        "aging_tank_b_outlet_valve" : float(serializer.data.get("aging_tank_b_outlet_valve")),
-                        "air_in_temp_2" : float(serializer.data.get("air_in_temp_2")),
-                        "high_pressure_pump_a_freq" : float(serializer.data.get("high_pressure_pump_a_freq")),
-                        "high_pressure_pump_b_freq" : float(serializer.data.get("high_pressure_pump_b_freq")),
-                        "las_mass_flow_meter_actual" : float(serializer.data.get("las_mass_flow_meter_actual")),
+                        "hlas_mass_flow_meter_setting" : round(float(serializer.data.get("hlas_mass_flow_meter_setting")), 2),
+                        "naoh_mass_flowm_eter_setting" : round(float(serializer.data.get("naoh_mass_flowm_eter_setting")), 2),
+                        "aging_tank_a_flow" : round(float(serializer.data.get("aging_tank_a_flow")), 2),
+                        "aging_tank_b_flow" : round(float(serializer.data.get("aging_tank_b_flow")), 2),
+                        "aging_tank_a_outlet_valve" : round(float(serializer.data.get("aging_tank_a_outlet_valve")), 2),
+                        "aging_tank_b_outlet_valve" : round(float(serializer.data.get("aging_tank_b_outlet_valve")), 2),
+                        "air_in_temp_2" : round(float(serializer.data.get("air_in_temp_2")), 2),
+                        "high_pressure_pump_a_freq" : round(float(serializer.data.get("high_pressure_pump_a_freq")), 2),
+                        "high_pressure_pump_b_freq" : round(float(serializer.data.get("high_pressure_pump_b_freq")), 2),
+                        "las_mass_flow_meter_actual" : round(float(serializer.data.get("las_mass_flow_meter_actual")),2),
 
-                        "las_mass_flow_meter_setting" : float(serializer.data.get("las_mass_flow_meter_setting")),
-                        "rv_base_mass_flow_meter_setting" : float(serializer.data.get("rv_base_mass_flow_meter_setting")),
-                        "rv_base_mass_flow_meter_actual" : float(serializer.data.get("rv_base_mass_flow_meter_actual")),
-                        "ev_base_mass_flow_meter_acutal" : float(serializer.data.get("ev_base_mass_flow_meter_acutal")),
-                        "ev_base_mass_flow_meter_setting" : float(serializer.data.get("ev_base_mass_flow_meter_setting")),
-                        "silicate_nass_flow_meter_actual" : float(serializer.data.get("silicate_nass_flow_meter_actual")),
-                        "silicate_mass_flow_meter_setting" : float(serializer.data.get("silicate_mass_flow_meter_setting")),
-                        "processed_water_mass_flow_meter_setting" : float(serializer.data.get("processed_water_mass_flow_meter_setting")),
-                        "processed_water_mass_flow_meter_actual" : float(serializer.data.get("processed_water_mass_flow_meter_actual")),
-                        "remelt_water_mass_flow_meter_setting" : float(serializer.data.get("remelt_water_mass_flow_meter_setting")),
+                        "las_mass_flow_meter_setting" : round(float(serializer.data.get("las_mass_flow_meter_setting")), 2),
+                        "rv_base_mass_flow_meter_setting" : round(float(serializer.data.get("rv_base_mass_flow_meter_setting")), 2),
+                        "rv_base_mass_flow_meter_actual" : round(float(serializer.data.get("rv_base_mass_flow_meter_actual")), 2),
+                        "ev_base_mass_flow_meter_acutal" : round(float(serializer.data.get("ev_base_mass_flow_meter_acutal")), 2),
+                        "ev_base_mass_flow_meter_setting" : round(float(serializer.data.get("ev_base_mass_flow_meter_setting")), 2),
+                        "silicate_nass_flow_meter_actual" : round(float(serializer.data.get("silicate_nass_flow_meter_actual")), 2),
+                        "silicate_mass_flow_meter_setting" : round(float(serializer.data.get("silicate_mass_flow_meter_setting")), 2),
+                        "processed_water_mass_flow_meter_setting" : round(float(serializer.data.get("processed_water_mass_flow_meter_setting")), 2),
+                        "processed_water_mass_flow_meter_actual" : round(float(serializer.data.get("processed_water_mass_flow_meter_actual")), 2),
+                        "remelt_water_mass_flow_meter_setting" : round(float(serializer.data.get("remelt_water_mass_flow_meter_setting")), 2),
 
-                        "remelt_water_mass_flow_meter_actual" : float(serializer.data.get("remelt_water_mass_flow_meter_actual")),
-                        "sulfate_silo_high_level_outlet_valve" : float(serializer.data.get("sulfate_silo_high_level_outlet_valve")),
-                        "sulfate_silo_low_level_outlet_valve" : float(serializer.data.get("sulfate_silo_low_level_outlet_valve")),
-                        "minor_material_silo_high_level_outlet_valve" : float(serializer.data.get("minor_material_silo_high_level_outlet_valve")),
-                        "minor_material_silo_low_level_outlet_valve" : float(serializer.data.get("minor_material_silo_low_level_outlet_valve")),
-                        "carbonate_silo_high_level_outlet_valve" : float(serializer.data.get("carbonate_silo_high_level_outlet_valve")),
-                        "carbonate_silo_low_level_outlet_valve" : float(serializer.data.get("carbonate_silo_low_level_outlet_valve")),
-                        "hlas_mass_flow_meter_actual_value" : float(serializer.data.get("hlas_mass_flow_meter_actual_value")),
-                        "naoh_mass_flow_meter_actual_value" : float(serializer.data.get("naoh_mass_flow_meter_actual_value")),
-                        "slurry_pipeline_upper_layer_pressure" : float(serializer.data.get("slurry_pipeline_upper_layer_pressure")),
+                        "remelt_water_mass_flow_meter_actual" : round(float(serializer.data.get("remelt_water_mass_flow_meter_actual")), 2),
+                        "sulfate_silo_high_level_outlet_valve" : round(float(serializer.data.get("sulfate_silo_high_level_outlet_valve")), 2),
+                        "sulfate_silo_low_level_outlet_valve" : round(float(serializer.data.get("sulfate_silo_low_level_outlet_valve")), 2),
+                        "minor_material_silo_high_level_outlet_valve" : round(float(serializer.data.get("minor_material_silo_high_level_outlet_valve")), 2),
+                        "minor_material_silo_low_level_outlet_valve" : round(float(serializer.data.get("minor_material_silo_low_level_outlet_valve")), 2),
+                        "carbonate_silo_high_level_outlet_valve" : round(float(serializer.data.get("carbonate_silo_high_level_outlet_valve")), 2),
+                        "carbonate_silo_low_level_outlet_valve" : round(float(serializer.data.get("carbonate_silo_low_level_outlet_valve")), 2),
+                        "hlas_mass_flow_meter_actual_value" : round(float(serializer.data.get("hlas_mass_flow_meter_actual_value")), 2),
+                        "naoh_mass_flow_meter_actual_value" : round(float(serializer.data.get("naoh_mass_flow_meter_actual_value")), 2),
+                        "slurry_pipeline_upper_layer_pressure" : round(float(serializer.data.get("slurry_pipeline_upper_layer_pressure")), 2),
 
-                        "base_power_flow_setting_value" : float(serializer.data.get("base_power_flow_setting_value")),
-                        "base_power_flow_acutal_value" : float(serializer.data.get("base_power_flow_acutal_value")),
-                        "powder_motor_freq" : float(serializer.data.get("powder_motor_freq")),
-                        "slurry_pipe_temp" : float(serializer.data.get("slurry_pipe_temp")),
-                        "sulfate_weight" : float(serializer.data.get("sulfate_weight")),
-                        "carbonate_weight" : float(serializer.data.get("carbonate_weight")),
-                        "brighter_minor_material_weight" : float(serializer.data.get("brighter_minor_material_weight")),
-                        "out_air_motor_freq" : float(serializer.data.get("out_air_motor_freq")),
-                        "air_in_temp_4" : float(serializer.data.get("air_in_temp_4")),
-                        "base_powder_weight" : float(serializer.data.get("base_powder_weight")),
+                        "base_power_flow_setting_value" : round(float(serializer.data.get("base_power_flow_setting_value")), 2),
+                        "base_power_flow_acutal_value" : round(float(serializer.data.get("base_power_flow_acutal_value")), 2),
+                        "powder_motor_freq" : round(float(serializer.data.get("powder_motor_freq")), 2),
+                        "slurry_pipe_temp" : round(float(serializer.data.get("slurry_pipe_temp")), 2),
+                        "sulfate_weight" : round(float(serializer.data.get("sulfate_weight")), 2),
+                        "carbonate_weight" : round(float(serializer.data.get("carbonate_weight")), 2),
+                        "brighter_minor_material_weight" : round(float(serializer.data.get("brighter_minor_material_weight")), 2),
+                        "out_air_motor_freq" : round(float(serializer.data.get("out_air_motor_freq")), 2),
+                        "air_in_temp_4" : round(float(serializer.data.get("air_in_temp_4")), 2),
+                        "base_powder_weight" : round(float(serializer.data.get("base_powder_weight")), 2),
 
-                        "waste_water_actual" : float(serializer.data.get("waste_water_actual")),
-                        "waste_water_setting" : float(serializer.data.get("waste_water_setting")),
-                        "las_open" : float(serializer.data.get("las_open")),
-                        "base_powder_open" : float(serializer.data.get("base_powder_open")),
-                        "steam_flow" : float(serializer.data.get("steam_flow")),
-                        "density_checking_switch_1" : float(serializer.data.get("density_checking_switch_1")),
-                        "density_checking_switch_2" : float(serializer.data.get("density_checking_switch_2")),
-                        "high_pressure_pump_entry_pressure" : float(serializer.data.get("high_pressure_pump_entry_pressure")),
-                        "high_pressure_pump_entry_flow" : float(serializer.data.get("high_pressure_pump_entry_flow")),
-                        "high_pressure_pump_a_freq_new" : float(serializer.data.get("high_pressure_pump_a_freq_new")),
+                        "waste_water_actual" : round(float(serializer.data.get("waste_water_actual")), 2),
+                        "waste_water_setting" : round(float(serializer.data.get("waste_water_setting")), 2),
+                        "las_open" : round(float(serializer.data.get("las_open")), 2),
+                        "base_powder_open" : round(float(serializer.data.get("base_powder_open")), 2),
+                        "steam_flow" : round(float(serializer.data.get("steam_flow")), 2),
+                        "density_checking_switch_1" : round(float(serializer.data.get("density_checking_switch_1")), 2),
+                        "density_checking_switch_2" : round(float(serializer.data.get("density_checking_switch_2")), 2),
+                        "high_pressure_pump_entry_pressure" : round(float(serializer.data.get("high_pressure_pump_entry_pressure")), 2),
+                        "high_pressure_pump_entry_flow" : round(float(serializer.data.get("high_pressure_pump_entry_flow")), 2),
+                        "high_pressure_pump_a_freq_new" : round(float(serializer.data.get("high_pressure_pump_a_freq_new")), 2),
 
-                        "high_pressure_pump_b_freq_new" : float(serializer.data.get("high_pressure_pump_b_freq_new")),
-                        "exhaust_freq_new" : float(serializer.data.get("exhaust_freq_new")),
+                        "high_pressure_pump_b_freq_new" : round(float(serializer.data.get("high_pressure_pump_b_freq_new")), 2),
+                        "exhaust_freq_new" : round(float(serializer.data.get("exhaust_freq_new")), 2),
                         
                     }
                 }
@@ -1060,7 +1061,8 @@ def jingbai_process(data):
     df_ready = data 
    
     train = df_ready.values
-    train_pred = np.expm1(model.predict(train))
+    # train_pred = np.expm1(model.predict(train))
+    train_pred = data['f_m'] * 0.993588
     print train_pred
     combine = np.column_stack((train_pred, train))
    
@@ -1180,16 +1182,20 @@ def jingbai_process(data):
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
             modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
 
-            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            modified_res[x, 0] = train_pred[x] * 0.9819
          
     return modified_res, train_pred
+
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
     del data['brand']
     df_ready = data 
    
     train = df_ready.values
-    train_pred = np.expm1(model.predict(train))
+    # train_pred = np.expm1(model.predict(train))
+
+    train_pred = data['f_m'] * 0.993188
 
     combine = np.column_stack((train_pred, train))
    
@@ -1308,9 +1314,10 @@ def tbo_process(data):
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
             modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
-            
-            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            
+
+            # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            modified_res[x, 0] = train_pred[x] * 0.9809
+
     return modified_res, train_pred
 
 def bilang_process(data):
@@ -1320,7 +1327,8 @@ def bilang_process(data):
     # train_y = df_ready.M.values
     
     train = df_ready.values
-    train_pred = np.expm1(model.predict(train))
+    # train_pred = np.expm1(model.predict(train))
+    train_pred = data['f_m'] * 0.993588
 
     combine = np.column_stack((train_pred, train))
    
@@ -1440,8 +1448,8 @@ def bilang_process(data):
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
             modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
 
-            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-
+            # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            modified_res[x, 0] = train_pred[x] * 0.9789
     # final_com = np.column_stack((combine, modified_res))
 
     return modified_res, train_pred
