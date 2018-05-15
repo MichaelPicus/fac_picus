@@ -940,7 +940,7 @@ def value_data_process(request, format=None):
                         "f_m" : round(float(serializer.data.get("f_m")), 2),
                         "pred_m" : round(float(pred_m[0]), 2),
                         "modified_m" :round(float(res[0][0]), 2),
-                        "slurry_density" : round(float(serializer.data.get("slurry_density")), 2),
+                        "slurry_density" : round(float(serializer.data.get("slurry_density")), 4),
                         "host": serializer.data.get("host"),
 
 
