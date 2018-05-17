@@ -1183,7 +1183,7 @@ def jingbai_process(data):
             modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9819
+            modified_res[x, 0] = train_pred[x] * 0.9869
          
     return modified_res, train_pred
 
@@ -1316,7 +1316,7 @@ def tbo_process(data):
             modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9809
+            modified_res[x, 0] = train_pred[x] * 0.9879
 
     return modified_res, train_pred
 
@@ -1449,7 +1449,7 @@ def bilang_process(data):
             modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9789
+            modified_res[x, 0] = train_pred[x] * 0.9859
     # final_com = np.column_stack((combine, modified_res))
 
     return modified_res, train_pred
