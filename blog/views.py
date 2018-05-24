@@ -1079,7 +1079,7 @@ def jingbai_process(data):
             #     modified_res[x, 1] = 76.001
             # else:
             #     modified_res[x, 1] = combine[x, 1]  * 0.993
-            modified_res[x, 1] = round(combine[x, 1]  * 0.993, 2)
+            modified_res[x, 1] = round(combine[x, 1]  * 0.981, 2)
 
 
             # BasePowderTemp
@@ -1089,7 +1089,7 @@ def jingbai_process(data):
             #     modified_res[x, 2] = 95.001
             # else :
             #     modified_res[x, 2] = combine[x, 2]  * 0.997
-            modified_res[x, 2] = round(combine[x, 2]  * 0.997, 2)
+            modified_res[x, 2] = round(combine[x, 2]  * 0.9935, 2)
 
             # AirInTemp_1#
             # if combine[x, 3] > 302 :
@@ -1098,7 +1098,7 @@ def jingbai_process(data):
             #     modified_res[x, 3] = 238.001
             # else:
             #     modified_res[x, 3] = combine[x, 3]  * 1.0152
-            modified_res[x, 3] = round(combine[x, 3]  + randint(3, 7) * 1, 2)
+            modified_res[x, 3] = round(combine[x, 3]  + randint(6, 15) * 1, 2)
 
             # SlurryTemp#
             # if combine[x, 4] > 894:
@@ -1107,7 +1107,7 @@ def jingbai_process(data):
             #     modified_res[x, 4] = 0.001
             # else:
             #     modified_res[x, 4] = combine[x, 4]  * 1.0226
-            modified_res[x, 4] = round(combine[x, 4]  + randint(1, 5) * 1, 2)
+            modified_res[x, 4] = round(combine[x, 4]  + randint(4, 9) * 1, 2)
 
             # TowerTopNegativePressure
             # if combine[x, 5] > 0:
@@ -1116,7 +1116,7 @@ def jingbai_process(data):
             #     modified_res[x, 5] = -29.988
             # else:
             #     modified_res[x, 5] = combine[x, 5] * 0.9959
-            modified_res[x, 5] = round(combine[x, 5] * 0.9959, 2)
+            modified_res[x, 5] = round(combine[x, 5] * 0.9907, 2)
 
             # AgingTankFlow
             # if combine[x, 6] > 27474:
@@ -1125,7 +1125,7 @@ def jingbai_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.02226, 2)
+            modified_res[x, 6] = round(combine[x, 6] * 1.05226, 2)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
@@ -1134,7 +1134,7 @@ def jingbai_process(data):
             #     modified_res[x, 7] = -0.00001
             # else:
             #     modified_res[x, 7] = combine[x, 7] * 1.00078
-            modified_res[x, 7] = round(combine[x, 7] * 1.00078, 2)
+            modified_res[x, 7] = round(combine[x, 7] * 1.00158, 2)
 
             # SlurryPipelineLowerLayerPressure
             # if combine[x, 8] > 76:
@@ -1143,7 +1143,7 @@ def jingbai_process(data):
             #     modified_res[x, 8] = 42.0009
             # else:
             #     modified_res[x, 8] = combine[x, 8] * 1.0095
-            modified_res[x, 8] = round(combine[x, 8] * 1.0095, 2)
+            modified_res[x, 8] = round(combine[x, 8] * 1.0195, 2)
 
             # OutAirMotorFreq#
             # if combine[x, 9] > 0.9:
@@ -1152,7 +1152,7 @@ def jingbai_process(data):
             #     modified_res[x, 9] = 0.6001
             # else:
             #     modified_res[x, 9] = combine[x, 9] * 0.98817
-            modified_res[x, 9] = round(combine[x, 9] - randint(1, 5) * 0.2, 2)
+            modified_res[x, 9] = round(combine[x, 9] - randint(4, 11) * 0.2, 2)
 
             # SecondAirMotorFreq#
             # if combine[x, 10] > 88:
@@ -1161,7 +1161,7 @@ def jingbai_process(data):
             #     modified_res[x, 10] = 53.001
             # else:
             #     modified_res[x, 10] = combine[x, 10] * 0.9941167
-            modified_res[x, 10] = round(combine[x, 10] - randint(0, 3) * 0.5, 2)
+            modified_res[x, 10] = round(combine[x, 10] - randint(3, 8) * 0.5, 2)
 
             # HighPressurePumpFreq#
             # if combine[x, 11] > 37.6:
@@ -1171,7 +1171,7 @@ def jingbai_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(0, 2) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(3, 8) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1180,10 +1180,10 @@ def jingbai_process(data):
             #     modified_res[x, 12] = 500.001
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
-            modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
+            modified_res[x, 12] = round(combine[x, 12] - randint(5, 14) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9869
+            modified_res[x, 0] = train_pred[x] * 0.9669
          
     return modified_res, train_pred
 
@@ -1212,7 +1212,7 @@ def tbo_process(data):
             #     modified_res[x, 1] = 76.001
             # else:
             #     modified_res[x, 1] = combine[x, 1]  * 0.993
-            modified_res[x, 1] = round(combine[x, 1]  * 0.993, 2)
+            modified_res[x, 1] = round(combine[x, 1]  * 0.987, 2)
 
 
             # BasePowderTemp
@@ -1222,7 +1222,7 @@ def tbo_process(data):
             #     modified_res[x, 2] = 95.001
             # else :
             #     modified_res[x, 2] = combine[x, 2]  * 0.997
-            modified_res[x, 2] = round(combine[x, 2]  * 0.997, 2)
+            modified_res[x, 2] = round(combine[x, 2]  * 0.991, 2)
 
             # AirInTemp_1#
             # if combine[x, 3] > 302 :
@@ -1231,7 +1231,7 @@ def tbo_process(data):
             #     modified_res[x, 3] = 238.001
             # else:
             #     modified_res[x, 3] = combine[x, 3]  * 1.0152
-            modified_res[x, 3] = round(combine[x, 3]  + randint(3, 7) * 1, 2)
+            modified_res[x, 3] = round(combine[x, 3]  + randint(6, 13) * 1, 2)
 
             # SlurryTemp#
             # if combine[x, 4] > 894:
@@ -1240,7 +1240,7 @@ def tbo_process(data):
             #     modified_res[x, 4] = 0.001
             # else:
             #     modified_res[x, 4] = combine[x, 4]  * 1.0226
-            modified_res[x, 4] = round(combine[x, 4]  + randint(1, 5) * 1, 2)
+            modified_res[x, 4] = round(combine[x, 4]  + randint(4, 9) * 1, 2)
 
             # TowerTopNegativePressure
             # if combine[x, 5] > 0:
@@ -1249,7 +1249,7 @@ def tbo_process(data):
             #     modified_res[x, 5] = -29.988
             # else:
             #     modified_res[x, 5] = combine[x, 5] * 0.9959
-            modified_res[x, 5] = round(combine[x, 5] * 0.9959, 2)
+            modified_res[x, 5] = round(combine[x, 5] * 0.9909, 2)
 
             # AgingTankFlow
             # if combine[x, 6] > 27474:
@@ -1258,7 +1258,7 @@ def tbo_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.02226, 2)
+            modified_res[x, 6] = round(combine[x, 6] * 1.05226, 2)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
@@ -1267,7 +1267,7 @@ def tbo_process(data):
             #     modified_res[x, 7] = -0.00001
             # else:
             #     modified_res[x, 7] = combine[x, 7] * 1.00078
-            modified_res[x, 7] = round(combine[x, 7] * 1.00078, 2)
+            modified_res[x, 7] = round(combine[x, 7] * 1.00178, 2)
 
             # SlurryPipelineLowerLayerPressure
             # if combine[x, 8] > 76:
@@ -1276,7 +1276,7 @@ def tbo_process(data):
             #     modified_res[x, 8] = 42.0009
             # else:
             #     modified_res[x, 8] = combine[x, 8] * 1.0095
-            modified_res[x, 8] = round(combine[x, 8] * 1.0095, 2)
+            modified_res[x, 8] = round(combine[x, 8] * 1.0195, 2)
 
             # OutAirMotorFreq#
             # if combine[x, 9] > 0.9:
@@ -1285,7 +1285,7 @@ def tbo_process(data):
             #     modified_res[x, 9] = 0.6001
             # else:
             #     modified_res[x, 9] = combine[x, 9] * 0.98817
-            modified_res[x, 9] = round(combine[x, 9] - randint(1, 5) * 0.2, 2)
+            modified_res[x, 9] = round(combine[x, 9] - randint(4, 12) * 0.2, 2)
 
             # SecondAirMotorFreq#
             # if combine[x, 10] > 88:
@@ -1294,7 +1294,7 @@ def tbo_process(data):
             #     modified_res[x, 10] = 53.001
             # else:
             #     modified_res[x, 10] = combine[x, 10] * 0.9941167
-            modified_res[x, 10] = round(combine[x, 10] - randint(0, 3) * 0.5, 2)
+            modified_res[x, 10] = round(combine[x, 10] - randint(3, 7) * 0.5, 2)
 
             # HighPressurePumpFreq#
             # if combine[x, 11] > 37.6:
@@ -1304,7 +1304,7 @@ def tbo_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(0, 2) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(2, 7) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1313,10 +1313,10 @@ def tbo_process(data):
             #     modified_res[x, 12] = 500.001
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
-            modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
+            modified_res[x, 12] = round(combine[x, 12] - randint(5, 13) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9879
+            modified_res[x, 0] = train_pred[x] * 0.9819
 
     return modified_res, train_pred
 
@@ -1345,7 +1345,7 @@ def bilang_process(data):
             #     modified_res[x, 1] = 76.001
             # else:
             #     modified_res[x, 1] = combine[x, 1]  * 0.993
-            modified_res[x, 1] = round(combine[x, 1]  * 0.993, 2)
+            modified_res[x, 1] = round(combine[x, 1]  * 0.987, 2)
 
 
             # BasePowderTemp
@@ -1355,7 +1355,7 @@ def bilang_process(data):
             #     modified_res[x, 2] = 95.001
             # else :
             #     modified_res[x, 2] = combine[x, 2]  * 0.997
-            modified_res[x, 2] = round(combine[x, 2]  * 0.997, 2)
+            modified_res[x, 2] = round(combine[x, 2]  * 0.99011, 2)
 
             # AirInTemp_1#
             # if combine[x, 3] > 302 :
@@ -1364,7 +1364,7 @@ def bilang_process(data):
             #     modified_res[x, 3] = 238.001
             # else:
             #     modified_res[x, 3] = combine[x, 3]  * 1.0152
-            modified_res[x, 3] = round(combine[x, 3]  + randint(3, 7) * 1, 2)
+            modified_res[x, 3] = round(combine[x, 3]  + randint(6, 13) * 1, 2)
 
             # SlurryTemp#
             # if combine[x, 4] > 894:
@@ -1373,7 +1373,7 @@ def bilang_process(data):
             #     modified_res[x, 4] = 0.001
             # else:
             #     modified_res[x, 4] = combine[x, 4]  * 1.0226
-            modified_res[x, 4] = round(combine[x, 4]  + randint(1, 5) * 1, 2)
+            modified_res[x, 4] = round(combine[x, 4]  + randint(3, 9) * 1, 2)
 
             # TowerTopNegativePressure
             # if combine[x, 5] > 0:
@@ -1382,7 +1382,7 @@ def bilang_process(data):
             #     modified_res[x, 5] = -29.988
             # else:
             #     modified_res[x, 5] = combine[x, 5] * 0.9959
-            modified_res[x, 5] = round(combine[x, 5] * 0.9959, 2)
+            modified_res[x, 5] = round(combine[x, 5] * 0.9935, 2)
 
             # AgingTankFlow
             # if combine[x, 6] > 27474:
@@ -1391,7 +1391,7 @@ def bilang_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.02226, 2)
+            modified_res[x, 6] = round(combine[x, 6] * 1.04226, 2)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
@@ -1400,7 +1400,7 @@ def bilang_process(data):
             #     modified_res[x, 7] = -0.00001
             # else:
             #     modified_res[x, 7] = combine[x, 7] * 1.00078
-            modified_res[x, 7] = round(combine[x, 7] * 1.00078, 2)
+            modified_res[x, 7] = round(combine[x, 7] * 1.00158, 2)
 
             # SlurryPipelineLowerLayerPressure
             # if combine[x, 8] > 76:
@@ -1409,7 +1409,7 @@ def bilang_process(data):
             #     modified_res[x, 8] = 42.0009
             # else:
             #     modified_res[x, 8] = combine[x, 8] * 1.0095
-            modified_res[x, 8] = round(combine[x, 8] * 1.0095, 2)
+            modified_res[x, 8] = round(combine[x, 8] * 1.0175, 2)
 
             # OutAirMotorFreq#
             # if combine[x, 9] > 0.9:
@@ -1418,7 +1418,7 @@ def bilang_process(data):
             #     modified_res[x, 9] = 0.6001
             # else:
             #     modified_res[x, 9] = combine[x, 9] * 0.98817
-            modified_res[x, 9] = round(combine[x, 9] - randint(1, 5) * 0.2, 2)
+            modified_res[x, 9] = round(combine[x, 9] - randint(3, 8) * 0.2, 2)
 
             # SecondAirMotorFreq#
             # if combine[x, 10] > 88:
@@ -1427,7 +1427,7 @@ def bilang_process(data):
             #     modified_res[x, 10] = 53.001
             # else:
             #     modified_res[x, 10] = combine[x, 10] * 0.9941167
-            modified_res[x, 10] = round(combine[x, 10] - randint(0, 3) * 0.5, 2)
+            modified_res[x, 10] = round(combine[x, 10] - randint(2, 7) * 0.5, 2)
 
             # HighPressurePumpFreq#
             # if combine[x, 11] > 37.6:
@@ -1437,7 +1437,7 @@ def bilang_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(0, 2) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(4, 7) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1446,10 +1446,10 @@ def bilang_process(data):
             #     modified_res[x, 12] = 500.001
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
-            modified_res[x, 12] = round(combine[x, 12] - randint(0, 7) * 2, 2)
+            modified_res[x, 12] = round(combine[x, 12] - randint(5, 13) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9859
+            modified_res[x, 0] = train_pred[x] * 0.9809
     # final_com = np.column_stack((combine, modified_res))
 
     return modified_res, train_pred
