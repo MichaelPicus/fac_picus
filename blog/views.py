@@ -1054,9 +1054,9 @@ def data_process(data):
     return res, pred_m
 
 
-jb_INTERVAL = 120
-jb_count = 0
-jb_tmp = ""
+# jb_INTERVAL = 120
+# jb_count = 0
+# jb_tmp = ""
 
 def jingbai_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
@@ -1074,8 +1074,8 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33) and (jb_count % jb_INTERVAL == 0):
-            jb_count = jb_count + 1
+        if (combine[x, 0] > 33):
+            # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
             #     modified_res[x, 1] = 129.99
@@ -1189,14 +1189,14 @@ def jingbai_process(data):
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             modified_res[x, 0] = train_pred[x] * 0.9669
 
-            jb_tmp = modified_res
-        modified_res = jb_tmp
+            # jb_tmp = modified_res
+        # modified_res = jb_tmp
          
     return modified_res, train_pred
 
-tbo_INTERVAL = 120
-tbo_count = 0
-tbo_tmp = ""
+# tbo_INTERVAL = 120
+# tbo_count = 0
+# tbo_tmp = ""
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
     del data['brand']
@@ -1214,8 +1214,8 @@ def tbo_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if combine[x, 0] > 33 and (tbo_count % tbo_INTERVAL == 0):
-            tbo_count = tbo_count + 1
+        if combine[x, 0] > 33:
+            # tbo_count = tbo_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
             #     modified_res[x, 1] = 129.99
@@ -1328,14 +1328,14 @@ def tbo_process(data):
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             modified_res[x, 0] = train_pred[x] * 0.9819
-            tbo_tmp = modified_res
-        modified_res = tbo_tmp
+            # tbo_tmp = modified_res
+        # modified_res = tbo_tmp
 
     return modified_res, train_pred
 
-bl_INTERVAL = 120
-bl_count = 0
-bl_tmp = ""
+# bl_INTERVAL = 120
+# bl_count = 0
+# bl_tmp = ""
 
 def bilang_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
@@ -1354,8 +1354,9 @@ def bilang_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
-            bl_count = bl_count + 1
+        # if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
+         if combine[x, 0] > 33:
+            # bl_count = bl_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
             #     modified_res[x, 1] = 129.99
@@ -1468,9 +1469,9 @@ def bilang_process(data):
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             modified_res[x, 0] = train_pred[x] * 0.9809
-            bl_tmp =  modified_res
+            # bl_tmp =  modified_res
     # final_com = np.column_stack((combine, modified_res))
-        modified_res = bl_tmp
+        # modified_res = bl_tmp
 
     return modified_res, train_pred
 
