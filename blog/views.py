@@ -1361,7 +1361,7 @@ def bilang_process(data):
     for x in range(0, rows):
         
         # if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
-         if (combine[x, 0] > 33 and combine[x, 2] >= 107):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 107):
             # bl_count = bl_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
