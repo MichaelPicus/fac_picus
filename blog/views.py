@@ -1192,7 +1192,7 @@ def jingbai_process(data):
             # jb_tmp = modified_res
         # modified_res = jb_tmp
         elif combine[x, 2] < 110:
-            combine[x] = 0
+            modified_res[x] = 0
 
          
     return modified_res, train_pred
@@ -1334,7 +1334,7 @@ def tbo_process(data):
             # tbo_tmp = modified_res
         # modified_res = tbo_tmp
         elif combine[x, 2] < 120:
-            combine[x] = 0
+            modified_res[x] = 0
 
 
     return modified_res, train_pred
@@ -1479,7 +1479,7 @@ def bilang_process(data):
     # final_com = np.column_stack((combine, modified_res))
         # modified_res = bl_tmp
         elif combine[x, 2] < 107:
-            combine[x] = 0
+            modified_res[x] = 0
 
 
     return modified_res, train_pred
