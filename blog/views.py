@@ -1074,7 +1074,7 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 110):
             # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1191,6 +1191,9 @@ def jingbai_process(data):
 
             # jb_tmp = modified_res
         # modified_res = jb_tmp
+        elif combine[x, 2] < 110:
+            combine[x] = 0
+
          
     return modified_res, train_pred
 
@@ -1214,7 +1217,7 @@ def tbo_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if combine[x, 0] > 33:
+        if (combine[x, 0] > 33 and combine[x, 2] >= 120):
             # tbo_count = tbo_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1330,6 +1333,9 @@ def tbo_process(data):
             modified_res[x, 0] = train_pred[x] * 0.9819
             # tbo_tmp = modified_res
         # modified_res = tbo_tmp
+        elif combine[x, 2] < 120:
+            combine[x] = 0
+
 
     return modified_res, train_pred
 
@@ -1355,7 +1361,7 @@ def bilang_process(data):
     for x in range(0, rows):
         
         # if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
-         if combine[x, 0] > 33:
+         if (combine[x, 0] > 33 and combine[x, 2] >= 107):
             # bl_count = bl_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1472,6 +1478,9 @@ def bilang_process(data):
             # bl_tmp =  modified_res
     # final_com = np.column_stack((combine, modified_res))
         # modified_res = bl_tmp
+        elif combine[x, 2] < 107:
+            combine[x] = 0
+
 
     return modified_res, train_pred
 
