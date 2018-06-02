@@ -1094,6 +1094,9 @@ def jingbai_process(data):
             # else :
             #     modified_res[x, 2] = combine[x, 2]  * 0.997
             modified_res[x, 2] = round(combine[x, 2]  * 0.9935, 2)
+            if modified_res[x, 2] < 110:
+                modified_res[x, 2] = 110
+
 
             # AirInTemp_1#
             # if combine[x, 3] > 302 :
@@ -1192,7 +1195,7 @@ def jingbai_process(data):
             # jb_tmp = modified_res
         # modified_res = jb_tmp
         elif combine[x, 2] < 110:
-            modified_res[x] = 0
+            modified_res[x] = -1
 
          
     return modified_res, train_pred
@@ -1237,6 +1240,8 @@ def tbo_process(data):
             # else :
             #     modified_res[x, 2] = combine[x, 2]  * 0.997
             modified_res[x, 2] = round(combine[x, 2]  * 0.991, 2)
+            if modified_res[x, 2] < 120:
+                modified_res[x, 2] = 120
 
             # AirInTemp_1#
             # if combine[x, 3] > 302 :
@@ -1334,7 +1339,7 @@ def tbo_process(data):
             # tbo_tmp = modified_res
         # modified_res = tbo_tmp
         elif combine[x, 2] < 120:
-            modified_res[x] = 0
+            modified_res[x] = -1
 
 
     return modified_res, train_pred
@@ -1381,6 +1386,9 @@ def bilang_process(data):
             # else :
             #     modified_res[x, 2] = combine[x, 2]  * 0.997
             modified_res[x, 2] = round(combine[x, 2]  * 0.99011, 2)
+
+            if modified_res[x, 2] < 107:
+                modified_res[x, 2] = 107
 
             # AirInTemp_1#
             # if combine[x, 3] > 302 :
@@ -1479,7 +1487,7 @@ def bilang_process(data):
     # final_com = np.column_stack((combine, modified_res))
         # modified_res = bl_tmp
         elif combine[x, 2] < 107:
-            modified_res[x] = 0
+            modified_res[x] = -1
 
 
     return modified_res, train_pred
