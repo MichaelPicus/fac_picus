@@ -1132,7 +1132,7 @@ def jingbai_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.03226, 2)
+            modified_res[x, 6] = round(combine[x, 6] * 1.04, 2)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
