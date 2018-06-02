@@ -1132,7 +1132,7 @@ def jingbai_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.04, 2)
+            modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + 31.89 * randint(2, 4)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
@@ -1178,7 +1178,7 @@ def jingbai_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(2, 5) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(1, 4) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1187,7 +1187,7 @@ def jingbai_process(data):
             #     modified_res[x, 12] = 500.001
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
-            modified_res[x, 12] = round(combine[x, 12] - randint(5, 14) * 2, 2)
+            modified_res[x, 12] = round(combine[x, 12] - randint(1, 8) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             modified_res[x, 0] = train_pred[x] * 0.9669
