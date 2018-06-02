@@ -1132,7 +1132,7 @@ def jingbai_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + 31.89 * randint(2, 4)
+            modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(31.89 * randint(2, 4), 2)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
@@ -1277,7 +1277,7 @@ def tbo_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.05226, 2)
+            modified_res[x, 6] = round(combine[x, 6] * 1.03226, 2) + round(28.89 * randint(2, 4), 2)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
@@ -1323,7 +1323,7 @@ def tbo_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(2, 7) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(1, 3) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1424,7 +1424,7 @@ def bilang_process(data):
             #     modified_res[x, 6] = 17451.02
             # else:
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            modified_res[x, 6] = round(combine[x, 6] * 1.04226, 2)
+            modified_res[x, 6] = round(combine[x, 6] * 1.03426, 2) + round(27.89 * randint(2, 4), 2)
 
             # SecondInputAirTemp
             # if combine[x, 7] > 68:
@@ -1470,7 +1470,7 @@ def bilang_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(4, 7) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(1, 3) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
