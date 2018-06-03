@@ -1106,6 +1106,8 @@ def jingbai_process(data):
             # else:
             #     modified_res[x, 3] = combine[x, 3]  * 1.0152
             modified_res[x, 3] = round(combine[x, 3]  + randint(6, 15) * 1, 2)
+            if modified_res[x, 3] > 270:
+                modified_res[x, 3] = 270
 
             # SlurryTemp#
             # if combine[x, 4] > 894:
@@ -1178,7 +1180,7 @@ def jingbai_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(1, 4) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(0, 2) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1251,6 +1253,8 @@ def tbo_process(data):
             # else:
             #     modified_res[x, 3] = combine[x, 3]  * 1.0152
             modified_res[x, 3] = round(combine[x, 3]  + randint(6, 13) * 1, 2)
+            if modified_res[x, 3] > 270:
+                modified_res[x, 3] = 270
 
             # SlurryTemp#
             # if combine[x, 4] > 894:
@@ -1323,7 +1327,7 @@ def tbo_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(1, 3) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(0, 2) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1399,6 +1403,9 @@ def bilang_process(data):
             #     modified_res[x, 3] = combine[x, 3]  * 1.0152
             modified_res[x, 3] = round(combine[x, 3]  + randint(6, 13) * 1, 2)
 
+            if modified_res[x, 3] > 270:
+                modified_res[x, 3] = 270
+
             # SlurryTemp#
             # if combine[x, 4] > 894:
             #     modified_res[x, 4] = 893.99
@@ -1470,7 +1477,7 @@ def bilang_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            modified_res[x, 11] = round(combine[x, 11] + randint(1, 3) * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + randint(0, 2) * 1, 2)
 
             # GasFlow#
             # if combine[x, 12] > 722:
