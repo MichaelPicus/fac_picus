@@ -1180,7 +1180,7 @@ def jingbai_process(data):
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
-            RANDOM = randint(0, 2)
+            RANDOM = randint(0, 1)
 
             modified_res[x, 11] = round(combine[x, 11] + RANDOM * 1, 2)
 
@@ -1332,7 +1332,7 @@ def tbo_process(data):
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
 
-            RANDOM = randint(0, 2)
+            RANDOM = randint(0, 1)
 
             modified_res[x, 11] = round(combine[x, 11] + RANDOM * 1, 2)
 
@@ -1488,7 +1488,7 @@ def bilang_process(data):
 
             # modified_res[x, 11] = round(combine[x, 11] + randint(0, 2) * 1, 2)
 
-            RANDOM = randint(0, 2)
+            RANDOM = randint(0, 1)
 
             modified_res[x, 11] = round(combine[x, 11] + RANDOM * 1, 2)
 
