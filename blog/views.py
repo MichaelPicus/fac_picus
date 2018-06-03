@@ -1184,7 +1184,7 @@ def jingbai_process(data):
 
             modified_res[x, 11] = round(combine[x, 11] + RANDOM * 1, 2)
 
-            modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(988 * RANDOM, 2) + 200
+            modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1336,7 +1336,7 @@ def tbo_process(data):
 
             modified_res[x, 11] = round(combine[x, 11] + RANDOM * 1, 2)
 
-            modified_res[x, 6] = round(combine[x, 6] * 1.03226, 2) + round(988 * RANDOM, 2) + 200
+            modified_res[x, 6] = round(combine[x, 6] * 1.03226, 2) + round(301 * RANDOM, 2) + 101
 
             # GasFlow#
             # if combine[x, 12] > 722:
@@ -1492,7 +1492,7 @@ def bilang_process(data):
 
             modified_res[x, 11] = round(combine[x, 11] + RANDOM * 1, 2)
 
-            modified_res[x, 6] = round(combine[x, 6] * 1.03426, 2) + round(988 * RANDOM, 2) + 200
+            modified_res[x, 6] = round(combine[x, 6] * 1.03426, 2) + round(311 * RANDOM, 2) + 101
 
             # GasFlow#
             # if combine[x, 12] > 722:
