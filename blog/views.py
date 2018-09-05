@@ -1122,7 +1122,7 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33 and combine[x, 2] >= 113 and (density_checking_switch > 594 and density_checking_switch < 630)):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 113 and (density_checking_switch[0] > 504 and density_checking_switch[0] < 630)):
             # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1272,7 +1272,7 @@ def tbo_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33 and combine[x, 2] >= 120) and (density_checking_switch > 622 and density_checking_switch < 640):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 120) and (density_checking_switch[0] > 622 and density_checking_switch[0] < 640):
             # tbo_count = tbo_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1427,7 +1427,7 @@ def bilang_process(data):
     for x in range(0, rows):
         
         # if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
-        if (combine[x, 0] > 33 and combine[x, 2] >= 107) and (density_checking_switch > 622 and density_checking_switch < 640):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 120 and density_checking_switch [0]> 622 and density_checking_switch[0] < 640):
             # bl_count = bl_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
