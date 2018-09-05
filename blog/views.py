@@ -1106,7 +1106,7 @@ def data_process(data):
 
 def jingbai_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
-    density_checking_switch = data['density_checking_switch_2']
+    density_checking_switch = data.iloc[0]['density_checking_switch_2']
     del data['density_checking_switch_2']
     del data['brand']
     df_ready = data 
@@ -1122,7 +1122,7 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33 and combine[x, 2] >= 113 and (density_checking_switch[0] > 504 and density_checking_switch[0] < 630)):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 113 and (density_checking_switch > 504 and density_checking_switch < 630)):
             # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1256,7 +1256,7 @@ def jingbai_process(data):
 
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
-    density_checking_switch = data['density_checking_switch_2']
+    density_checking_switch = data.iloc[0]['density_checking_switch_2']
     del data['density_checking_switch_2']
     del data['brand']
     df_ready = data 
@@ -1272,7 +1272,7 @@ def tbo_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33 and combine[x, 2] >= 120) and (density_checking_switch[0] > 622 and density_checking_switch[0] < 640):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 120) and (density_checking_switch > 622 and density_checking_switch < 640):
             # tbo_count = tbo_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1409,7 +1409,8 @@ def tbo_process(data):
 
 def bilang_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
-    density_checking_switch = data['density_checking_switch_2']
+    density_checking_switch = data.iloc[0]['density_checking_switch_2']
+    
     del data['density_checking_switch_2']
     del data['brand']
     df_ready = data 
@@ -1427,7 +1428,7 @@ def bilang_process(data):
     for x in range(0, rows):
         
         # if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
-        if (combine[x, 0] > 33 and combine[x, 2] >= 120 and density_checking_switch [0]> 622 and density_checking_switch[0] < 640):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 120 and density_checking_switch > 622 and density_checking_switch < 640):
             # bl_count = bl_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
