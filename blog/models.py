@@ -87,6 +87,23 @@ class Valuedata(models.Model):
     p_slurry_pipeline_lower_layer_pressure = models.FloatField(default='0')
     p_slurry_temp = models.FloatField(default='0')
     p_tower_top_negative_pressure = models.FloatField(default='0')
+
+    # flag_aging_tank_flow = models.FloatField(default='0')
+    # flag_air_in_temp_1 = models.FloatField(default='0')
+    # flag_air_out_temp = models.FloatField(default='0')
+    # flag_base_powder_temp = models.FloatField(default='0')
+    # flag_gas_flow = models.FloatField(default='0')
+    # flag_high_pressure_pump_freq = models.FloatField(default='0')
+    # flag_out_air_motor_freq = models.FloatField(default='0')
+    # flag_second_air_motor_freq = models.FloatField(default='0')
+    # flag_second_input_air_temp = models.FloatField(default='0')
+    # flag_slurry_pipeline_lower_layer_pressure = models.FloatField(default='0')
+    # flag_slurry_temp = models.FloatField(default='0')
+    # flag_tower_top_negative_pressure = models.FloatField(default='0')
+    # flag_slurry_density = models.FloatField(default='0')
+    # flag_density_checking_switch_1 = models.FloatField(default='0')
+    # flag_density_checking_switch_2 = models.FloatField(default='0')
+
     pred_m = models.FloatField(default='0')
     region = models.CharField(default='chengdu', max_length=100)
     second_air_motor_freq = models.FloatField(default='0')
@@ -168,6 +185,8 @@ class Valuedata(models.Model):
     high_pressure_pump_a_freq_new = models.FloatField(default='0')
     high_pressure_pump_b_freq_new = models.FloatField(default='0')
     exhaust_freq_new = models.FloatField(default='0')
+
+
 
 
 

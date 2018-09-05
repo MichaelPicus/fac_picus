@@ -33,5 +33,8 @@ class ValuedataSerializer(serializers.ModelSerializer):
 			'base_power_flow_acutal_value', 'powder_motor_freq', 'slurry_pipe_temp', 'sulfate_weight', 'carbonate_weight', 'brighter_minor_material_weight', 
 			'out_air_motor_freq', 'air_in_temp_4', 'base_powder_weight', 'waste_water_actual', 'waste_water_setting', 'las_open', 'base_powder_open',
 			'steam_flow', 'density_checking_switch_1', 'density_checking_switch_2', 'high_pressure_pump_entry_pressure', 'high_pressure_pump_entry_flow', 'high_pressure_pump_a_freq_new', 'high_pressure_pump_b_freq_new', 'exhaust_freq_new',
+			# 'flag_aging_tank_flow', 'flag_air_in_temp_1', 'flag_air_out_temp', 'flag_base_powder_temp', 'flag_gas_flow', 'flag_high_pressure_pump_freq',
+			# 'flag_out_air_motor_freq', 'flag_second_air_motor_freq', 'flag_second_input_air_temp', 'flag_slurry_pipeline_lower_layer_pressure', 
+			# 'flag_slurry_temp', 'flag_tower_top_negative_pressure', 'flag_slurry_density', 'flag_density_checking_switch_1', 'flag_density_checking_switch_2',
 			)
 		

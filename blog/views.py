@@ -15,7 +15,6 @@ from sklearn.externals import joblib
 import numpy as np 
 import pandas as pd 
 
-
 import lightgbm as lgb
 from random import randint
 import copy
@@ -83,6 +82,11 @@ def get_name(request):
 
 def thanks(request):
     return render(request, 'thanks.html')
+
+# display soluton for onsite tuning
+def display(request):
+
+    return render(request, 'display.html')
 
 def process(request):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
@@ -810,6 +814,9 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
+import os
+import json
+
 
 
 @api_view(['GET', 'POST'])
@@ -865,6 +872,25 @@ database_name = 'picus_db'
 #setup the connection with influx db
 con = InfluxDBClient(hostname, port_num, db_user_name, db_user_name, database_name)
 # con.write_points(json_body)
+# 
+# 
+# air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp
+
+# 
+# 
+@api_view(['GET'])
+def getlatest(request, format=None):
+    if request.method == "GET":
+        result = con.query("select f_m, modified_m, air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp  from value_data  order by desc limit 1")
+        values = result.raw['series'][0]['values'][0]
+        keys   = result.raw['series'][0]['columns']
+
+        res = dict(zip(keys, values))
+        con.close()
+        # res =json.loads('{"one" : "111", "two" : "2", "three" : "3"}')
+        return Response(res)
+        
+
 
 # process value data from OPC via restful API call
 @api_view(['GET', 'POST'])
@@ -892,12 +918,12 @@ def value_data_process(request, format=None):
                 'brand' : [serializer.data.get("brand")],
                 'f_m' : [serializer.data.get("f_m")],
             }
-
+            
             data = pd.DataFrame(data=d, columns=['air_out_temp', 'base_powder_temp', 'air_in_temp_1', 'slurry_temp', 'tower_top_negative_pressure',
                     'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
                     'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m'])
             pred_m = 0
-          
+            
             res, pred_m = data_process(data)
             
             measurement = "value_data"
@@ -1022,11 +1048,26 @@ def value_data_process(request, format=None):
                         "high_pressure_pump_b_freq_new" : round(float(serializer.data.get("high_pressure_pump_b_freq_new")), 2),
                         "exhaust_freq_new" : round(float(serializer.data.get("exhaust_freq_new")), 2),
                         
+                        "flag_aging_tank_flow" : float(1),
+                        "flag_air_in_temp_1" : float(1), 
+                        "flag_air_out_temp" : float(1),
+                        "flag_base_powder_temp" :float(1) , 
+                        "flag_gas_flow" : float(1), 
+                        "flag_high_pressure_pump_freq" : float(1),
+                        "flag_out_air_motor_freq" : float(1),
+                        "flag_second_air_motor_freq" : float(1),
+                        "flag_second_input_air_temp" : float(1),
+                        "flag_slurry_pipeline_lower_layer_pressure" : float(1),
+                        "flag_slurry_temp" : float(1),
+                        "flag_tower_top_negative_pressure" : float(1),
+                        "flag_slurry_density" : float(1),
+                        "flag_density_checking_switch_1" : float(1),
+                        "flag_density_checking_switch_2" : float(1),
+
                     }
                 }
             ]
             
-            print json_body
             con.write_points(json_body)
             print "post sucessfully!"
             con.close()
@@ -1040,17 +1081,22 @@ def value_data_process(request, format=None):
         print "post failure!!!"
         return Response("error! sorry!")
 
+   
 
+# 1 -- others
+# 2 -- jingbai
+# 3 -- bilang
+# 4 -- tbo
 def data_process(data):
     if data['brand'][0] == 2.0:
                 print "processing jingbai!"
-                res, pred_m = jingbai_process(data)
+                res, pred_m= jingbai_process(data)
     elif data['brand'][0] == 3.0:
                 print "processing bilang!"
                 res, pred_m = bilang_process(data)
-    else:
+    elif data['brand'][0] == 4.0:
                 print "processing tbo or others!"
-                res, pred_m = tbo_process(data)
+                res, pred_m= tbo_process(data)
     return res, pred_m
 
 
@@ -1064,8 +1110,8 @@ def jingbai_process(data):
     df_ready = data 
    
     train = df_ready.values
-    # train_pred = np.expm1(model.predict(train))
-    train_pred = data['f_m'] * 0.993588
+    train_pred = np.expm1(model.predict(train))
+    # train_pred = data['f_m'] * 0.993588
     print train_pred
     combine = np.column_stack((train_pred, train))
    
@@ -1203,12 +1249,9 @@ def jingbai_process(data):
         elif combine[x, 2] < 110:
             modified_res[x] = -1
 
-         
     return modified_res, train_pred
 
-# tbo_INTERVAL = 120
-# tbo_count = 0
-# tbo_tmp = ""
+
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
     del data['brand']
