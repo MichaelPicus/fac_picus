@@ -1,0 +1,168 @@
+ 
+{% load staticfiles %}
+ <html>
+ <head>
+    <title>Factory Picus 人工智能分析系统</title>
+  
+  <!-- <link rel="stylesheet" href="{% static 'css/blog.css' %}"> -->
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+    box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 20px;
+    height: 300px;
+     /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
+</head>
+ <body>
+ <h1 align="center">Factory Picus 人工智能分析系统</h1> 
+
+
+<div id="app">
+<div class="row">
+  <div class="column" style="">
+    <h2>当前时刻的实时参数：</h2>
+    <p>
+f_m: [[info.f_m]]
+<br />
+<br />
+air_out_temp    : [[info.air_out_temp]]
+<br />
+<br />
+base_powder_temp: [[info.base_powder_temp]]
+<br />
+<br />
+air_in_temp_1   : [[info.air_in_temp_1]]
+<br />
+<br />
+slurry_temp     : [[info.slurry_temp]]
+<br />
+<br />
+tower_top_negative_pressure: [[info.tower_top_negative_pressure]]
+<br />
+<br />
+aging_tank_flow : [[info.aging_tank_flow]]
+<br />
+<br />
+second_input_air_temp: [[info.second_input_air_temp]]
+<br />
+<br />
+slurry_pipeline_lower_layer_pressure: [[info.slurry_pipeline_lower_layer_pressure]]
+<br />
+<br />
+out_air_motor_freq: [[info.out_air_motor_freq]]
+<br />
+<br />
+second_air_motor_freq: [[info.second_air_motor_freq]]
+<br />
+<br />
+high_pressure_pump_freq: [[info.high_pressure_pump_freq]]
+<br />
+<br />
+gas_flow: [[info.gas_flow]]
+<br />
+    </p>
+  </div>
+  <div class="column" style="">
+    <h2>系统建议调优参数：</h2>
+    <p>
+modified_m: [[info.modified_m]]
+<br />
+<br />
+p_air_out_temp: [[info.p_air_out_temp]]
+<br />
+<br />
+p_base_powder_temp: [[info.p_base_powder_temp]]
+<br />
+<br />
+p_air_in_temp_1: [[info.p_air_in_temp_1]]
+<br />
+<br />
+p_slurry_temp: [[info.p_slurry_temp]]
+<br />
+<br />
+p_tower_top_negative_pressure: [[info.p_tower_top_negative_pressure]]
+<br />
+<br />
+p_aging_tank_flow: [[info.p_aging_tank_flow]]
+<br />
+<br />
+p_second_input_air_temp: [[info.p_second_input_air_temp]]
+<br />
+<br />
+p_slurry_pipeline_lower_layer_pressure: [[info.p_slurry_pipeline_lower_layer_pressure]]
+<br />
+<br />
+p_out_air_motor_freq: [[info.p_out_air_motor_freq]]
+<br />
+<br />
+p_second_air_motor_freq: [[info.p_second_air_motor_freq]]
+<br />
+<br />
+p_high_pressure_pump_freq: [[info.p_high_pressure_pump_freq]]
+<br />
+<br />
+p_gas_flow: [[info.p_gas_flow]]
+<br />
+<br />
+
+    </p>
+  </div>
+</div>
+</div>
+
+<script src="{% static 'js/vue.min.js' %}"></script>
+<script src="{% static 'js/axios.min.js' %}"></script>
+  
+ <script language="JavaScript">
+     
+  new Vue({
+  delimiters: ['[[', ']]'],
+  el: '#app',
+  data () {
+    return {
+      info: null,
+      loading: true,
+      errored: false, 
+      // my_url: "https://api.coindesk.com/v1/bpi/currentprice.json"
+      my_url: "http://localhost:8001/getlatest"
+    }
+  },
+  // filters: {
+  //   currencydecimal (value) {
+  //     return value.toFixed(2)
+  //   },
+    // itemdecimal (value) {
+    //   return value.toFixed(2)
+    // }
+  // },
+  mounted () {
+    
+      this.interval = setInterval(() => {
+          axios.get(this.my_url).then(response => {
+        this.info = response.data}).catch(error => {console.log(error)
+        this.errored = true
+      }).finally(() => this.loading = false);
+      }, 120000);
+  }
+})
+    </script>
+</body>
+</html>
+ 
