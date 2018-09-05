@@ -921,7 +921,7 @@ def value_data_process(request, format=None):
             
             data = pd.DataFrame(data=d, columns=['air_out_temp', 'base_powder_temp', 'air_in_temp_1', 'slurry_temp', 'tower_top_negative_pressure',
                     'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
-                    'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m'])
+                    'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m', 'density_checking_switch_2'])
             pred_m = 0
             
             res, pred_m = data_process(data)
@@ -1106,12 +1106,14 @@ def data_process(data):
 
 def jingbai_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
+    density_checking_switch = data['density_checking_switch_2']
+    del data['density_checking_switch_2']
     del data['brand']
     df_ready = data 
    
     train = df_ready.values
-    train_pred = np.expm1(model.predict(train))
-    # train_pred = data['f_m'] * 0.993588
+    # train_pred = np.expm1(model.predict(train))
+    train_pred = data['f_m'] * 0.993588
     print train_pred
     combine = np.column_stack((train_pred, train))
    
@@ -1120,7 +1122,7 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33 and combine[x, 2] >= 110):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 113) and (density_checking_switch > 594 and density_checking_switch < 617):
             # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1254,13 +1256,14 @@ def jingbai_process(data):
 
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
+    density_checking_switch = data['density_checking_switch_2']
+    del data['density_checking_switch_2']
     del data['brand']
     df_ready = data 
    
     train = df_ready.values
     # train_pred = np.expm1(model.predict(train))
-
-    train_pred = data['f_m'] * 0.993188
+    train_pred = data['f_m'] * 0.993588
 
     combine = np.column_stack((train_pred, train))
    
@@ -1269,7 +1272,7 @@ def tbo_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if (combine[x, 0] > 33 and combine[x, 2] >= 120):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 120) and (density_checking_switch > 622 and density_checking_switch < 640):
             # tbo_count = tbo_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1406,6 +1409,8 @@ def tbo_process(data):
 
 def bilang_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
+    density_checking_switch = data['density_checking_switch_2']
+    del data['density_checking_switch_2']
     del data['brand']
     df_ready = data 
     # train_y = df_ready.M.values
@@ -1422,7 +1427,7 @@ def bilang_process(data):
     for x in range(0, rows):
         
         # if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
-        if (combine[x, 0] > 33 and combine[x, 2] >= 107):
+        if (combine[x, 0] > 33 and combine[x, 2] >= 107) and (density_checking_switch > 622 and density_checking_switch < 640):
             # bl_count = bl_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1441,7 +1446,7 @@ def bilang_process(data):
             #     modified_res[x, 2] = 95.001
             # else :
             #     modified_res[x, 2] = combine[x, 2]  * 0.997
-            modified_res[x, 2] = round(combine[x, 2]  * 0.99011, 2)
+            modified_res[x, 2] = round(combine[x, 2]  * 1.001, 2)
 
             if modified_res[x, 2] < 107:
                 modified_res[x, 2] = 107
@@ -1510,7 +1515,7 @@ def bilang_process(data):
             #     modified_res[x, 9] = 0.6001
             # else:
             #     modified_res[x, 9] = combine[x, 9] * 0.98817
-            modified_res[x, 9] = round(combine[x, 9] - randint(3, 8) * 0.2, 2)
+            modified_res[x, 9] = round(combine[x, 9] - randint(3, 6) * 0.2, 2)
 
             # SecondAirMotorFreq#
             # if combine[x, 10] > 88:
