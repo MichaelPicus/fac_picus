@@ -1108,7 +1108,8 @@ def jingbai_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
     print "------------------------------"
-    print density_checking_switch 
+    print density_checking_switch
+    print density_checking_switch > 504
     print "------------------------------"
     del data['density_checking_switch_2']
     del data['brand']
