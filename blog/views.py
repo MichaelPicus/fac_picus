@@ -917,6 +917,7 @@ def value_data_process(request, format=None):
                 'gas_flow':[serializer.data.get("gas_flow")],
                 'brand' : [serializer.data.get("brand")],
                 'f_m' : [serializer.data.get("f_m")],
+                'density_checking_switch_2' : [serializer.data.get("density_checking_switch_2")],
             }
             
             data = pd.DataFrame(data=d, columns=['air_out_temp', 'base_powder_temp', 'air_in_temp_1', 'slurry_temp', 'tower_top_negative_pressure',
