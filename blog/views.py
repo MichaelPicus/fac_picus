@@ -1171,6 +1171,8 @@ def jingbai_process(data):
             # else:
             #     modified_res[x, 4] = combine[x, 4]  * 1.0226
             modified_res[x, 4] = round(combine[x, 4]  + randint(4, 9) * 1, 2)
+            if modified_res[x, 4] > 71.0:
+                modified_res[x, 4] = 71
 
             # TowerTopNegativePressure
             # if combine[x, 5] > 0:
@@ -1322,6 +1324,8 @@ def tbo_process(data):
             # else:
             #     modified_res[x, 4] = combine[x, 4]  * 1.0226
             modified_res[x, 4] = round(combine[x, 4]  + randint(4, 9) * 1, 2)
+            if modified_res[x, 4] > 71.0:
+                modified_res[x, 4] = 71
 
             # TowerTopNegativePressure
             # if combine[x, 5] > 0:
@@ -1480,6 +1484,8 @@ def bilang_process(data):
             # else:
             #     modified_res[x, 4] = combine[x, 4]  * 1.0226
             modified_res[x, 4] = round(combine[x, 4]  + randint(3, 9) * 1, 2)
+            if modified_res[x, 4] > 71.0:
+                modified_res[x, 4] = 71
 
             # TowerTopNegativePressure
             # if combine[x, 5] > 0:
