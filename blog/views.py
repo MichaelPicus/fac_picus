@@ -1238,7 +1238,7 @@ def jingbai_process(data):
 
             RANDOM = randint(0, 1)
 
-            modified_res[x, 11] = round(combine[x, 11] + RANDOM * 1, 2)
+            modified_res[x, 11] = round(combine[x, 11] + 1, 2)
 
             modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
