@@ -1128,7 +1128,7 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if ((combine[x, 0] > 33) and (combine[x, 2] >= 113) and (density_checking_switch > 504) and (density_checking_switch < 650)):
+        if ((combine[x, 0] > 33) and (combine[x, 2] >= 112) and (density_checking_switch > 580) and (density_checking_switch < 640)):
             # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1137,7 +1137,8 @@ def jingbai_process(data):
             #     modified_res[x, 1] = 76.001
             # else:
             #     modified_res[x, 1] = combine[x, 1]  * 0.993
-            modified_res[x, 1] = round(combine[x, 1]  * 0.981, 2)
+            if combine[x, 1] < 79 and combine[x, 1] > 70:
+                modified_res[x, 1] = round(combine[x, 1]  * 0.981, 2)
 
 
             # BasePowderTemp
@@ -1237,8 +1238,8 @@ def jingbai_process(data):
             #     modified_res[x, 11] = combine[x, 11] * 1.018
 
             RANDOM = randint(0, 1)
-
-            modified_res[x, 11] = round(combine[x, 11] + 1, 2)
+            if combine[x, 11] > 30 and combine[x, 11] < 35:
+                modified_res[x, 11] = round(combine[x, 11] + 1, 2)
 
             modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
