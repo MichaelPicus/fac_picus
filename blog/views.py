@@ -1130,7 +1130,7 @@ def jingbai_process(data):
         
         if ((combine[x, 0] > 33) and (combine[x, 2] >= 106) and (density_checking_switch > 580) and (density_checking_switch < 640)):
             # jb_count = jb_count + 1
-            # AirOutTemp 尾气温度
+            # AirOutTemp
             # if combine[x, 1] > 130 :
             #     modified_res[x, 1] = 129.99
             # elif combine[x, 1] < 76 :
@@ -1141,7 +1141,7 @@ def jingbai_process(data):
                 modified_res[x, 1] = round(combine[x, 1]  * 0.981, 2)
 
 
-            # BasePowderTemp 基粉温度
+            # BasePowderTemp 
             # if combine[x, 2] > 166 :
             #     modified_res[x, 2] = 165.99
             # elif combine[x, 2] < 95 :
@@ -1153,7 +1153,7 @@ def jingbai_process(data):
                 modified_res[x, 2] = 106
 
 
-            # AirInTemp_1# 进塔温度
+            # AirInTemp_1# 
             # if combine[x, 3] > 302 :
             #     modified_res[x, 3] = 301.999
             # elif combine[x, 3] < 238 :
@@ -1164,7 +1164,7 @@ def jingbai_process(data):
             if modified_res[x, 3] > 279.1:
                 modified_res[x, 3] = 279
 
-            # SlurryTemp# 料浆温度
+            # SlurryTemp# 
             # if combine[x, 4] > 894:
             #     modified_res[x, 4] = 893.99
             # elif combine[x, 4] < 0:
@@ -1175,7 +1175,7 @@ def jingbai_process(data):
             if modified_res[x, 4] > 71.0:
                 modified_res[x, 4] = 71
 
-            # TowerTopNegativePressure 塔顶负压
+            # TowerTopNegativePressure 
             # if combine[x, 5] > 0:
             #     modified_res[x, 5] = -0.000001
             # elif combine[x, 5] < -30.0:
@@ -1184,7 +1184,7 @@ def jingbai_process(data):
             #     modified_res[x, 5] = combine[x, 5] * 0.9959
             modified_res[x, 5] = round(combine[x, 5] * 0.9907, 2)
 
-            # AgingTankFlow 老化锅流量
+            # AgingTankFlow 
             # if combine[x, 6] > 27474:
             #     modified_res[x, 6] = 27473.999
             # elif combine[x, 6] < 17451:
@@ -1202,7 +1202,7 @@ def jingbai_process(data):
             #     modified_res[x, 7] = combine[x, 7] * 1.00078
             modified_res[x, 7] = round(combine[x, 7] * 1.00158, 2)
 
-            # SlurryPipelineLowerLayerPressure料浆管道压力
+            # SlurryPipelineLowerLayerPressure
             # if combine[x, 8] > 76:
             #     modified_res[x, 8] = 75.999
             # elif combine[x, 8] < 42:
@@ -1211,7 +1211,7 @@ def jingbai_process(data):
             #     modified_res[x, 8] = combine[x, 8] * 1.0095
             modified_res[x, 8] = round(combine[x, 8] * 1.0195, 2)
 
-            # OutAirMotorFreq#尾气风机频率
+            # OutAirMotorFreq#
             # if combine[x, 9] > 0.9:
             #     modified_res[x, 9] = 0.899999
             # elif combine[x, 9] < 0.6:
@@ -1220,7 +1220,7 @@ def jingbai_process(data):
             #     modified_res[x, 9] = combine[x, 9] * 0.98817
             modified_res[x, 9] = round(combine[x, 9] - randint(4, 11) * 0.2, 2)
 
-            # SecondAirMotorFreq# 二次风机频率
+            # SecondAirMotorFreq# 
             # if combine[x, 10] > 88:
             #     modified_res[x, 10] = 87.99
             # elif combine[x, 10] < 53:
@@ -1230,7 +1230,7 @@ def jingbai_process(data):
             if combine[x, 10] > 61.0:
                 modified_res[x, 10] = round(combine[x, 10] - randint(3, 8) * 0.5, 2)
 
-            # HighPressurePumpFreq#高压泵频率
+            # HighPressurePumpFreq#
             # if combine[x, 11] > 37.6:
             #     modified_res[x, 11] = 37.59
             # elif combine[x, 11] < 8.6:
@@ -1244,7 +1244,7 @@ def jingbai_process(data):
 
             modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
-            # GasFlow# 天然气流量
+            # GasFlow# 
             # if combine[x, 12] > 722:
             #     modified_res[x, 12] = 721.99
             # elif combine[x, 12] < 500:
