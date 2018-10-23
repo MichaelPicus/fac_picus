@@ -1251,7 +1251,8 @@ def jingbai_process(data):
             #     modified_res[x, 12] = 500.001
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
-            modified_res[x, 12] = round(combine[x, 12] - randint(1, 8) * 2, 2)
+            if combine[x, 2] > 109 and density_checking_switch < 635 and density_checking_switch > 600:
+                modified_res[x, 12] = round(combine[x, 12] - randint(1, 8) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             modified_res[x, 0] = train_pred[x] * 0.9669
