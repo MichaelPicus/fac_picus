@@ -1347,6 +1347,8 @@ def jingbai_process_v2(data):
             arr11[x, 11] = arr11[x, 11] + delta_highpp
             arr12[x, 12] = arr12[x, 12] + delta_gasflow
 
+            flag_gas_flow = 1
+
             for item in range(20):
                 print "==========================================="
                 print "iterating item"
@@ -1475,10 +1477,14 @@ def jingbai_process_v2(data):
 
                 if np.expm1(model.predict(np.reshape(arr12[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr12[x, 12] = arr12[x, 12] - 2 * delta_gasflow
+                    
                     if np.expm1(model.predict(np.reshape(arr12[x][1:], (-1, 12)))) >= combine[x, 0] :
                         arr12[x, 12] = arr12[x, 12] + delta_gasflow
+
                     else : 
                         arr12[x, 12] = arr12[x, 12] - delta_gasflow
+
+                    flag_gas_flow = 0
                 else :
                     arr12[x, 12] = arr12[x, 12] + delta_gasflow
 
@@ -1564,7 +1570,7 @@ def jingbai_process_v2(data):
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
             if combine[x, 2] > 109 and density_checking_switch < 635 and density_checking_switch > 600:
-                if round(modified_res[x, 12], 2) != round(arr12[x, 12], 2):
+                if flag_gas_flow == 0:
                     modified_res[x, 12] = round(arr12[x, 12], 2)
                     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
                 
