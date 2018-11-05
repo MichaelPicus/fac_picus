@@ -1580,7 +1580,7 @@ def jingbai_process_v2(data):
                 
             # jb_tmp = modified_res
         # modified_res = jb_tmp
-        elif combine[x, 2] < 105.00: #todo 
+        elif combine[x, 2] < 103.00: #todo 
             modified_res[x] = -1
         else :
             modified_res[x] = -1
