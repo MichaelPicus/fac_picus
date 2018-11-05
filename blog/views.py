@@ -1091,10 +1091,11 @@ def value_data_process(request, format=None):
 def data_process(data):
     if data['brand'][0] == 2.0:
                 print "processing jingbai!"
-                res, pred_m= jingbai_process(data)
+                res, pred_m= jingbai_process_v2(data)
     elif data['brand'][0] == 3.0:
                 print "processing bilang!"
                 res, pred_m = bilang_process(data)
+                # res, pred_m =jingbai_process_v2(data) # for testing
     elif data['brand'][0] == 4.0:
                 print "processing tbo or others!"
                 res, pred_m= tbo_process(data)
@@ -1280,9 +1281,316 @@ def jingbai_process(data):
 
 
 def jingbai_process_v2(data):
+    print "------------------------------"
+    print "this is a test for jingbai version2.0"
+    print "------------------------------"
+
+    model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai_20181023.pkl'))
+    density_checking_switch = data.iloc[0]['density_checking_switch_2']
+    m = data['f_m'][0]
+    del data['density_checking_switch_2']
+    del data['brand']
+    del data['f_m']
+
+    df_ready = data 
+
+    train = df_ready.values
+    train_pred = np.expm1(model.predict(train))
+    
+    combine = np.column_stack((train_pred, train))
+   
+    rows = combine.shape[0]
+    cols = combine.shape[1]
+    modified_res = copy.deepcopy(combine)
+    print "before modified"
+    print modified_res
+    for x in range(0, rows):
+        
+        if ((combine[x, 0] > 33) and (combine[x, 2] >= 105) and (density_checking_switch > 580) and (density_checking_switch < 640)):
+            delta_airouttemp = combine[x, 1] * 0.001
+            delta_basepowdertemp = combine[x, 2] * 0.00017
+            delta_airintemp1 = 1  #max 279
+            delta_slurrytemp = 1  #max 71
+            delta_ttnp  = combine[x, 5] * 0.0005
+            delta_agingtankflow = 20
+            delta_secinputairtemp = combine[x, 7] * 0.00008
+            delta_splllp = combine[x, 8] * 0.0005
+            delta_outairmotorfreq = 0.2
+            delta_secairmotorfreq = 0.5
+            delta_highpp = 1 #max 35 min 31
+            delta_gasflow = 1.5 #max 700 min 500
+            arr1 = copy.deepcopy(combine)
+            arr02 = copy.deepcopy(combine)
+            arr3 = copy.deepcopy(combine)
+            arr4 = copy.deepcopy(combine)
+            arr5 = copy.deepcopy(combine)
+            arr6 = copy.deepcopy(combine)
+            arr7 = copy.deepcopy(combine)
+            arr8 = copy.deepcopy(combine)
+            arr9 = copy.deepcopy(combine)
+            arr10 = copy.deepcopy(combine)
+            arr11 = copy.deepcopy(combine)
+            arr12 = copy.deepcopy(combine)
+            print "origin: "
+            print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
+
+            arr1[x, 1] = arr1[x, 1] + delta_airouttemp
+            arr02[x, 2] = arr02[x, 2] + delta_basepowdertemp
+            arr3[x, 3] = arr3[x, 3] + delta_airintemp1
+            arr4[x, 4] = arr4[x, 4] + delta_slurrytemp
+            arr5[x, 5] = arr5[x, 5] + delta_ttnp
+            arr6[x, 6] = arr6[x, 6] + delta_agingtankflow
+            arr7[x, 7] = arr7[x, 7] + delta_secinputairtemp
+            arr8[x, 8] = arr8[x, 8] + delta_splllp
+            arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
+            arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
+            arr11[x, 11] = arr11[x, 11] + delta_highpp
+            arr12[x, 12] = arr12[x, 12] + delta_gasflow
+
+            for item in range(20):
+                print "==========================================="
+                print "iterating item"
+                print item
+
+                print "before: "
+                print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
+
+                if np.expm1(model.predict(np.reshape(arr1[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr1[x, 1] = arr1[x, 1] - 2 * delta_airouttemp
+                    if np.expm1(model.predict(np.reshape(arr1[x][1:], (-1, 12)))) >= combine[x, 0]:
+                        arr1[x, 1] = arr1[x, 1] + delta_airouttemp
+                    else :
+                        arr1[x, 1] = arr1[x, 1] - delta_airouttemp
+                else:
+                    arr1[x, 1] = arr1[x, 1] + delta_airouttemp
+
+                if np.expm1(model.predict(np.reshape(arr02[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr02[x, 2] = arr02[x, 2] - 2 * delta_basepowdertemp
+                    if np.expm1(model.predict(np.reshape(arr02[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr02[x, 2] = arr02[x, 2] + delta_basepowdertemp
+                    else :
+                        arr02[x, 2] = arr02[x, 2] - delta_basepowdertemp
+                else :
+                    arr02[x, 2] = arr02[x, 2] + delta_basepowdertemp
+
+
+                if np.expm1(model.predict(np.reshape(arr3[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr3[x, 3] = arr3[x, 3] - 2 * delta_airintemp1
+                    if np.expm1(model.predict(np.reshape(arr3[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr3[x, 3] = arr3[x, 3] + delta_airintemp1
+                    else : 
+                        arr3[x, 3] = arr3[x, 3] - delta_airintemp1
+                else :
+                    arr3[x, 3] = arr3[x, 3] + delta_airintemp1
+
+
+                if np.expm1(model.predict(np.reshape(arr4[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr4[x, 4] = arr4[x, 4] - 2 * delta_slurrytemp
+                    if np.expm1(model.predict(np.reshape(arr4[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr4[x, 4] = arr4[x, 4] + delta_slurrytemp
+                    else :
+                        arr4[x, 4] = arr4[x, 4] - delta_slurrytemp
+                else :
+                    arr4[x, 4] = arr4[x, 4] + delta_slurrytemp
+
+
+                if np.expm1(model.predict(np.reshape(arr5[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr5[x, 5] = arr5[x, 5] - 2 * delta_ttnp
+                    if np.expm1(model.predict(np.reshape(arr5[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr5[x, 5] = arr5[x, 5] + delta_ttnp
+                    else : 
+                        arr5[x, 5] = arr5[x, 5] - delta_ttnp
+                else :
+                    arr5[x, 5] = arr5[x, 5] + delta_ttnp
+                
+                if np.expm1(model.predict(np.reshape(arr6[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr6[x, 6] = arr6[x, 6] - 2 * delta_agingtankflow
+                    if np.expm1(model.predict(np.reshape(arr6[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr6[x, 6] = arr6[x, 6] + delta_agingtankflow
+                    else :
+                        arr6[x, 6] = arr6[x, 6] - delta_agingtankflow
+                else :
+                    arr6[x, 6] = arr6[x, 6] + delta_agingtankflow
+
+
+                if np.expm1(model.predict(np.reshape(arr7[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr7[x, 7] = arr7[x, 7] - 2 * delta_secinputairtemp
+                    if np.expm1(model.predict(np.reshape(arr7[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr7[x, 7] = arr7[x, 7] + delta_secinputairtemp
+                    else :
+                        arr7[x, 7] = arr7[x, 7] - delta_secinputairtemp
+                else :
+                    arr7[x, 7] = arr7[x, 7] + delta_secinputairtemp
+
+
+                if np.expm1(model.predict(np.reshape(arr8[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr8[x, 8] = arr8[x, 8] - 2 * delta_splllp
+                    if np.expm1(model.predict(np.reshape(arr8[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr8[x, 8] = arr8[x, 8] + delta_splllp
+                    else :
+                        arr8[x, 8] = arr8[x, 8] - delta_splllp
+                else :
+                    arr8[x, 8] = arr8[x, 8] + delta_splllp
+
+                if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr9[x, 9] = arr9[x, 9] - 2 * delta_outairmotorfreq
+                    if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
+                    else :
+                        arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
+                else :
+                    arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
+
+
+                if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr10[x, 10] = arr10[x, 10] - 2 * delta_secairmotorfreq
+                    if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
+                    else :
+                        arr10[x, 10] = arr10[x, 10] - delta_secairmotorfreq
+                else :
+                    arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
+
+                if np.expm1(model.predict(np.reshape(arr11[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr11[x, 11] = arr11[x, 11] - 2 * delta_highpp
+                    if np.expm1(model.predict(np.reshape(arr11[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr11[x, 11] = arr11[x, 11] + delta_highpp
+                    else :
+                        arr11[x, 11] = arr11[x, 11] - delta_highpp
+                else :
+                    arr11[x, 11] = arr11[x, 11] + delta_highpp
+
+
+
+                if np.expm1(model.predict(np.reshape(arr12[x][1:], (-1, 12)))) >= combine[x, 0] :
+                    arr12[x, 12] = arr12[x, 12] - 2 * delta_gasflow
+                    if np.expm1(model.predict(np.reshape(arr12[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr12[x, 12] = arr12[x, 12] + delta_gasflow
+                    else : 
+                        arr12[x, 12] = arr12[x, 12] - delta_gasflow
+                else :
+                    arr12[x, 12] = arr12[x, 12] + delta_gasflow
+
+                if arr02[x, 2] < 106:
+                    arr02[x, 2] = 106.01
+                    if arr11[x, 11] < 34:
+                        arr11[x, 11] = arr11[x, 11] + 1
+
+                    arr10[x, 10] = arr10[x, 10] + 2 * delta_secairmotorfreq
+                    arr12[x, 12] = arr12[x, 12] + 2 * delta_gasflow
+
+                if arr3[x, 3] > 279:
+                    arr11[x, 11] = arr11[x, 11] - delta_highpp
+
+
+                print "-------------------------------------------"
+                print "after: "
+                print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
+                print "==========================================="
+
+            print "out of loop:"
+            print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
+
+            # AirOutTemp
+            if combine[x, 1] < 79 and combine[x, 1] > 70:
+                modified_res[x, 1] = round(arr1[x, 1], 2)
+
+            # BasePowderTemp 
+            modified_res[x, 2] = round(arr02[x, 2], 2)
+            if modified_res[x, 2] < 106:
+                modified_res[x, 2] = 106
+                if modified_res[x, 11] < 34:
+                    modified_res[x, 11] = modified_res[x, 11] + 1
+                modified_res[x, 10] = modified_res[x, 10] + 1
+                modified_res[x, 12] = modified_res[x, 12] + 10
+
+
+            # AirInTemp_1# 
+            modified_res[x, 3] = round(arr3[x, 3], 2)
+            if modified_res[x, 3] > 279.0:
+                modified_res[x, 3] = 279
+                modified_res[x, 11] = modified_res[x, 11] - 1
+
+
+            # SlurryTemp# 
+            modified_res[x, 4] = round(arr4[x, 4], 2)
+            if modified_res[x, 4] > 71.0:
+                modified_res[x, 4] = 71
+
+            # TowerTopNegativePressure 
+            modified_res[x, 5] = round(arr5[x, 5], 2)
+
+            # AgingTankFlow 
+            modified_res[x, 6] = round(arr6[x, 6], 2) 
+
+            # SecondInputAirTemp 
+            modified_res[x, 7] = round(arr7[x, 7], 2)
+
+            # SlurryPipelineLowerLayerPressure
+            modified_res[x, 8] = round(arr8[x, 8], 2)
+
+            # OutAirMotorFreq#
+            modified_res[x, 9] = round(arr9[x, 9], 2)
+
+            # SecondAirMotorFreq# 
+            if combine[x, 10] > 61.0:
+                modified_res[x, 10] = round(arr10[x, 10], 2)
+
+            # HighPressurePumpFreq#
+
+            RANDOM = randint(0, 1)
+            if combine[x, 11] > 30 and combine[x, 11] < 35:
+                modified_res[x, 11] = round(arr11[x, 11], 2)
+
+            # modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
+
+            # GasFlow# 
+            # if combine[x, 12] > 722:
+            #     modified_res[x, 12] = 721.99
+            # elif combine[x, 12] < 500:
+            #     modified_res[x, 12] = 500.001
+            # else:
+            #     modified_res[x, 12] = combine[x, 12] * 0.99857
+            if combine[x, 2] > 109 and density_checking_switch < 635 and density_checking_switch > 600:
+                modified_res[x, 12] = round(arr12[x, 12], 2)
+
+            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            # if np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))[0] < m:
+            #     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            # else :
+            #     modified_res = copy.deepcopy(combine)
+                
+            print "modified_res"
+            print modified_res
+            # modified_res[x, 0] = train_pred[x] * 0.9669
+
+
+            ##conditioins
+            # if combine[x, 2] < 108 and (combine[x, 11]==34 or combine[x, 11] == 35): 
+            #     modified_res[x, 11] = combine[x, 11] - 1
+            #     modified_res[x, 10] = round(combine[x, 10] + randint(3, 8) * 0.5, 2)
+
+
+            # if combine[x, 3] > 279:
+            #     modified_res[x, 10] = round(combine[x, 10] + randint(3, 8) * 0.5, 2)
+            #     modified_res[x, 9] = round(combine[x, 9] + randint(4, 11) * 0.2, 2)
+                
+            # jb_tmp = modified_res
+        # modified_res = jb_tmp
+        elif combine[x, 2] < 105.00: #todo 
+            modified_res[x] = -1
+        else :
+            modified_res[x] = -1
+ 
+    return modified_res, train_pred
+
+def tbo_process_v2(data):
     pass
 
+def bilang_process_v2(data):
+    pass
 
+    
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
