@@ -1333,6 +1333,8 @@ def jingbai_process_v2(data):
             arr12 = copy.deepcopy(combine)
             print "origin: "
             print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
+            
+            AIR_IN_TEMP_1 = arr3[x, 3]
 
             arr1[x, 1] = arr1[x, 1] + delta_airouttemp
             arr02[x, 2] = arr02[x, 2] + delta_basepowdertemp
@@ -1351,6 +1353,7 @@ def jingbai_process_v2(data):
             arr12[x, 12] = arr12[x, 12] + delta_gasflow
 
             GAS_FLOW = arr12[x, 12]
+
 
             for item in range(10):
                 print "==========================================="
@@ -1531,7 +1534,7 @@ def jingbai_process_v2(data):
 
             # AirInTemp_1# 
             modified_res[x, 3] = round(arr3[x, 3], 2)
-            if modified_res[x, 3] > 279.0:
+            if AIR_IN_TEMP_1 > 279.0:
                 modified_res[x, 3] = 279
                 modified_res[x, 11] = modified_res[x, 11] - 1
 
