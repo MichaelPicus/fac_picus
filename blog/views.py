@@ -1443,19 +1443,26 @@ def jingbai_process_v2(data):
                 else :
                     arr8[x, 8] = arr8[x, 8] + delta_splllp
 
+                if AIR_IN_TEMP_1 < 279 :
 
-                if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
-                    arr9[x, 9] = arr9[x, 9] - 2 * delta_outairmotorfreq
-                    arr9[x, 10] = arr9[x, 10] - 2 * delta_secairmotorfreq
                     if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
+                        arr9[x, 9] = arr9[x, 9] - 2 * delta_outairmotorfreq
+                        arr9[x, 10] = arr9[x, 10] - 2 * delta_secairmotorfreq
+                        if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
+                          arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
+                          arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
+                        else :
+                            arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
+                            arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
+                    else :
                         arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
                         arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
-                    else :
-                        arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
-                        arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
+
                 else :
-                    arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
-                    arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
+                    arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
+                    arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
+
+
 
 
                 # if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
@@ -1532,9 +1539,10 @@ def jingbai_process_v2(data):
 
             # AirInTemp_1# 
             modified_res[x, 3] = round(arr3[x, 3], 2)
-            if AIR_IN_TEMP_1 > 279.0:
-                modified_res[x, 3] = 279
-                modified_res[x, 11] = modified_res[x, 11] - 1
+            # if AIR_IN_TEMP_1 > 279.0:
+            #     modified_res[x, 3] = 279
+            #     modified_res[x, 11] = modified_res[x, 11] - 1
+
 
 
             # SlurryTemp# 
@@ -1559,7 +1567,7 @@ def jingbai_process_v2(data):
 
             # SecondAirMotorFreq# 
             if combine[x, 10] > 61.0:
-                modified_res[x, 10] = round(arr10[x, 10], 2)
+                modified_res[x, 10] = round(arr9[x, 10], 2)
 
            
             # HighPressurePumpFreq#
