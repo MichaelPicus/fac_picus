@@ -1592,6 +1592,7 @@ def jingbai_process_v2(data):
 
                 else :
                     modified_res[x, 12] = round(arr12[x, 12], 2) - 18
+                    modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
                 
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
