@@ -1564,9 +1564,12 @@ def jingbai_process_v2(data):
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
             if combine[x, 2] > 109 and density_checking_switch < 635 and density_checking_switch > 600:
-                modified_res[x, 12] = round(arr12[x, 12], 2)
+                if round(modified_res[x, 12], 2) != round(arr12[x, 12], 2):
+                    modified_res[x, 12] = round(arr12[x, 12], 2)
+                    modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+                
 
-            modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+            # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             # if np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))[0] < m:
             #     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             # else :
