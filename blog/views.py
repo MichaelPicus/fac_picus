@@ -1355,7 +1355,7 @@ def jingbai_process_v2(data):
             GAS_FLOW = arr12[x, 12]
 
 
-            for item in range(10):
+            for item in range(20):
                 print "==========================================="
                 print "iterating item"
                 print item
