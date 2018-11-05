@@ -1306,7 +1306,7 @@ def jingbai_process_v2(data):
     print modified_res
     for x in range(0, rows):
         
-        if ((combine[x, 0] > 33) and (combine[x, 2] >= 105) and (density_checking_switch > 580) and (density_checking_switch < 640)):
+        if ((combine[x, 0] > 33) and (combine[x, 2] >= 103) and (density_checking_switch > 580) and (density_checking_switch < 640)):
             delta_airouttemp = combine[x, 1] * 0.001
             delta_basepowdertemp = combine[x, 2] * 0.00017
             delta_airintemp1 = 1  #max 279
@@ -1590,7 +1590,7 @@ def tbo_process_v2(data):
 def bilang_process_v2(data):
     pass
 
-    
+
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
