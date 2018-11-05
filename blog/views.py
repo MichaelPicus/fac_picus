@@ -1503,8 +1503,7 @@ def jingbai_process_v2(data):
                         arr10[x, 10] = arr10[x, 10] + 2 * delta_secairmotorfreq
                     arr12[x, 12] = arr12[x, 12] + 2 * delta_gasflow
 
-                if arr3[x, 3] > 277:
-                    arr11[x, 11] = arr11[x, 11] - delta_highpp
+                
 
 
                 print "-------------------------------------------"
@@ -1515,6 +1514,7 @@ def jingbai_process_v2(data):
             print "out of loop:"
             print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
 
+            
             # AirOutTemp
             if combine[x, 1] < 79 and combine[x, 1] > 70:
                 modified_res[x, 1] = round(arr1[x, 1], 2)
@@ -1559,6 +1559,10 @@ def jingbai_process_v2(data):
             # SecondAirMotorFreq# 
             if combine[x, 10] > 61.0:
                 modified_res[x, 10] = round(arr10[x, 10], 2)
+
+            if arr3[x, 3] > 277:
+                if arr11[x, 11] > 32 and arr11[x, 11] < 36 :
+                    modified_res[x, 11] = arr11[x, 11] - delta_highpp
 
             # HighPressurePumpFreq#
 
