@@ -1502,8 +1502,6 @@ def jingbai_process_v2(data):
                     if arr11[x, 11] < 34:
                         arr11[x, 11] = arr11[x, 11] + 1
 
-                    if arr10[x, 10] <70:
-                        arr10[x, 10] = arr10[x, 10] + 2 * delta_secairmotorfreq
                     arr12[x, 12] = arr12[x, 12] + 2 * delta_gasflow
 
                 
