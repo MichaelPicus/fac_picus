@@ -1451,6 +1451,11 @@ def jingbai_process_v2(data):
                 else :
                     arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
 
+                if arr10[x, 10] > 70:
+                    arr10[x, 10] = 69.9
+                elif arr10[x, 10] < 61:
+                    arr10[x, 10] = 61
+
                 if np.expm1(model.predict(np.reshape(arr11[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr11[x, 11] = arr11[x, 11] - 2 * delta_highpp
                     if np.expm1(model.predict(np.reshape(arr11[x][1:], (-1, 12)))) >= combine[x, 0] :
@@ -1479,7 +1484,8 @@ def jingbai_process_v2(data):
                     if arr11[x, 11] < 34:
                         arr11[x, 11] = arr11[x, 11] + 1
 
-                    arr10[x, 10] = arr10[x, 10] + 2 * delta_secairmotorfreq
+                    if arr10[x, 10] <70:
+                        arr10[x, 10] = arr10[x, 10] + 2 * delta_secairmotorfreq
                     arr12[x, 12] = arr12[x, 12] + 2 * delta_gasflow
 
                 if arr3[x, 3] > 279:
