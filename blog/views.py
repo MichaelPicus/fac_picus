@@ -1460,7 +1460,10 @@ def jingbai_process_v2(data):
                 else :
                     arr11[x, 11] = arr11[x, 11] + delta_highpp
 
-
+                if  arr11[x, 11] <= 30 :
+                    arr11[x, 11] = 31
+                elif arr11[x, 11] >= 36 :
+                    arr11[x, 11] = 35
 
                 if np.expm1(model.predict(np.reshape(arr12[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr12[x, 12] = arr12[x, 12] - 2 * delta_gasflow
