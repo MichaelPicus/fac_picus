@@ -1344,12 +1344,15 @@ def jingbai_process_v2(data):
             arr8[x, 8] = arr8[x, 8] + delta_splllp
             arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
             arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
+
+            arr9[x, 10] = arr10[x, 10]
+
             arr11[x, 11] = arr11[x, 11] + delta_highpp
             arr12[x, 12] = arr12[x, 12] + delta_gasflow
 
             GAS_FLOW = arr12[x, 12]
 
-            for item in range(20):
+            for item in range(10):
                 print "==========================================="
                 print "iterating item"
                 print item
@@ -1437,24 +1440,29 @@ def jingbai_process_v2(data):
                 else :
                     arr8[x, 8] = arr8[x, 8] + delta_splllp
 
+
                 if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr9[x, 9] = arr9[x, 9] - 2 * delta_outairmotorfreq
+                    arr9[x, 10] = arr9[x, 10] - 2 * delta_secairmotorfreq
                     if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
                         arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
+                        arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
                     else :
                         arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
+                        arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
                 else :
                     arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
+                    arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
 
 
-                if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
-                    arr10[x, 10] = arr10[x, 10] - 2 * delta_secairmotorfreq
-                    if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
-                        arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
-                    else :
-                        arr10[x, 10] = arr10[x, 10] - delta_secairmotorfreq
-                else :
-                    arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
+                # if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
+                #     arr10[x, 10] = arr10[x, 10] - 2 * delta_secairmotorfreq
+                #     if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
+                #         arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
+                #     else :
+                #         arr10[x, 10] = arr10[x, 10] - delta_secairmotorfreq
+                # else :
+                #     arr10[x, 10] = arr10[x, 10] + delta_secairmotorfreq
 
                 if arr10[x, 10] > 70:
                     arr10[x, 10] = 69.9
