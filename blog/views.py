@@ -1318,7 +1318,7 @@ def jingbai_process_v2(data):
             delta_outairmotorfreq = 0.2
             delta_secairmotorfreq = 0.5
             delta_highpp = 1 #max 35 min 31
-            delta_gasflow = 1.5 #max 700 min 500
+            delta_gasflow = 2 #max 700 min 500
             arr1 = copy.deepcopy(combine)
             arr02 = copy.deepcopy(combine)
             arr3 = copy.deepcopy(combine)
