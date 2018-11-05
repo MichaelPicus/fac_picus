@@ -1560,10 +1560,7 @@ def jingbai_process_v2(data):
             if combine[x, 10] > 61.0:
                 modified_res[x, 10] = round(arr10[x, 10], 2)
 
-            if arr3[x, 3] > 277:
-                if arr11[x, 11] > 32 and arr11[x, 11] < 36 :
-                    modified_res[x, 11] = arr11[x, 11] - delta_highpp
-
+           
             # HighPressurePumpFreq#
 
             RANDOM = randint(0, 1)
