@@ -1383,6 +1383,9 @@ def jingbai_process_v2(data):
                 else :
                     arr3[x, 3] = arr3[x, 3] + delta_airintemp1
 
+                if arr3[x, 3] >= 279:
+                    arr3[x, 3] = 278.5
+
 
                 if np.expm1(model.predict(np.reshape(arr4[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr4[x, 4] = arr4[x, 4] - 2 * delta_slurrytemp
