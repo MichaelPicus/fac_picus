@@ -1306,7 +1306,7 @@ def jingbai_process_v2(data):
     print modified_res
     for x in range(0, rows):
         
-        if ((combine[x, 0] > 33) and (combine[x, 2] >= 103) and (density_checking_switch > 530) and (density_checking_switch < 630)):
+        if ((combine[x, 0] > 33) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 630)):
             delta_airouttemp = combine[x, 1] * 0.001
             delta_basepowdertemp = combine[x, 2] * 0.00017
             delta_airintemp1 = 1  #max 279
@@ -1512,8 +1512,6 @@ def jingbai_process_v2(data):
                     arr12[x, 12] = arr12[x, 12] + 2 * delta_gasflow
 
                 
-
-
                 print "-------------------------------------------"
                 print "after: "
                 print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
@@ -1618,7 +1616,7 @@ def jingbai_process_v2(data):
                 
             # jb_tmp = modified_res
         # modified_res = jb_tmp
-        elif combine[x, 2] < 103.00: #todo 
+        elif combine[x, 2] < 100.00: #todo 
             modified_res[x] = -1
         else :
             modified_res[x] = -1
