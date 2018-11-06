@@ -1504,8 +1504,8 @@ def jingbai_process_v2(data):
                 else :
                     arr12[x, 12] = arr12[x, 12] + delta_gasflow
 
-                if arr02[x, 2] < 106:
-                    arr02[x, 2] = 106.01
+                if arr02[x, 2] < 102:
+                    arr02[x, 2] = 102.01
                     if arr11[x, 11] < 34:
                         arr11[x, 11] = arr11[x, 11] + 1
 
@@ -1527,8 +1527,8 @@ def jingbai_process_v2(data):
 
             # BasePowderTemp 
             modified_res[x, 2] = round(arr02[x, 2], 2)
-            if modified_res[x, 2] < 106:
-                modified_res[x, 2] = 106
+            if modified_res[x, 2] < 102:
+                modified_res[x, 2] = 102
                 if modified_res[x, 11] < 34:
                     modified_res[x, 11] = modified_res[x, 11] + 1
                 modified_res[x, 10] = modified_res[x, 10] + 1
@@ -1583,7 +1583,7 @@ def jingbai_process_v2(data):
             #     modified_res[x, 12] = 500.001
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
-            if combine[x, 2] > 109 and density_checking_switch < 620 and density_checking_switch > 540:
+            if combine[x, 2] > 102 and density_checking_switch < 620 and density_checking_switch > 540:
                 if GAS_FLOW >= arr12[x, 12]:
                     modified_res[x, 12] = round(arr12[x, 12], 2)
                     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
