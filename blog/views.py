@@ -1603,7 +1603,7 @@ def jingbai_process_v2(data):
             if (modified_res[x, 8] >= LOW_BOUND_PIPE_PRESURE and modified_res[x, 8] <= UP_BOUND_PIPE_PRESURE) and ( modified_res[x, 6] >= LOW_BOUND_AGING_TANK_FLOW and modified_res[x, 6] <= UP_BOUND_AGING_TANK_FLOW):
                 flag_frog = True
 
-            if flag_frog:
+            if not flag_frog:
                 modified_res[x] = -9
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
