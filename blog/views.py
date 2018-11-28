@@ -1295,7 +1295,8 @@ def jingbai_process_v2(data):
     df_ready = data 
 
     train = df_ready.values
-    train_pred = np.expm1(model.predict(train))
+    # train_pred = np.expm1(model.predict(train))
+    train_pred = m * 0.99123
     
     combine = np.column_stack((train_pred, train))
    
