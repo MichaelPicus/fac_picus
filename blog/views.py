@@ -1566,16 +1566,22 @@ def jingbai_process_v2(data):
             modified_res[x, 9] = round(arr9[x, 9], 2) + 6.0
 
             # SecondAirMotorFreq# 
-            if combine[x, 10] < 61.0:
-                modified_res[x, 10] = round(arr9[x, 10], 2) + 13
-            else :
-                modified_res[x, 10] = round(arr9[x, 10], 2)
+            if combine[x, 10] < 61.0 :
+                # modified_res[x, 10] = round(arr9[x, 10], 2) + 13
+
+                if arr9[x, 10] < 61:
+                    modified_res[x, 10] = round(arr9[x, 10], 2) + 11
+                elif arr9[x, 10] < 65:
+                    modified_res[x, 10] = round(arr9[x, 10], 2) + 5
+
+            else  :
+                modified_res[x, 10] = round(arr9[x, 10], 2) 
 
            
             # HighPressurePumpFreq#
 
             RANDOM = randint(0, 1)
-            if combine[x, 11] > 30 and combine[x, 11] < 35:
+            if combine[x, 11] > 31 and combine[x, 11] < 34:
                 modified_res[x, 11] = round(arr11[x, 11], 2)
 
             # modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
