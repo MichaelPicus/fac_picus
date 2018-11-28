@@ -1600,7 +1600,7 @@ def jingbai_process_v2(data):
             LOW_BOUND_AGING_TANK_FLOW = 20492.090
             UP_BOUND_AGING_TANK_FLOW = 28476.0
 
-            if (modified_res[x, 8] >= LOW_BOUND and modified_res[x, 8] <= UP_BOUND) and ( modified_res[x, 6] >= LOW_BOUND_AGING_TANK_FLOW and modified_res[x, 6] <= UP_BOUND_AGING_TANK_FLOW):
+            if (modified_res[x, 8] >= LOW_BOUND_PIPE_PRESURE and modified_res[x, 8] <= UP_BOUND_PIPE_PRESURE) and ( modified_res[x, 6] >= LOW_BOUND_AGING_TANK_FLOW and modified_res[x, 6] <= UP_BOUND_AGING_TANK_FLOW):
                 flag_frog = True
 
             if flag_frog:
