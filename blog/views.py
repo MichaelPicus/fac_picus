@@ -1129,7 +1129,7 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if ((combine[x, 0] > 33) and (combine[x, 2] >= 105) and (density_checking_switch > 580) and (density_checking_switch < 640)):
+        if ((combine[x, 0] > 33) and (combine[x, 2] >= 105) and (density_checking_switch > 530) and (density_checking_switch < 630)):
             # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1532,7 +1532,7 @@ def jingbai_process_v2(data):
                 if modified_res[x, 11] < 34:
                     modified_res[x, 11] = modified_res[x, 11] + 1
                 modified_res[x, 10] = modified_res[x, 10] + 1
-                modified_res[x, 12] = modified_res[x, 12] + 10
+                modified_res[x, 12] = modified_res[x, 12] + 8
 
 
             # AirInTemp_1# 
@@ -1592,6 +1592,19 @@ def jingbai_process_v2(data):
                     modified_res[x, 12] = round(arr12[x, 12], 2) - 18
                     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
                 
+
+            # frog condition
+            flag_frog =  False
+            LOW_BOUND_PIPE_PRESURE = 55.9
+            UP_BOUND_PIPE_PRESURE  = 74.1
+            LOW_BOUND_AGING_TANK_FLOW = 20492.090
+            UP_BOUND_AGING_TANK_FLOW = 28476.0
+
+            if (modified_res[x, 8] >= LOW_BOUND and modified_res[x, 8] <= UP_BOUND) and ( modified_res[x, 6] >= LOW_BOUND_AGING_TANK_FLOW and modified_res[x, 6] <= UP_BOUND_AGING_TANK_FLOW):
+                flag_frog = True
+
+            if flag_frog:
+                modified_res[x] = -9
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             # if np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))[0] < m:
