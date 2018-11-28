@@ -1449,20 +1449,20 @@ def jingbai_process_v2(data):
 
                     if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
                         arr9[x, 9] = arr9[x, 9] - 2 * delta_outairmotorfreq
-                        arr9[x, 10] = arr9[x, 10] - 2 * delta_secairmotorfreq
+                        # arr9[x, 10] = arr9[x, 10] - 2 * delta_secairmotorfreq
                         if np.expm1(model.predict(np.reshape(arr9[x][1:], (-1, 12)))) >= combine[x, 0] :
                           arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
-                          arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
+                          # arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
                         else :
                             arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
-                            arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
+                            # arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
                     else :
                         arr9[x, 9] = arr9[x, 9] + delta_outairmotorfreq
-                        arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
+                        # arr9[x, 10] = arr9[x, 10] + delta_secairmotorfreq
 
                 else :
                     arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
-                    arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
+                    # arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
 
 
 
