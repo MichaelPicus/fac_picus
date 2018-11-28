@@ -1641,8 +1641,8 @@ def jingbai_process_v2(data):
         # modified_res = jb_tmp
         elif combine[x, 2] < 100.00: #todo 
             modified_res[x] = -1
-        else :
-            modified_res[x] = -1
+        # else :
+        #     modified_res[x] = -1
  
     return modified_res, train_pred
 
