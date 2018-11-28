@@ -1306,7 +1306,7 @@ def jingbai_process_v2(data):
     print modified_res
     for x in range(0, rows):
         
-        if ((combine[x, 0] > 33) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 630)):
+        if ((combine[x, 0] > 33) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 660)):
             delta_airouttemp = combine[x, 1] * 0.001
             delta_basepowdertemp = combine[x, 2] * 0.00017
             delta_airintemp1 = 1  #max 279
