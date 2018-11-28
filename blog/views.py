@@ -1287,7 +1287,7 @@ def jingbai_process_v2(data):
 
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai_20181023.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
-    train_pred = data['f_m'] * 0.9123
+    train_pred = data['f_m'] * 0.99123
     m = data['f_m'][0]
     del data['density_checking_switch_2']
     del data['brand']
