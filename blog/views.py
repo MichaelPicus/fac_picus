@@ -1588,11 +1588,11 @@ def jingbai_process_v2(data):
             # else:
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
             if combine[x, 2] > 107 and density_checking_switch < 620 and density_checking_switch > 540:
-                if GAS_FLOW >= arr12[x, 12]:
-                    modified_res[x, 12] = round(arr12[x, 12], 2)
-                    modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+                # if GAS_FLOW >= arr12[x, 12]:
+                #     modified_res[x, 12] = round(arr12[x, 12], 2)
+                #     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
 
-                else :
+                # else :
                     modified_res[x, 12] = round(arr12[x, 12], 2) - 18
                     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
                 
