@@ -1566,7 +1566,7 @@ def jingbai_process_v2(data):
 
             # SecondAirMotorFreq# 
             if combine[x, 10] < 61.0:
-                modified_res[x, 10] = round(arr9[x, 10], 2) + 8
+                modified_res[x, 10] = round(arr9[x, 10], 2) + 13
             else :
                 modified_res[x, 10] = round(arr9[x, 10], 2)
 
