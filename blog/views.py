@@ -1272,7 +1272,7 @@ def jingbai_process(data):
                 modified_res[x, 12] = round(combine[x, 12] - randint(1, 8) * 2, 2)
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9669
+            modified_res[x, 0] = train_pred[x] * 0.9869
 
 
             ##conditioins
