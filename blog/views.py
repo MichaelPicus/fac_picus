@@ -1219,7 +1219,23 @@ def jingbai_process(data):
             #     modified_res[x, 9] = 0.6001
             # else:
             #     modified_res[x, 9] = combine[x, 9] * 0.98817
-            modified_res[x, 9] = round(combine[x, 9] - randint(4, 11) * 0.2, 2)
+            if combine[x, 9] > 79 and combine[x, 10] > 66.0:
+                modified_res[x, 9] = round(combine[x, 9] - randint(4, 11) * 0.2, 2)
+                modified_res[x, 10] = round(combine[x, 10] - randint(3, 8) * 0.5, 2)
+
+            if combine[x, 9] < 79 and combine[x, 10] > 66.0:
+                modified_res[x, 9] = round(combine[x, 9] + 3 * 0.2, 2)
+                modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
+
+            if combine[x, 9] > 79 and combine[x, 10] < 66.0:
+                modified_res[x, 9] = round(combine[x, 9] - 1 * 0.2, 2)
+                modified_res[x, 10] = round(combine[x, 10] - 1 * 0.5, 2)
+
+            if combine[x, 9] < 79 and combine[x, 10] < 66.0:
+                modified_res[x, 9] = round(combine[x, 9] + 2 * 0.2, 2)
+                modified_res[x, 10] = round(combine[x, 10] + 2 * 0.5, 2)
+
+
 
             # SecondAirMotorFreq# 
             # if combine[x, 10] > 88:
@@ -1228,8 +1244,8 @@ def jingbai_process(data):
             #     modified_res[x, 10] = 53.001
             # else:
             #     modified_res[x, 10] = combine[x, 10] * 0.9941167
-            if combine[x, 10] > 61.0:
-                modified_res[x, 10] = round(combine[x, 10] - randint(3, 8) * 0.5, 2)
+            # if :
+            #     modified_res[x, 10] = round(combine[x, 10] - randint(3, 8) * 0.5, 2)
 
             # HighPressurePumpFreq#
             # if combine[x, 11] > 37.6:
