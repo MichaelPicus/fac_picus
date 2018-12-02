@@ -1258,6 +1258,7 @@ def jingbai_process(data):
             RANDOM = randint(0, 1)
             if combine[x, 11] > 30 and combine[x, 11] < 35:
                 modified_res[x, 11] = round(combine[x, 11] + 1, 2)
+                modified_res[x, 0] = train_pred[x] * 0.9909
 
             modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
@@ -1270,15 +1271,17 @@ def jingbai_process(data):
             #     modified_res[x, 12] = combine[x, 12] * 0.99857
             if combine[x, 2] > 109 and density_checking_switch < 635 and density_checking_switch > 600:
                 modified_res[x, 12] = round(combine[x, 12] - randint(1, 8) * 2, 2)
+                modified_res[x, 0] = train_pred[x] * 0.9869
 
             # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            modified_res[x, 0] = train_pred[x] * 0.9869
+            # modified_res[x, 0] = train_pred[x] * 0.9869
 
 
             ##conditioins
             if combine[x, 2] < 108 and (combine[x, 11]==34 or combine[x, 11] == 35): 
                 modified_res[x, 11] = combine[x, 11] - 1
                 modified_res[x, 10] = round(combine[x, 10] + randint(3, 8) * 0.5, 2)
+                modified_res[x, 0] = train_pred[x] * 1.0123
 
 
             if combine[x, 3] > 279:
