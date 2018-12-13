@@ -924,8 +924,10 @@ def value_data_process(request, format=None):
                     'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
                     'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m', 'density_checking_switch_2'])
             pred_m = 0
+
             
             res, pred_m = data_process(data)
+            time.sleep(1)
             
             measurement = "value_data"
             host_name = "127.0.0.1"
