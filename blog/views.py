@@ -925,7 +925,7 @@ def value_data_process(request, format=None):
                     'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m', 'density_checking_switch_2'])
             pred_m = 0
 
-            res = data
+            res = 0
             res, pred_m = data_process(data)
 
             
@@ -1101,9 +1101,7 @@ def data_process(data):
     elif data['brand'][0] == 4.0:
                 print "processing tbo or others!"
                 res, pred_m= jingbai_process(data)
-    print "====================="
-    print res
-    print "====================="
+   
     return res, pred_m
 
 
