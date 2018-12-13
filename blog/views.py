@@ -1099,6 +1099,9 @@ def data_process(data):
     elif data['brand'][0] == 4.0:
                 print "processing tbo or others!"
                 res, pred_m= jingbai_process(data)
+    print "====================="
+    print res
+    print "====================="
     return res, pred_m
 
 
