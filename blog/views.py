@@ -1283,13 +1283,14 @@ def jingbai_process(data):
             ##conditioins
             if combine[x, 2] < 108 and (combine[x, 11]==34 or combine[x, 11] == 35): 
                 modified_res[x, 11] = combine[x, 11] - 1
-                modified_res[x, 10] = round(combine[x, 10] + randint(3, 8) * 0.5, 2)
+                modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
                 modified_res[x, 0] = train_pred[x] * 1.0123
 
 
             if combine[x, 3] > 279:
-                modified_res[x, 10] = round(combine[x, 10] + randint(3, 8) * 0.5, 2)
-                modified_res[x, 9] = round(combine[x, 9] + randint(4, 11) * 0.2, 2)
+                modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
                 
             # jb_tmp = modified_res
         # modified_res = jb_tmp
