@@ -1223,7 +1223,7 @@ def jingbai_process(data):
             # else:
             #     modified_res[x, 9] = combine[x, 9] * 0.98817
             if combine[x, 9] > 79 and combine[x, 10] > 66.0:
-                modified_res[x, 9] = round(combine[x, 9] - 4* 0.2, 2)
+                modified_res[x, 9] = round(combine[x, 9] - 2* 0.2, 2)
                 modified_res[x, 10] = round(combine[x, 10] - 3 * 0.5, 2)
 
             if combine[x, 9] < 79 and combine[x, 10] > 66.0:
