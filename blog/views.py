@@ -88,6 +88,9 @@ def display(request):
 
     return render(request, 'display.html')
 
+def display1(request):
+    return render(request, 'display1.html')
+
 def process(request):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
 
