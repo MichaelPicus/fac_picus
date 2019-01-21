@@ -119,7 +119,7 @@ def process(request):
             train_pred = np.expm1(train_pred)
             m =  train_pred
 
-            if train_pred > 30:
+            if train_pred > 31:
 
                 for x in range(3):
 
