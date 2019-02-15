@@ -8,11 +8,30 @@
   
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+   
 <style>
 * {
     box-sizing: border-box;
 }
 
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+h1.ex1 {
+  margin-top: 66px;
+}
+
+#picus {
+  margin-top: 23px
+}
 /* Create two equal columns that floats next to each other */
 .column {
     float: left;
@@ -28,104 +47,136 @@
     display: table;
     clear: both;
 }
+body {
+  background-color: #808080;
+}
+h1, h2, p, table{
+  color: #DCDCDC;
+}
+
+
+table {
+    border-bottom: 1px solid #DCDCDC;
+    border-top: 1px solid #DCDCDC;
+    border-left: 1px solid #DCDCDC;
+    border-right: 1px solid #DCDCDC;
+    border-collapse: collapse;
+}​
+
+#id1 {
+  color: #FF0000;
+  font-size: 25px;
+}
+
+#id2 {
+  color: #00FF00;
+  font-size: 25px;
+}
+
+#id3 {
+  color: #FFFF00;
+  font-size: 25px;
+}
+
+#id4 {
+  color: #FF0000;
+  font-size: 25px;
+}
+
+.div1 {
+  width: 100%;
+  height: 100px;  
+  padding: 25px;
+  border: 5px solid red;
+}
+
+.div2 {
+  width: 100%;
+  height: 100px;  
+  padding: 25px;
+  border: 5px solid #00FF00;
+}
+
+.div3 {
+  width: 100%;
+  height: 100px;  
+  padding: 25px;
+  border: 5px solid #FFFF00;
+}
+
+.div4 {
+  width: 100%;
+  height: 100px;  
+  padding: 25px;
+  border: 5px solid #FF0000;
+}
+
+#logo {
+  width: 1050px;
+  margin: 30px;
+  
+}
+
+
 </style>
+
+
 </head>
+
  <body>
- <h1 align="center">Factory Picus 人工智能分析系统</h1> 
-
-
+  <div id="logo">
+    <img align="left" src="{% static 'images/pg_logo.png' %}" style="width:130px;height:120px;"/>
+    <img  id="picus" align="right" src="{% static 'images/picus.png' %}" style="width:180px;height:90px;"/>
+  </div> 
+<br>
+<br>
+<br>
+<br>
+<h1 align="center" class="ex1">智能分析系统</h1> 
+<br>
+<br>
 <div id="app">
-<div class="row">
-  <div class="column" style="">
-    <h2>当前时刻的实时参数：</h2>
-    <p>
-f_m: [[info.f_m]]
-<br />
-<br />
-air_out_temp    : [[info.air_out_temp]]
-<br />
-<br />
-base_powder_temp: [[info.base_powder_temp]]
-<br />
-<br />
-air_in_temp_1   : [[info.air_in_temp_1]]
-<br />
-<br />
-slurry_temp     : [[info.slurry_temp]]
-<br />
-<br />
-tower_top_negative_pressure: [[info.tower_top_negative_pressure]]
-<br />
-<br />
-aging_tank_flow : [[info.aging_tank_flow]]
-<br />
-<br />
-second_input_air_temp: [[info.second_input_air_temp]]
-<br />
-<br />
-slurry_pipeline_lower_layer_pressure: [[info.slurry_pipeline_lower_layer_pressure]]
-<br />
-<br />
-out_air_motor_freq: [[info.out_air_motor_freq]]
-<br />
-<br />
-second_air_motor_freq: [[info.second_air_motor_freq]]
-<br />
-<br />
-high_pressure_pump_freq: [[info.high_pressure_pump_freq]]
-<br />
-<br />
-gas_flow: [[info.gas_flow]]
-<br />
-    </p>
-  </div>
-  <div class="column" style="">
-    <h2>系统建议调优参数：</h2>
-    <p>
-modified_m: [[info.modified_m]]
-<br />
-<br />
-p_air_out_temp: [[info.p_air_out_temp]]
-<br />
-<br />
-p_base_powder_temp: [[info.p_base_powder_temp]]
-<br />
+ <div v-if="info.indicator == -9"> 
+ <div class="div1" align="center" id="id1">需要按照下列参数调整</div>
+</div>
+ <div v-if="info.indicator == 1"> 
+ <div class="div2" align="center" id="id2">正&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;常</div>
+</div>
+<div v-if="info.indicator == 0"> 
+ <div class="div3" align="center" id="id3">检查喷枪雾化系统</div>
+</div>
+<div v-if="info.indicator == 499"> 
+ <div class="div4" align="center" id="id4">需要按照下列参数调整</div>
 
-<br />
-<br />
-p_slurry_temp: [[info.p_slurry_temp]]
-<br />
 
-<br />
-<br />
-p_aging_tank_flow: [[info.p_aging_tank_flow]]
-<br />
-<br />
+<br>
+<br>
 
-<br />
-<br />
-p_out_air_motor_freq: [[info.p_out_air_motor_freq]]
-<br />
-<br />
-p_second_air_motor_freq: [[info.p_second_air_motor_freq]]
-<br />
-<br />
-p_high_pressure_pump_freq: [[info.p_high_pressure_pump_freq]]
-<br />
-<br />
-p_gas_flow: [[info.p_gas_flow]]
-<br />
-<br />
 
-    </p>
-  </div>
+<table style="width: 100%; margin-top: 10px; font-size: 1.5em;" border="1px">
+    <tr align="center" >      
+      <th style="padding:2.5px; width: 55%;" rowspan="10">调整参数</th>
+      <th v-if="info.p_second_air_motor_freq !== -11" style="padding:2.5px;" colspan="1">二次风频率 : [[info.p_second_air_motor_freq]]</th>   
+    </tr>
+    
+    <tr v-if="info.p_out_air_motor_freq !== -1">
+        <th>尾气风机频率 : [[info.p_out_air_motor_freq]]</th>   
+    </tr>
+  
+    <tr v-if="info.p_high_pressure_pump_freq !== -1">
+        <th>高压泵频率 : [[info.p_high_pressure_pump_freq]]</th>
+    </tr> 
+    <tr v-if="info.p_gas_flow !== -11">
+      <th>天然气流量 : [[info.p_gas_flow]]</th>
+    </tr>
+</table>
 </div>
 </div>
 
 <script src="{% static 'js/vue.min.js' %}"></script>
 <script src="{% static 'js/axios.min.js' %}"></script>
-  
- <script language="JavaScript">
+
+<script language="JavaScript">
      
   new Vue({
   delimiters: ['[[', ']]'],
@@ -135,8 +186,7 @@ p_gas_flow: [[info.p_gas_flow]]
       info: null,
       loading: true,
       errored: false, 
-      // my_url: "https://api.coindesk.com/v1/bpi/currentprice.json"
-      my_url: "http://localhost:8001/getlatest"
+      my_url: "http://127.0.0.1:8000/getlatest"
     }
   },
   // filters: {
@@ -154,10 +204,10 @@ p_gas_flow: [[info.p_gas_flow]]
         this.info = response.data}).catch(error => {console.log(error)
         this.errored = true
       }).finally(() => this.loading = false);
-      }, 120000);
+      }, 12000);
   }
 })
-    </script>
+</script>
 </body>
 </html>
  

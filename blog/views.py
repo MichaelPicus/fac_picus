@@ -867,6 +867,15 @@ def snippet_detail(request, pk, format=None):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 from influxdb import InfluxDBClient
+import Queue
+q = Queue.Queue()
+for i in range(500):
+    q.put(i)
+
+# q.qsize()
+# q.get()
+# q.put(i)
+
 hostname = '127.0.0.1' #'143.35.218.66'
 port_num = 8086
 db_user_name = 'root'
@@ -884,7 +893,7 @@ con = InfluxDBClient(hostname, port_num, db_user_name, db_user_name, database_na
 @api_view(['GET'])
 def getlatest(request, format=None):
     if request.method == "GET":
-        result = con.query("select f_m, modified_m, air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp  from value_data  order by desc limit 1")
+        result = con.query("select energy_saving, indicator, f_m, modified_m, air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp  from new_value_data  order by desc limit 1")
         values = result.raw['series'][0]['values'][0]
         keys   = result.raw['series'][0]['columns']
 
@@ -932,7 +941,7 @@ def value_data_process(request, format=None):
             res, pred_m = data_process(data)
 
             
-            measurement = "value_data"
+            measurement = "new_value_data"
             host_name = "127.0.0.1"
             region_value = "us_west"
 
@@ -1069,6 +1078,8 @@ def value_data_process(request, format=None):
                         "flag_slurry_density" : float(1),
                         "flag_density_checking_switch_1" : float(1),
                         "flag_density_checking_switch_2" : float(1),
+                        "indicator" : float(q.get()),
+                        "energy_saving" : float(1),
 
                     }
                 }
@@ -1100,7 +1111,7 @@ def data_process(data):
     elif data['brand'][0] == 3.0:
                 print "processing bilang!"
                 res, pred_m = bilang_process(data)
-                # res, pred_m =jingbai_process_v2(data) # for testing
+                # res, pred_m =jingbai_process_v3(data) # for testing
     elif data['brand'][0] == 4.0:
                 print "processing tbo or others!"
                 res, pred_m= jingbai_process(data)
@@ -1111,6 +1122,8 @@ def data_process(data):
 # jb_INTERVAL = 120
 # jb_count = 0
 # jb_tmp = ""
+def jingbai_process_v3(data):
+    pass
 
 def jingbai_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
