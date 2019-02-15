@@ -869,7 +869,7 @@ def snippet_detail(request, pk, format=None):
 from influxdb import InfluxDBClient
 import Queue
 q = Queue.Queue()
-for i in range(500):
+for i in range(100):
     q.put(i)
 
 # q.qsize()
@@ -1078,7 +1078,7 @@ def value_data_process(request, format=None):
                         "flag_slurry_density" : float(1),
                         "flag_density_checking_switch_1" : float(1),
                         "flag_density_checking_switch_2" : float(1),
-                        "indicator" : float(q.get()),
+                        "indicator" : float(1),
                         "energy_saving" : float(1),
 
                     }
@@ -1110,7 +1110,7 @@ def data_process(data):
                 res, pred_m= jingbai_process(data)
     elif data['brand'][0] == 3.0:
                 print "processing bilang!"
-                res, pred_m = bilang_process(data)
+                res, pred_m = jingbai_process(data)
                 # res, pred_m =jingbai_process_v3(data) # for testing
     elif data['brand'][0] == 4.0:
                 print "processing tbo or others!"
