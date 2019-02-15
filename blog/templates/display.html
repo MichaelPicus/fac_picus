@@ -145,7 +145,7 @@ table {
 <div v-if="info.indicator == 0"> 
  <div class="div3" align="center" id="id3">检查喷枪雾化系统</div>
 </div>
-<div v-if="info.indicator == 499"> 
+<div v-if="info.indicator == -1"> 
  <div class="div4" align="center" id="id4">需要按照下列参数调整</div>
 
 
@@ -156,7 +156,7 @@ table {
 <table style="width: 100%; margin-top: 10px; font-size: 1.5em;" border="1px">
     <tr align="center" >      
       <th style="padding:2.5px; width: 55%;" rowspan="10">调整参数</th>
-      <th v-if="info.p_second_air_motor_freq !== -11" style="padding:2.5px;" colspan="1">二次风频率 : [[info.p_second_air_motor_freq]]</th>   
+      <th v-if="info.p_second_air_motor_freq !== -1" style="padding:2.5px;" colspan="1">二次风频率 : [[info.p_second_air_motor_freq]]</th>   
     </tr>
     
     <tr v-if="info.p_out_air_motor_freq !== -1">
@@ -166,7 +166,7 @@ table {
     <tr v-if="info.p_high_pressure_pump_freq !== -1">
         <th>高压泵频率 : [[info.p_high_pressure_pump_freq]]</th>
     </tr> 
-    <tr v-if="info.p_gas_flow !== -11">
+    <tr v-if="info.p_gas_flow !== -1">
       <th>天然气流量 : [[info.p_gas_flow]]</th>
     </tr>
 </table>
