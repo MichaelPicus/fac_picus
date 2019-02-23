@@ -1113,8 +1113,12 @@ def data_process(data):
                 res, pred_m = jingbai_process(data)
                 # res, pred_m =jingbai_process_v3(data) # for testing
     elif data['brand'][0] == 4.0:
-                print "processing tbo or others!"
+                print "processing tbo !"
                 res, pred_m= tbo_process(data)
+
+    elif data['brand'][0] == 1.0:
+                print "chukou jifen"
+                res, pred_m = jingbai_process(data)
    
     return res, pred_m
 
