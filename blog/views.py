@@ -935,10 +935,10 @@ def value_data_process(request, format=None):
             data = pd.DataFrame(data=d, columns=['air_out_temp', 'base_powder_temp', 'air_in_temp_1', 'slurry_temp', 'tower_top_negative_pressure',
                     'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
                     'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m', 'density_checking_switch_2'])
-            pred_m = 0
+            # pred_m = 0
 
             
-            res, pred_m = data_process(data)
+            res, indicator = data_process(data)
 
             
             measurement = "new_value_data"
@@ -1078,7 +1078,7 @@ def value_data_process(request, format=None):
                         "flag_slurry_density" : float(1),
                         "flag_density_checking_switch_1" : float(1),
                         "flag_density_checking_switch_2" : float(1),
-                        "indicator" : float(1),
+                        "indicator" : float(indicator),
                         "energy_saving" : float(1),
 
                     }
@@ -1130,6 +1130,7 @@ def jingbai_process_v3(data):
     pass
 
 def jingbai_process(data):
+    indicator = 1
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
     print "------------------------------"
@@ -1152,7 +1153,8 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if ((combine[x, 0] > 33) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 620)):
+        if ((combine[x, 0] > 35) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 620)):
+            indicator = 2
             # jb_count = jb_count + 1
             # AirOutTemp
             # if combine[x, 1] > 130 :
@@ -1308,18 +1310,43 @@ def jingbai_process(data):
                 modified_res[x, 0] = train_pred[x] * 1.0123
 
 
+
             if combine[x, 3] > 279:
                 modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+
+            modified_res[x] = -1
+
+            if combine[x, 11] <= 33:
+                
+                modified_res[x, 11] = combine[x, 11] + 1
+                modified_res[x, 10] = combine[x, 10] + 1.3
+
+            elif combine[x, 11] == 35 and combine[x, 2] > 118:
+                modified_res[x, 11] = combine[x, 11] - 1
+                modified_res[x, 10] = combine[x, 10] - 1.4
+
+            elif density_checking_switch > 630:
+            
+                modified_res[x, 12] = combine[x, 12] + 12
+
+            elif combine[x, 2] < 115:
+
+                modified_res[x, 12] = combine[x, 12] + 12
+
+            
                 
             # jb_tmp = modified_res
         # modified_res = jb_tmp
         elif combine[x, 2] < 105:
             modified_res[x] = -1
+            indicator = 1
+
         else :
             modified_res[x] = -1
+            indicator = 3
  
-    return modified_res, train_pred
+    return modified_res, indicator
 
 
 
