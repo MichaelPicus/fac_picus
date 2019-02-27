@@ -1340,11 +1340,27 @@ def jingbai_process(data):
         # modified_res = jb_tmp
         elif combine[x, 2] < 105:
             modified_res[x] = -1
-            indicator = 1
+            indicator = 2
+            if combine[x, 11] <= 33:
+                
+                modified_res[x, 11] = combine[x, 11] + 1
+                modified_res[x, 10] = combine[x, 10] + 1.3
+
+            elif combine[x, 11] == 35 and combine[x, 2] > 118:
+                modified_res[x, 11] = combine[x, 11] - 1
+                modified_res[x, 10] = combine[x, 10] - 1.4
 
         else :
             modified_res[x] = -1
-            indicator = 3
+            indicator = 2
+            if combine[x, 11] <= 33:
+                
+                modified_res[x, 11] = combine[x, 11] + 1
+                modified_res[x, 10] = combine[x, 10] + 1.3
+
+            elif combine[x, 11] == 35 and combine[x, 2] > 118:
+                modified_res[x, 11] = combine[x, 11] - 1
+                modified_res[x, 10] = combine[x, 10] - 1.4
  
     return modified_res, indicator
 
