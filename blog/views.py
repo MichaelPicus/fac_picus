@@ -1321,20 +1321,41 @@ def jingbai_process(data):
                 
                 modified_res[x, 11] = combine[x, 11] + 1
                 modified_res[x, 10] = combine[x, 10] + 1.3
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
-            elif combine[x, 11] == 35 and combine[x, 2] > 118:
-                modified_res[x, 11] = combine[x, 11] - 1
+            if combine[x, 11] >= 36 and combine[x, 2] > 118:
+                modified_res[x, 11] = combine[x, 11] + 1
                 modified_res[x, 10] = combine[x, 10] - 1.4
+                modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
-            elif density_checking_switch > 630:
+            if density_checking_switch > 620 and combine[x, 11] <= 33:
             
                 modified_res[x, 12] = combine[x, 12] + 12
 
-            elif combine[x, 2] < 115:
+            if density_checking_switch > 620 and combine[x, 11] >=34:
+                modified_res[x, 11] = combine[x, 11] - 1
 
-                modified_res[x, 12] = combine[x, 12] + 12
 
-            
+            if combine[x, 2] < 110:
+               
+                modified_res[x, 10] = combine[x, 10] + 1.3
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+
+                # modified_res[x, 12] = combine[x, 12] + 12
+
+            if combine[x, 3] > 275  and modified_res[x, 11] < 37:
+                modified_res[x, 11] = combine[x, 11] + 1
+                modified_res[x, 10] = combine[x, 10] - 1.5
+                modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+
+            if combine[x, 3] < 257:
+                modified_res[x, 11] = combine[x, 11] + 1
+                modified_res[x, 10] = combine[x, 10] + 1.3
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+
+            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610:
+                modified_res[x, 12] = combine[x, 12] - 13
+
                 
             # jb_tmp = modified_res
         # modified_res = jb_tmp
@@ -1352,15 +1373,8 @@ def jingbai_process(data):
 
         else :
             modified_res[x] = -1
-            indicator = 2
-            if combine[x, 11] <= 33:
-                
-                modified_res[x, 11] = combine[x, 11] + 1
-                modified_res[x, 10] = combine[x, 10] + 1.3
+            indicator = 1
 
-            elif combine[x, 11] == 35 and combine[x, 2] > 118:
-                modified_res[x, 11] = combine[x, 11] - 1
-                modified_res[x, 10] = combine[x, 10] - 1.4
  
     return modified_res, indicator
 
