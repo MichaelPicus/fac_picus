@@ -1153,7 +1153,7 @@ def jingbai_process(data):
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
         
-        if ((combine[x, 0] > 35) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 620)):
+        if ((combine[x, 0] > 35) and (combine[x, 2] >= 90) and (density_checking_switch > 530) and (density_checking_switch < 650)):
             indicator = 2
             # jb_count = jb_count + 1
             # AirOutTemp
