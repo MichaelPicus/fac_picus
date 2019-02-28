@@ -1369,7 +1369,7 @@ def jingbai_process(data):
         else :
             modified_res[x] = -1
             indicator = 1
-        if modified_res[x] == -1:
+        if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and modified_res[x, 12] == -1 and modified_res[x, 9] == -1:
             indicator = 1
  
     return modified_res, indicator
