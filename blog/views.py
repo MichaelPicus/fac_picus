@@ -1354,6 +1354,16 @@ def jingbai_process(data):
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
+            if combine[x, 2] < 115 and modified_res[x, 10] == -1 and modified_res[x, 9] == -1: 
+                modified_res[x, 10] = combine[x, 10] + 1.3
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+
+            if density_checking_switch >=610 and combine[x, 11] >= 34:
+                modified_res[x, 11] = combine[x, 11] - 1
+
+            if density_checking_switch >=610 and combine[x, 11] <= 33:
+                modified_res[x, 12] = combine[x, 12] + 10
+
             if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] > 115:
                 modified_res[x, 12] = combine[x, 12] - 13
 
