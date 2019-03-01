@@ -890,14 +890,31 @@ con = InfluxDBClient(hostname, port_num, db_user_name, db_user_name, database_na
 
 # 
 # 
+
+import time
+
+pre_time = ""
 @api_view(['GET'])
 def getlatest(request, format=None):
+    global pre_time
+
     if request.method == "GET":
         result = con.query("select energy_saving, indicator, f_m, modified_m, air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp  from new_value_data  order by desc limit 1")
         values = result.raw['series'][0]['values'][0]
         keys   = result.raw['series'][0]['columns']
 
         res = dict(zip(keys, values))
+
+        if res['time'] == pre_time:
+            res['indicator'] = 1
+            res['p_gas_flow'] = -1
+            res['p_high_pressure_pump_freq'] = -1
+            res['p_out_air_motor_freq'] = -1
+            res['p_second_air_motor_freq'] = -1
+            
+
+        pre_time = res['time']
+        time.sleep(2)
         con.close()
         # res =json.loads('{"one" : "111", "two" : "2", "three" : "3"}')
         return Response(res)
