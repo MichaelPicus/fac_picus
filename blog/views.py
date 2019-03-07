@@ -918,6 +918,7 @@ def getlatest(request, format=None):
 
         if res['base_powder_temp_baseline'] == -1:
             res['base_powder_temp_baseline_ai'] = res['base_powder_temp']
+            res['base_powder_temp_baseline'] = 0
         # if res['time'] == pre_time:
         #     res['indicator'] = 1
         #     res['p_gas_flow'] = -1
