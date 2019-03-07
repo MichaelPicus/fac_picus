@@ -194,7 +194,12 @@ class Valuedata(models.Model):
         ordering = ('time',)
 
 
+class BPT(models.Model):
 
+    base_powder_temp =models.FloatField(default='0')
+
+    class Meta:
+        ordering = ('base_powder_temp',)
 
 
 

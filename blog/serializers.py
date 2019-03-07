@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from blog.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES, Valuedata
+from blog.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES, Valuedata, BPT
 
 
 class SnippetSerializer(serializers.ModelSerializer):
@@ -38,3 +38,9 @@ class ValuedataSerializer(serializers.ModelSerializer):
 			# 'flag_slurry_temp', 'flag_tower_top_negative_pressure', 'flag_slurry_density', 'flag_density_checking_switch_1', 'flag_density_checking_switch_2',
 			)
 		
+
+
+class BasePowderTempSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BPT
+        fields = ('base_powder_temp', )
