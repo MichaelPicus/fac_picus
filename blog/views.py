@@ -898,11 +898,13 @@ from django.shortcuts import redirect
 # pre_time = ""
 BPT = ""
 flag_BPT = ""
+flag_ai = -1
 @api_view(['GET', 'POST'])
 def getlatest(request, format=None):
     # global pre_time
     global BPT
     global flag_BPT
+    global flag_ai
     
     if request.method == "GET":
         result = con.query("select energy_saving, indicator, f_m, modified_m, air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp  from new_value_data  order by desc limit 1")
@@ -916,9 +918,9 @@ def getlatest(request, format=None):
         else:
             res['base_powder_temp_baseline'] = -1
 
-        if res['base_powder_temp_baseline'] == -1:
+        if flag_ai == -1:
             res['base_powder_temp_baseline_ai'] = res['base_powder_temp']
-            res['base_powder_temp_baseline'] = 0
+            flag_ai = 1
         # if res['time'] == pre_time:
         #     res['indicator'] = 1
         #     res['p_gas_flow'] = -1
