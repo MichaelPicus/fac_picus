@@ -20,6 +20,10 @@ from random import randint
 import copy
 import os, sys
 import shutil
+import Queue
+
+
+base_powder_temp_queue = Queue.Queue()
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -83,10 +87,7 @@ def get_name(request):
 def thanks(request):
     return render(request, 'thanks.html')
 
-# display soluton for onsite tuning
-def display(request):
 
-    return render(request, 'display.html')
 
 def display1(request):
     return render(request, 'display1.html')
@@ -811,7 +812,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from blog.models import Snippet
-from blog.serializers import SnippetSerializer, ValuedataSerializer
+from blog.serializers import SnippetSerializer, ValuedataSerializer, BasePowderTempSerializer
 
 from django.http import Http404
 from rest_framework.views import APIView
@@ -892,34 +893,69 @@ con = InfluxDBClient(hostname, port_num, db_user_name, db_user_name, database_na
 # 
 
 import time
+from django.shortcuts import redirect
 
-pre_time = ""
-@api_view(['GET'])
+# pre_time = ""
+BPT = ""
+flag_BPT = ""
+@api_view(['GET', 'POST'])
 def getlatest(request, format=None):
-    global pre_time
-
+    # global pre_time
+    global BPT
+    global flag_BPT
+    
     if request.method == "GET":
         result = con.query("select energy_saving, indicator, f_m, modified_m, air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp  from new_value_data  order by desc limit 1")
         values = result.raw['series'][0]['values'][0]
         keys   = result.raw['series'][0]['columns']
 
         res = dict(zip(keys, values))
+        if flag_BPT == 1:
+            res['base_powder_temp_baseline'] = BPT
 
-        if res['time'] == pre_time:
-            res['indicator'] = 1
-            res['p_gas_flow'] = -1
-            res['p_high_pressure_pump_freq'] = -1
-            res['p_out_air_motor_freq'] = -1
-            res['p_second_air_motor_freq'] = -1
+        else:
+            res['base_powder_temp_baseline'] = -1
+
+        if res['base_powder_temp_baseline'] == -1:
+            res['base_powder_temp_baseline_ai'] = res['base_powder_temp']
+        # if res['time'] == pre_time:
+        #     res['indicator'] = 1
+        #     res['p_gas_flow'] = -1
+        #     res['p_high_pressure_pump_freq'] = -1
+        #     res['p_out_air_motor_freq'] = -1
+        #     res['p_second_air_motor_freq'] = -1
             
 
-        pre_time = res['time']
-        time.sleep(2)
+        # pre_time = res['time']
+        # time.sleep(2)
         con.close()
         # res =json.loads('{"one" : "111", "two" : "2", "three" : "3"}')
         return Response(res)
-        
 
+    if request.method == "POST":
+        serializer = BasePowderTempSerializer(data=request.data)
+        if serializer.is_valid():
+            BPT = serializer.data.get("base_powder_temp")
+            if(BPT == -2):
+                BPT = ""
+                flag_BPT = ""
+            else:
+                flag_BPT = 1
+
+
+        return redirect('http://127.0.0.1:8000/display')
+
+@api_view(['POST'])
+def cleanup(request, format=None):
+    BPT = "11"
+    flag_BPT = "11"
+    return redirect('http://127.0.0.1:8000/display')
+
+        
+# display soluton for onsite tuning
+def display(request):
+    
+    return render(request, 'display.html')
 
 # process value data from OPC via restful API call
 @api_view(['GET', 'POST'])
@@ -1148,6 +1184,10 @@ def jingbai_process_v3(data):
 
 def jingbai_process(data):
     indicator = 1
+    # global BPT
+    print("Base powder temp baseline:")
+    print(BPT)
+
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
     print "------------------------------"

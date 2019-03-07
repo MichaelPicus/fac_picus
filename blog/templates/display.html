@@ -50,7 +50,7 @@ h1.ex1 {
 body {
   background-color: #808080;
 }
-h1, h2, p, table{
+h1, h2, p, table, form{
   color: #DCDCDC;
 }
 
@@ -117,6 +117,27 @@ table {
   
 }
 
+.button {
+  background-color: #DCDCDC;
+  border: none;
+  color: white;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+form {
+    display: inline-block;
+}
+input[type='submit']{color:#171515;}
+
+input[id="base_powder_temp"] {
+    line-height: 2.4em; // 2em is (2 * default line height)
+}
 
 </style>
 
@@ -133,9 +154,64 @@ table {
 <br>
 <br>
 <h1 align="center" class="ex1">智能分析系统</h1> 
-<br>
-<br>
+<p>
+
+  <form
+  action="http://127.0.0.1:8000/getlatest/"
+  method="post"
+>
+
+     <input
+      id="base_powder_temp"
+      v-model="base_powder_temp"
+      type="hidden"
+      name="base_powder_temp"
+      value="-2"  >
+  
+    <input
+      type="submit" class="button"
+      value="智能分析"
+    >&nbsp;&nbsp;&nbsp;&nbsp; 或者 &nbsp;&nbsp;&nbsp;&nbsp;
+
+
+</form>
+
+ <form
+  id="app_form"
+  @submit="checkForm"
+  action="http://127.0.0.1:8000/getlatest/"
+  method="post"
+>
+
+    <label for="base_powder_temp">输入基粉温度下限&nbsp;&nbsp;</label>
+    <input
+      id="base_powder_temp"
+      v-model="base_powder_temp"
+      type="number"
+      name="base_powder_temp"
+      min="0" >
+  &nbsp;&nbsp;
+    <input
+      type="submit" class="button"
+      value="提交"
+    >
+ 
+
+</form>
+
+ 
+</p>
+
 <div id="app">
+  <div > 
+  <p><label for="" v-if="info.base_powder_temp_baseline != -1">基粉温度下限： [[info.base_powder_temp_baseline]]&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  
+
+ <label for="">智能分析基粉温度下限： [[info.base_powder_temp]]</label>
+
+</p>
+
+</div>
  <div v-if="info.indicator == -9"> 
  <div class="div1" align="center" id="id1">需要按照下列参数调整</div>
 </div>
@@ -205,6 +281,32 @@ table {
         this.errored = true
       }).finally(() => this.loading = false);
       }, 1000);
+  }
+})
+
+  const app = new Vue({
+  delimiters: ['[[', ']]'], 
+  el: '#app_form',
+  data: {
+    errors: [],
+    base_powder_temp: null,
+    
+  },
+  methods:{
+    checkForm: function (e) {
+      if (this.base_powder_temp) {
+        return true;
+      }
+
+      this.errors = [];
+
+      
+      if (!this.base_powder_temp) {
+        this.errors.push('请输入基粉温度.');
+      }
+
+      e.preventDefault();
+    }
   }
 })
 </script>
