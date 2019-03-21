@@ -1200,7 +1200,10 @@ def jingbai_process(data):
     global pre_hppf
     global cnt
 
-    # global BPT
+    print "cnt : "
+    print cnt
+
+    global BPT
     print("Base powder temp baseline:")
     print(BPT)
 
