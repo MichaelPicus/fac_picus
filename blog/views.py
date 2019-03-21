@@ -1188,10 +1188,19 @@ def data_process(data):
 # jb_INTERVAL = 120
 # jb_count = 0
 # jb_tmp = ""
+pre_hppf = ""
 def jingbai_process_v3(data):
     pass
 
+indicator = ""
+cnt = 250
+
 def jingbai_process(data):
+    global indicator
+    if indicator == -3 and cnt > 0:
+        cnt = cnt - 1
+        return modified_res, indicator
+
     indicator = 1
     # global BPT
     print("Base powder temp baseline:")
@@ -1345,6 +1354,10 @@ def jingbai_process(data):
             #     modified_res[x, 11] = 8.699
             # else:
             #     modified_res[x, 11] = combine[x, 11] * 1.018
+            if pre_hppf != combine[x, 11]:
+                pre_hppf = combine[x, 11]
+                indicator = -3
+
 
             RANDOM = randint(0, 1)
             if combine[x, 11] > 30 and combine[x, 11] < 35:
@@ -1432,6 +1445,8 @@ def jingbai_process(data):
 
             if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 122:
                 modified_res[x, 12] = combine[x, 12] - 13
+
+
 
                 
             # jb_tmp = modified_res
