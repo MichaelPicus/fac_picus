@@ -896,7 +896,7 @@ import time
 from django.shortcuts import redirect
 
 # pre_time = ""
-BPT = ""
+BPT = 0.0
 flag_BPT = ""
 flag_ai = -1
 tmp = ""
@@ -1188,10 +1188,10 @@ def data_process(data):
 # jb_INTERVAL = 120
 # jb_count = 0
 # jb_tmp = ""
-pre_hppf = ""
-pre_gasflow = ""
-pre_second =""
-pre_out_air = ""
+pre_hppf = 0.0
+pre_gasflow = 0.0
+pre_second = 0.0
+pre_out_air = 0.0
 def jingbai_process_v3(data):
     pass
 
@@ -1377,17 +1377,17 @@ def jingbai_process(data):
                 indicator = -3
                 cnt = 25
 
-            if abs(pre_gasflow - combine[x, 12]) >= combine[x, 12] * 0.01:
+            if abs(float(pre_gasflow) - combine[x, 12]) >= combine[x, 12] * 0.01:
                 pre_gasflow = combine[x, 12]
                 indicator = -3
                 cnt = 25
 
-            if abs(pre_second - combine[x, 10]) >= combine[x, 10] * 0.01:
+            if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
                 pre_second = combine[x, 10]
                 indicator = -3
                 cnt = 25
 
-            if abs(pre_out_air - combine[x, 9]) >= combine[x, 9] * 0.01:
+            if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
                 pre_out_air =combine[x, 9]
                 indicator = -3
                 cnt = 25
