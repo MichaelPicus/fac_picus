@@ -1199,13 +1199,7 @@ def jingbai_process(data):
     global indicator
     global pre_hppf
     global cnt
-    if indicator == -3 and cnt > 0:
-        cnt = cnt - 1
-        modified_res = copy.deepcopy(combine)
-        modified_res = -1
-        return modified_res, indicator
 
-    indicator = 1
     # global BPT
     print("Base powder temp baseline:")
     print(BPT)
@@ -1230,6 +1224,17 @@ def jingbai_process(data):
     rows = combine.shape[0]
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
+
+    if indicator == -3 and cnt > 0:
+        cnt = cnt - 1
+        modified_res = copy.deepcopy(combine)
+       
+        return modified_res, indicator
+
+    indicator = 1
+
+
+
     for x in range(0, rows):
         
         if ((combine[x, 0] > 35) and (combine[x, 2] >= 90) and (density_checking_switch > 530) and (density_checking_switch < 650)):
