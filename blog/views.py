@@ -1470,6 +1470,8 @@ def jingbai_process(data):
             if combine[x, 2] < float(BPT) and modified_res[x, 10] == -1 and modified_res[x, 9] == -1: 
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+                modified_res[x, 12] = round(combine[x, 12] + 10, 2)
+
 
             if density_checking_switch >=610 and combine[x, 11] >= 34:
                 modified_res[x, 11] = combine[x, 11] - 1
