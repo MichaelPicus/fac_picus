@@ -1197,6 +1197,7 @@ cnt = 250
 
 def jingbai_process(data):
     global indicator
+    global pre_hppf
     if indicator == -3 and cnt > 0:
         cnt = cnt - 1
         return modified_res, indicator
