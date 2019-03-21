@@ -1372,9 +1372,9 @@ def jingbai_process(data):
 
 
             RANDOM = randint(0, 1)
-            if combine[x, 11] > 30 and combine[x, 11] < 35:
-                modified_res[x, 11] = round(combine[x, 11] + 1, 2)
-                modified_res[x, 0] = train_pred[x] * 0.9909
+            # if combine[x, 11] > 30 and combine[x, 11] < 35:
+            #     modified_res[x, 11] = round(combine[x, 11] + 1, 2)
+            #     modified_res[x, 0] = train_pred[x] * 0.9909
 
             modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
