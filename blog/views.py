@@ -1196,7 +1196,7 @@ def jingbai_process_v3(data):
     pass
 
 indicator = ""
-cnt = 250
+cnt = 25
 
 def jingbai_process(data):
     global indicator
@@ -1375,22 +1375,22 @@ def jingbai_process(data):
             if pre_hppf != combine[x, 11]:
                 pre_hppf = combine[x, 11]
                 indicator = -3
-                cnt = 250
+                cnt = 25
 
             if abs(pre_gasflow - combine[x, 12]) >= combine[x, 12] * 0.01:
                 pre_gasflow = combine[x, 12]
                 indicator = -3
-                cnt = 250
+                cnt = 25
 
             if abs(pre_second - combine[x, 10]) >= combine[x, 10] * 0.01:
                 pre_second = combine[x, 10]
                 indicator = -3
-                cnt = 250
+                cnt = 25
 
             if abs(pre_out_air - combine[x, 9]) >= combine[x, 9] * 0.01:
                 pre_out_air =combine[x, 9]
                 indicator = -3
-                cnt = 250
+                cnt = 25
 
 
             RANDOM = randint(0, 1)
@@ -1430,15 +1430,15 @@ def jingbai_process(data):
 
             modified_res[x] = -1
 
-            if combine[x, 11] <= 33 or combine[x, 2] < 120:
+            if combine[x, 11] <= 34 or combine[x, 2] < 120:
                 if combine[x, 11] <= 35:
-                    modified_res[x, 11] = combine[x, 11] + 1
+                    modified_res[x, 11] = combine[x, 11] - 1
                
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
             if combine[x, 11] >= 36 and combine[x, 2] > 120:
-                modified_res[x, 11] = combine[x, 11] + 1
+                modified_res[x, 11] = combine[x, 11] - 1
                 modified_res[x, 10] = combine[x, 10] - 1.4
                 modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
@@ -1458,7 +1458,7 @@ def jingbai_process(data):
                 # modified_res[x, 12] = combine[x, 12] + 12
 
             if combine[x, 3] > 275  and modified_res[x, 11] < 37:
-                modified_res[x, 11] = combine[x, 11] + 1
+                modified_res[x, 11] = combine[x, 11] - 1
                 modified_res[x, 10] = combine[x, 10] - 1.5
                 modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
