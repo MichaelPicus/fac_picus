@@ -1201,6 +1201,8 @@ def jingbai_process(data):
     global cnt
     if indicator == -3 and cnt > 0:
         cnt = cnt - 1
+        modified_res = copy.deepcopy(combine)
+        modified_res = -1
         return modified_res, indicator
 
     indicator = 1
