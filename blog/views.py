@@ -1189,6 +1189,9 @@ def data_process(data):
 # jb_count = 0
 # jb_tmp = ""
 pre_hppf = ""
+pre_gasflow = ""
+pre_second =""
+pre_out_air = ""
 def jingbai_process_v3(data):
     pass
 
@@ -1198,6 +1201,9 @@ cnt = 250
 def jingbai_process(data):
     global indicator
     global pre_hppf
+    global pre_gasflow
+    global pre_second
+    global pre_out_air
     global cnt
 
     print "cnt : "
@@ -1369,6 +1375,22 @@ def jingbai_process(data):
             if pre_hppf != combine[x, 11]:
                 pre_hppf = combine[x, 11]
                 indicator = -3
+                cnt = 250
+
+            if abs(pre_gasflow - combine[x, 12]) >= combine[x, 12] * 0.01:
+                pre_gasflow = combine[x, 12]
+                indicator = -3
+                cnt = 250
+
+            if abs(pre_second - combine[x, 10]) >= combine[x, 10] * 0.01:
+                pre_second = combine[x, 10]
+                indicator = -3
+                cnt = 250
+
+            if abs(pre_out_air - combine[x, 9]) >= combine[x, 9] * 0.01:
+                pre_out_air =combine[x, 9]
+                indicator = -3
+                cnt = 250
 
 
             RANDOM = randint(0, 1)
