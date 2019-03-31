@@ -12,8 +12,8 @@ from blog.forms import DocumentForm
 
 from sklearn.externals import joblib
 
-import numpy as np 
-import pandas as pd 
+import numpy as np
+import pandas as pd
 
 import lightgbm as lgb
 from random import randint
@@ -21,7 +21,6 @@ import copy
 import os, sys
 import shutil
 import Queue
-
 
 base_powder_temp_queue = Queue.Queue()
 
@@ -64,7 +63,7 @@ def get_name(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            
+
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             sender = form.cleaned_data['sender']
@@ -131,7 +130,7 @@ def process(request):
                         train[0][0] = 76.001
                     else:
                         train[0][0] = train[0][0]  * 0.993
-                    
+
                     # BasePowderTemp
                     if train[0][1] > 166:
                         train[0][1] = 165.99
@@ -145,7 +144,7 @@ def process(request):
                         train[0][2] = 301.999
                     elif train[0][2] < 238:
                         train[0][2] = 238.001
-                        
+
                     else:
                         train[0][2] = train[0][2]  * 1.0152
 
@@ -163,9 +162,9 @@ def process(request):
                         train[0][4] = -0.000001
                     elif train[0][4] < -30.0:
                         train[0][4] = -29.988
-                    else: 
+                    else:
                         train[0][4] = train[0][4] * 0.9959
-                    
+
                     # AgingTankFlow
                     if train[0][5] > 27474:
                         train[0][5] = 27473.999
@@ -173,7 +172,7 @@ def process(request):
                         train[0][5] = 17451.02
                     else:
                         train[0][5] = train[0][5] * 1.02226
-                    
+
                     # SecondInputAirTemp
                     if train[0][6] >68:
                         train[0][6] = 67.99
@@ -181,7 +180,7 @@ def process(request):
                         train[0][6] = -0.00001
                     else:
                         train[0][6] = train[0][6] * 1.00078
-                    
+
                     # SlurryPipelineLowerLayerPressure
                     if train[0][7] > 76:
                         train[0][7] = 75.999
@@ -189,7 +188,7 @@ def process(request):
                         train[0][7] = 42.0009
                     else:
                         train[0][7] = train[0][7] * 1.0095
-                    
+
                     # OutAirMotorFreq
                     if train[0][8] > 0.9:
                         train[0][8] = 0.899999
@@ -197,7 +196,7 @@ def process(request):
                         train[0][8] = 0.6001
                     else:
                         train[0][8] = train[0][8] * 0.98817
-                    
+
                     # SecondAirMotorFreq
                     if train[0][9] > 88:
                         train[0][9] = 87.99
@@ -249,12 +248,12 @@ def process(request):
                     # train[0][11] = train[0][11] * 0.98667
 
                     modified_m = np.expm1(model.predict(train))
-                    
+
                     tmp = np.append(train, modified_m)
                     results.append(tmp)
 
             else:
-                
+
                 tmp = np.append(train, train_pred)
                 results.append(tmp)
 
@@ -262,14 +261,14 @@ def process(request):
     else:
         form = Jingbai()
 
-    return render(request, 'process.html', {'form': form, 'results': results, 'm': m})    
+    return render(request, 'process.html', {'form': form, 'results': results, 'm': m})
 
 
 # Create your views here.
 def post_list(request):
 	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
 	return render(request, 'blog/post_list.html', {'posts': posts})
-	
+
 def jingbai(request):
     # Handle file upload
     if request.method == 'POST':
@@ -444,7 +443,7 @@ def jingbai_ds(request):
     train_pred = lasso_model.predict(train)
 
     combine = np.column_stack((np.expm1(train_pred), train))
-    
+
     # need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/jingbai_ready.csv'))
 
@@ -454,7 +453,7 @@ def jingbai_ds(request):
     for x in range(0, rows):
         # count = 0
         # while combine[x, 0] > 32.9:
-        #     if count == 3: 
+        #     if count == 3:
         #         break
         #     count = count + 1
         #     for y in range(1, cols-1):
@@ -491,10 +490,10 @@ def jingbai_ds(request):
             modified_res[x, 12] = combine[x, 12] * 0.98667
 
             modified_res[x, 0] = np.expm1(lasso_model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            
+
 
     final_com = np.column_stack((combine, modified_res))
- 
+
     return render(request, 'blog/jingbai_ds.html', {'final_com': final_com})
 
 
@@ -509,7 +508,7 @@ def tbo_ds(request):
     train_pred = np.expm1(lasso_model.predict(train))
 
     combine = np.column_stack((train_pred, train))
-    
+
     # need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/tbo_ready.csv'))
 
@@ -519,7 +518,7 @@ def tbo_ds(request):
     # for x in range(0, rows):
     #     count = 0
     #     while combine[x, 0] > 32.9:
-    #         if count == 3: 
+    #         if count == 3:
     #             break
     #         count = count + 1
     #         for y in range(1, cols-1):
@@ -536,7 +535,7 @@ def tbo_ds(request):
     for x in range(0, rows):
         # count = 0
         # while combine[x, 0] > 32.9:
-        #     if count == 3: 
+        #     if count == 3:
         #         break
         #     count = count + 1
         #     for y in range(1, cols-1):
@@ -580,7 +579,7 @@ def tbo_ds(request):
 
 def bilang_ds(request):
     lasso_model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
-    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv')) 
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv'))
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
@@ -588,7 +587,7 @@ def bilang_ds(request):
     train_pred = np.expm1(lasso_model.predict(train))
 
     combine = np.column_stack((train_pred, train))
-	
+
 	# need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv'))
 
@@ -598,7 +597,7 @@ def bilang_ds(request):
     for x in range(0, rows):
         # count = 0
         # while combine[x, 0] > 32.9:
-        #     if count == 3: 
+        #     if count == 3:
         #         break
         #     count = count + 1
         #     for y in range(1, cols-1):
@@ -636,14 +635,14 @@ def bilang_ds(request):
 
             modified_res[x, 0] = np.expm1(lasso_model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
 
-            
+
 
     final_com = np.column_stack((combine, modified_res))
     return render(request, 'blog/bilang_ds.html', {'final_com': final_com})
 
 def bilang_steps(request):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
-    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv')) 
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv'))
     train_y = df_ready.M.values
     del df_ready["Unnamed: 0"]
     del df_ready["M"]
@@ -651,7 +650,7 @@ def bilang_steps(request):
     train_pred = np.expm1(model.predict(train))
 
     combine = np.column_stack((train_pred, train))
-    
+
     # need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/bilang_ready.csv'))
 
@@ -659,7 +658,7 @@ def bilang_steps(request):
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
-      
+
         if combine[x, 0] > 33 :
             # AirOutTemp
             modified_res[x, 1] = combine[x, 1]  * 0.98
@@ -689,7 +688,7 @@ def bilang_steps(request):
 
             modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
 
-            
+
 
     final_com = np.column_stack((combine, modified_res))
     return render(request, 'blog/bilang_steps.html', {'final_com': final_com})
@@ -719,7 +718,7 @@ def delete_tbo(request):
 def jingbai_gasflow_highppf(request):
 
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai_gasflow_highpressurepf.pkl'))
-    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/jingbai_two_vars_ready.csv')) 
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/jingbai_two_vars_ready.csv'))
     train_y = df_ready.GasFlow.values
     del df_ready["Unnamed: 0"]
     del df_ready["GasFlow"]
@@ -727,7 +726,7 @@ def jingbai_gasflow_highppf(request):
     train_pred = np.expm1(model.predict(train))
 
     combine = np.column_stack((train_pred, train))
-    
+
     # need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/jingbai_two_vars_ready.csv'))
 
@@ -746,7 +745,7 @@ def jingbai_gasflow_highppf(request):
 def bilang_gasflow_highppf(request):
 
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang_gasflow_highpressurepf.pkl'))
-    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_two_vars_ready.csv')) 
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/bilang_two_vars_ready.csv'))
     train_y = df_ready.GasFlow.values
     del df_ready["Unnamed: 0"]
     del df_ready["GasFlow"]
@@ -754,7 +753,7 @@ def bilang_gasflow_highppf(request):
     train_pred = np.expm1(model.predict(train))
 
     combine = np.column_stack((train_pred, train))
-    
+
     # need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/bilang_two_vars_ready.csv'))
 
@@ -773,7 +772,7 @@ def bilang_gasflow_highppf(request):
 def tbo_gasflow_highppf(request):
 
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo_gasflow_highpressurepf.pkl'))
-    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/tbo_two_vars_ready.csv')) 
+    df_ready = pd.read_csv(os.path.join(BASE_DIR, 'media/documents/tbo_two_vars_ready.csv'))
     train_y = df_ready.GasFlow.values
     del df_ready["Unnamed: 0"]
     del df_ready["GasFlow"]
@@ -781,7 +780,7 @@ def tbo_gasflow_highppf(request):
     train_pred = np.expm1(model.predict(train))
 
     combine = np.column_stack((train_pred, train))
-    
+
     # need to delete the origin upload file
     os.remove(os.path.join(BASE_DIR, 'media/documents/tbo_two_vars_ready.csv'))
 
@@ -885,12 +884,12 @@ database_name = 'picus_db'
 #setup the connection with influx db
 con = InfluxDBClient(hostname, port_num, db_user_name, db_user_name, database_name)
 # con.write_points(json_body)
-# 
-# 
+#
+#
 # air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp
 
-# 
-# 
+#
+#
 
 import time
 from django.shortcuts import redirect
@@ -906,8 +905,8 @@ def getlatest(request, format=None):
     global BPT
     global flag_BPT
     global flag_ai
-    global tmp 
-    
+    global tmp
+
     if request.method == "GET":
         result = con.query("select energy_saving, indicator, f_m, modified_m, air_out_temp, base_powder_temp,  air_in_temp_1, slurry_temp, tower_top_negative_pressure, aging_tank_flow, second_input_air_temp, slurry_pipeline_lower_layer_pressure, out_air_motor_freq, second_air_motor_freq, high_pressure_pump_freq, gas_flow,p_slurry_pipeline_lower_layer_pressure, p_out_air_motor_freq, p_second_air_motor_freq, p_high_pressure_pump_freq, p_gas_flow,p_air_out_temp, p_base_powder_temp,  p_air_in_temp_1, p_slurry_temp, p_tower_top_negative_pressure, p_aging_tank_flow, p_second_input_air_temp  from new_value_data  order by desc limit 1")
         values = result.raw['series'][0]['values'][0]
@@ -926,14 +925,14 @@ def getlatest(request, format=None):
             flag_ai = 1
 
         if flag_ai == 1:
-            res['base_powder_temp_baseline_ai'] = tmp    
+            res['base_powder_temp_baseline_ai'] = tmp
         # if res['time'] == pre_time:
         #     res['indicator'] = 1
         #     res['p_gas_flow'] = -1
         #     res['p_high_pressure_pump_freq'] = -1
         #     res['p_out_air_motor_freq'] = -1
         #     res['p_second_air_motor_freq'] = -1
-            
+
 
         # pre_time = res['time']
         # time.sleep(2)
@@ -960,10 +959,10 @@ def cleanup(request, format=None):
     flag_BPT = "11"
     return redirect('http://127.0.0.1:8000/display')
 
-        
+
 # display soluton for onsite tuning
 def display(request):
-    
+
     return render(request, 'display.html')
 
 # process value data from OPC via restful API call
@@ -977,32 +976,32 @@ def value_data_process(request, format=None):
             # print serializer.data.get("aging_tank_flow")
             # print serializer.data.get("air_in_temp_1")
             d = {
-                'air_out_temp': [serializer.data.get("air_out_temp")], 
-                'base_powder_temp': [serializer.data.get("base_powder_temp")], 
-                'air_in_temp_1': [serializer.data.get("air_in_temp_1")], 
-                'slurry_temp': [serializer.data.get("slurry_temp")], 
+                'air_out_temp': [serializer.data.get("air_out_temp")],
+                'base_powder_temp': [serializer.data.get("base_powder_temp")],
+                'air_in_temp_1': [serializer.data.get("air_in_temp_1")],
+                'slurry_temp': [serializer.data.get("slurry_temp")],
                 'tower_top_negative_pressure':[serializer.data.get("tower_top_negative_pressure")],
-                'aging_tank_flow': [serializer.data.get("aging_tank_flow")], 
-                'second_input_air_temp': [serializer.data.get("second_input_air_temp")], 
-                'slurry_pipeline_lower_layer_pressure': [serializer.data.get("slurry_pipeline_lower_layer_pressure")], 
-                'out_air_motor_freq': [serializer.data.get("out_air_motor_freq")], 
-                'second_air_motor_freq': [serializer.data.get("second_air_motor_freq")], 
-                'high_pressure_pump_freq': [serializer.data.get("high_pressure_pump_freq")], 
+                'aging_tank_flow': [serializer.data.get("aging_tank_flow")],
+                'second_input_air_temp': [serializer.data.get("second_input_air_temp")],
+                'slurry_pipeline_lower_layer_pressure': [serializer.data.get("slurry_pipeline_lower_layer_pressure")],
+                'out_air_motor_freq': [serializer.data.get("out_air_motor_freq")],
+                'second_air_motor_freq': [serializer.data.get("second_air_motor_freq")],
+                'high_pressure_pump_freq': [serializer.data.get("high_pressure_pump_freq")],
                 'gas_flow':[serializer.data.get("gas_flow")],
                 'brand' : [serializer.data.get("brand")],
                 'f_m' : [serializer.data.get("f_m")],
                 'density_checking_switch_2' : [serializer.data.get("density_checking_switch_2")],
             }
-            
+
             data = pd.DataFrame(data=d, columns=['air_out_temp', 'base_powder_temp', 'air_in_temp_1', 'slurry_temp', 'tower_top_negative_pressure',
-                    'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure', 
+                    'aging_tank_flow', 'second_input_air_temp', 'slurry_pipeline_lower_layer_pressure',
                     'out_air_motor_freq', 'second_air_motor_freq', 'high_pressure_pump_freq', 'gas_flow', 'brand', 'f_m', 'density_checking_switch_2'])
             # pred_m = 0
 
-            
+
             res, indicator = data_process(data)
 
-            
+
             measurement = "new_value_data"
             host_name = "127.0.0.1"
             region_value = "us_west"
@@ -1124,12 +1123,12 @@ def value_data_process(request, format=None):
 
                         "high_pressure_pump_b_freq_new" : round(float(serializer.data.get("high_pressure_pump_b_freq_new")), 2),
                         "exhaust_freq_new" : round(float(serializer.data.get("exhaust_freq_new")), 2),
-                        
+
                         "flag_aging_tank_flow" : float(1),
-                        "flag_air_in_temp_1" : float(1), 
+                        "flag_air_in_temp_1" : float(1),
                         "flag_air_out_temp" : float(1),
-                        "flag_base_powder_temp" :float(1) , 
-                        "flag_gas_flow" : float(1), 
+                        "flag_base_powder_temp" :float(1) ,
+                        "flag_gas_flow" : float(1),
                         "flag_high_pressure_pump_freq" : float(1),
                         "flag_out_air_motor_freq" : float(1),
                         "flag_second_air_motor_freq" : float(1),
@@ -1146,7 +1145,7 @@ def value_data_process(request, format=None):
                     }
                 }
             ]
-            
+
             con.write_points(json_body)
             print "post sucessfully!"
             con.close()
@@ -1160,7 +1159,7 @@ def value_data_process(request, format=None):
         print "post failure!!!"
         return Response("error! sorry!")
 
-   
+
 
 # 1 -- others
 # 2 -- jingbai
@@ -1181,7 +1180,7 @@ def data_process(data):
     elif data['brand'][0] == 1.0:
                 print "chukou jifen"
                 res, pred_m = jingbai_process(data)
-   
+
     return res, pred_m
 
 
@@ -1222,14 +1221,14 @@ def jingbai_process(data):
     print "------------------------------"
     del data['density_checking_switch_2']
     del data['brand']
-    df_ready = data 
-   
+    df_ready = data
+
     train = df_ready.values
     # train_pred = np.expm1(model.predict(train))
     train_pred = data['f_m'] * 0.993588
     print train_pred
     combine = np.column_stack((train_pred, train))
-   
+
     rows = combine.shape[0]
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
@@ -1237,7 +1236,7 @@ def jingbai_process(data):
     if indicator == -3 and cnt > 0:
         cnt = cnt - 1
         modified_res = copy.deepcopy(combine)
-       
+
         return modified_res, indicator
 
     indicator = 1
@@ -1245,7 +1244,7 @@ def jingbai_process(data):
 
 
     for x in range(0, rows):
-        
+
         if ((combine[x, 0] > 35) and (combine[x, 2] >= 90) and (density_checking_switch > 530) and (density_checking_switch < 650)):
             indicator = 2
             # jb_count = jb_count + 1
@@ -1260,7 +1259,7 @@ def jingbai_process(data):
                 modified_res[x, 1] = round(combine[x, 1]  * 0.981, 2)
 
 
-            # BasePowderTemp 
+            # BasePowderTemp
             # if combine[x, 2] > 166 :
             #     modified_res[x, 2] = 165.99
             # elif combine[x, 2] < 95 :
@@ -1272,7 +1271,7 @@ def jingbai_process(data):
                 modified_res[x, 2] = 106
 
 
-            # AirInTemp_1# 
+            # AirInTemp_1#
             # if combine[x, 3] > 302 :
             #     modified_res[x, 3] = 301.999
             # elif combine[x, 3] < 238 :
@@ -1283,7 +1282,7 @@ def jingbai_process(data):
             if modified_res[x, 3] > 279.1:
                 modified_res[x, 3] = 279
 
-            # SlurryTemp# 
+            # SlurryTemp#
             # if combine[x, 4] > 894:
             #     modified_res[x, 4] = 893.99
             # elif combine[x, 4] < 0:
@@ -1294,7 +1293,7 @@ def jingbai_process(data):
             if modified_res[x, 4] > 71.0:
                 modified_res[x, 4] = 71
 
-            # TowerTopNegativePressure 
+            # TowerTopNegativePressure
             # if combine[x, 5] > 0:
             #     modified_res[x, 5] = -0.000001
             # elif combine[x, 5] < -30.0:
@@ -1303,7 +1302,7 @@ def jingbai_process(data):
             #     modified_res[x, 5] = combine[x, 5] * 0.9959
             modified_res[x, 5] = round(combine[x, 5] * 0.9907, 2)
 
-            # AgingTankFlow 
+            # AgingTankFlow
             # if combine[x, 6] > 27474:
             #     modified_res[x, 6] = 27473.999
             # elif combine[x, 6] < 17451:
@@ -1312,7 +1311,7 @@ def jingbai_process(data):
             #     modified_res[x, 6] = combine[x, 6] * 1.02226
             # modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(31.89 * randint(2, 4), 2)
 
-            # SecondInputAirTemp 
+            # SecondInputAirTemp
             # if combine[x, 7] > 68:
             #     modified_res[x, 7] = 67.99
             # elif combine[x, 7] < 0:
@@ -1355,7 +1354,7 @@ def jingbai_process(data):
 
 
 
-            # SecondAirMotorFreq# 
+            # SecondAirMotorFreq#
             # if combine[x, 10] > 88:
             #     modified_res[x, 10] = 87.99
             # elif combine[x, 10] < 53:
@@ -1400,7 +1399,7 @@ def jingbai_process(data):
 
             modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
-            # GasFlow# 
+            # GasFlow#
             # if combine[x, 12] > 722:
             #     modified_res[x, 12] = 721.99
             # elif combine[x, 12] < 500:
@@ -1416,8 +1415,8 @@ def jingbai_process(data):
 
 
             ##conditioins
-            if combine[x, 2] < 108 and (combine[x, 11]==34 or combine[x, 11] == 35): 
-                modified_res[x, 11] = combine[x, 11] 
+            if combine[x, 2] < 112 and (combine[x, 11]==34 or combine[x, 11] == 35):
+                modified_res[x, 11] = combine[x, 11]
                 modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
                 modified_res[x, 0] = train_pred[x] * 1.0123
@@ -1431,9 +1430,9 @@ def jingbai_process(data):
             modified_res[x] = -1
 
             if combine[x, 11] <= 34 or combine[x, 2] < 120:
-                if combine[x, 11] <= 35:
+                if combine[x, 11] <= 35 and combine[x, 11] >=31:
                     modified_res[x, 11] = combine[x, 11] - 1
-               
+
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
@@ -1443,7 +1442,6 @@ def jingbai_process(data):
                 modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
             if density_checking_switch > 620 and combine[x, 11] <= 33:
-            
                 modified_res[x, 12] = combine[x, 12] + 12
 
             if density_checking_switch > 620 and combine[x, 11] >=34:
@@ -1451,7 +1449,7 @@ def jingbai_process(data):
 
 
             if combine[x, 2] < 120:
-               
+
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
@@ -1467,7 +1465,7 @@ def jingbai_process(data):
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
-            if combine[x, 2] < float(BPT) and modified_res[x, 10] == -1 and modified_res[x, 9] == -1: 
+            if combine[x, 2] < float(BPT) and modified_res[x, 10] == -1 and modified_res[x, 9] == -1:
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
                 modified_res[x, 12] = round(combine[x, 12] + 10, 2)
@@ -1479,12 +1477,12 @@ def jingbai_process(data):
             if density_checking_switch >=610 and combine[x, 11] <= 33:
                 modified_res[x, 12] = combine[x, 12] + 10
 
-            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 122:
+            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 118:
                 modified_res[x, 12] = combine[x, 12] - 13
 
 
 
-                
+
             # jb_tmp = modified_res
         # modified_res = jb_tmp
         elif combine[x, 2] < 105:
@@ -1498,7 +1496,7 @@ def jingbai_process(data):
             indicator = 1
         if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and modified_res[x, 12] == -1 and modified_res[x, 9] == -1:
             indicator = 1
-    
+
     return modified_res, indicator
 
 
@@ -1516,21 +1514,21 @@ def jingbai_process_v2(data):
     del data['brand']
     del data['f_m']
 
-    df_ready = data 
+    df_ready = data
 
     train = df_ready.values
     # train_pred = np.expm1(model.predict(train))
-    
-    
+
+
     combine = np.column_stack((train_pred, train))
-   
+
     rows = combine.shape[0]
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
     print "before modified"
     print modified_res
     for x in range(0, rows):
-        
+
         if ((combine[x, 0] > 33) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 650)):
             delta_airouttemp = combine[x, 1] * 0.001
             delta_basepowdertemp = combine[x, 2] * 0.00017
@@ -1558,7 +1556,7 @@ def jingbai_process_v2(data):
             arr12 = copy.deepcopy(combine)
             print "origin: "
             print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
-            
+
             AIR_IN_TEMP_1 = arr3[x, 3]
 
             arr1[x, 1] = arr1[x, 1] + delta_airouttemp
@@ -1611,7 +1609,7 @@ def jingbai_process_v2(data):
                     arr3[x, 3] = arr3[x, 3] - 2 * delta_airintemp1
                     if np.expm1(model.predict(np.reshape(arr3[x][1:], (-1, 12)))) >= combine[x, 0] :
                         arr3[x, 3] = arr3[x, 3] + delta_airintemp1
-                    else : 
+                    else :
                         arr3[x, 3] = arr3[x, 3] - delta_airintemp1
                 else :
                     arr3[x, 3] = arr3[x, 3] + delta_airintemp1
@@ -1634,11 +1632,11 @@ def jingbai_process_v2(data):
                     arr5[x, 5] = arr5[x, 5] - 2 * delta_ttnp
                     if np.expm1(model.predict(np.reshape(arr5[x][1:], (-1, 12)))) >= combine[x, 0] :
                         arr5[x, 5] = arr5[x, 5] + delta_ttnp
-                    else : 
+                    else :
                         arr5[x, 5] = arr5[x, 5] - delta_ttnp
                 else :
                     arr5[x, 5] = arr5[x, 5] + delta_ttnp
-                
+
                 if np.expm1(model.predict(np.reshape(arr6[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr6[x, 6] = arr6[x, 6] - 2 * delta_agingtankflow
                     if np.expm1(model.predict(np.reshape(arr6[x][1:], (-1, 12)))) >= combine[x, 0] :
@@ -1720,11 +1718,11 @@ def jingbai_process_v2(data):
 
                 if np.expm1(model.predict(np.reshape(arr12[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr12[x, 12] = arr12[x, 12] - 2 * delta_gasflow
-                    
+
                     if np.expm1(model.predict(np.reshape(arr12[x][1:], (-1, 12)))) >= combine[x, 0] :
                         arr12[x, 12] = arr12[x, 12] + delta_gasflow
 
-                    else : 
+                    else :
                         arr12[x, 12] = arr12[x, 12] - delta_gasflow
                 else :
                     arr12[x, 12] = arr12[x, 12] + delta_gasflow
@@ -1736,7 +1734,7 @@ def jingbai_process_v2(data):
 
                     arr12[x, 12] = arr12[x, 12] + 2 * delta_gasflow
 
-                
+
                 print "-------------------------------------------"
                 print "after: "
                 print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
@@ -1745,12 +1743,12 @@ def jingbai_process_v2(data):
             print "out of loop:"
             print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
 
-            
+
             # AirOutTemp
             if combine[x, 1] < 79 and combine[x, 1] > 70:
                 modified_res[x, 1] = round(arr1[x, 1], 2)
 
-            # BasePowderTemp 
+            # BasePowderTemp
             modified_res[x, 2] = round(arr02[x, 2], 2)
             if modified_res[x, 2] < 102:
                 modified_res[x, 2] = 102
@@ -1760,7 +1758,7 @@ def jingbai_process_v2(data):
                 modified_res[x, 12] = modified_res[x, 12] + 8
 
 
-            # AirInTemp_1# 
+            # AirInTemp_1#
             modified_res[x, 3] = round(arr3[x, 3], 2)
             # if AIR_IN_TEMP_1 > 279.0:
             #     modified_res[x, 3] = 279
@@ -1768,18 +1766,18 @@ def jingbai_process_v2(data):
 
 
 
-            # SlurryTemp# 
+            # SlurryTemp#
             modified_res[x, 4] = round(arr4[x, 4], 2)
             if modified_res[x, 4] > 71.0:
                 modified_res[x, 4] = 71
 
-            # TowerTopNegativePressure 
+            # TowerTopNegativePressure
             modified_res[x, 5] = round(arr5[x, 5], 2)
 
-            # AgingTankFlow 
-            modified_res[x, 6] = round(arr6[x, 6], 2) 
+            # AgingTankFlow
+            modified_res[x, 6] = round(arr6[x, 6], 2)
 
-            # SecondInputAirTemp 
+            # SecondInputAirTemp
             modified_res[x, 7] = round(arr7[x, 7], 2)
 
             # SlurryPipelineLowerLayerPressure
@@ -1788,7 +1786,7 @@ def jingbai_process_v2(data):
             # OutAirMotorFreq#
             modified_res[x, 9] = round(arr9[x, 9], 2) + 6.0
 
-            # SecondAirMotorFreq# 
+            # SecondAirMotorFreq#
             if combine[x, 10] < 61.0 :
                 # modified_res[x, 10] = round(arr9[x, 10], 2) + 13
 
@@ -1798,9 +1796,9 @@ def jingbai_process_v2(data):
                     modified_res[x, 10] = round(arr9[x, 10], 2) + 5
 
             else  :
-                modified_res[x, 10] = round(arr9[x, 10], 2) 
+                modified_res[x, 10] = round(arr9[x, 10], 2)
 
-           
+
             # HighPressurePumpFreq#
 
             RANDOM = randint(0, 1)
@@ -1809,7 +1807,7 @@ def jingbai_process_v2(data):
 
             # modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
-            # GasFlow# 
+            # GasFlow#
             # if combine[x, 12] > 722:
             #     modified_res[x, 12] = 721.99
             # elif combine[x, 12] < 500:
@@ -1824,7 +1822,7 @@ def jingbai_process_v2(data):
                 # else :
                     modified_res[x, 12] = round(arr12[x, 12], 2) - 18
                     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-                
+
 
             # frog condition
             flag_frog =  False
@@ -1844,14 +1842,14 @@ def jingbai_process_v2(data):
             #     modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
             # else :
             #     modified_res = copy.deepcopy(combine)
-                
+
             print "modified_res"
             print modified_res
             # modified_res[x, 0] = train_pred[x] * 0.9669
 
 
             ##conditioins
-            # if combine[x, 2] < 108 and (combine[x, 11]==34 or combine[x, 11] == 35): 
+            # if combine[x, 2] < 108 and (combine[x, 11]==34 or combine[x, 11] == 35):
             #     modified_res[x, 11] = combine[x, 11] - 1
             #     modified_res[x, 10] = round(combine[x, 10] + randint(3, 8) * 0.5, 2)
 
@@ -1859,14 +1857,14 @@ def jingbai_process_v2(data):
             # if combine[x, 3] > 279:
             #     modified_res[x, 10] = round(combine[x, 10] + randint(3, 8) * 0.5, 2)
             #     modified_res[x, 9] = round(combine[x, 9] + randint(4, 11) * 0.2, 2)
-                
+
             # jb_tmp = modified_res
         # modified_res = jb_tmp
-        elif combine[x, 2] < 100.00: #todo 
+        elif combine[x, 2] < 100.00: #todo
             modified_res[x] = -1
         # else :
         #     modified_res[x] = -1
- 
+
     return modified_res, train_pred
 
 def tbo_process_v2(data):
@@ -1881,19 +1879,19 @@ def tbo_process(data):
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
     del data['density_checking_switch_2']
     del data['brand']
-    df_ready = data 
-   
+    df_ready = data
+
     train = df_ready.values
     # train_pred = np.expm1(model.predict(train))
     train_pred = data['f_m'] * 0.993588
 
     combine = np.column_stack((train_pred, train))
-   
+
     rows = combine.shape[0]
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
-        
+
         if (combine[x, 0] > 33 and combine[x, 2] >= 120) and (density_checking_switch > 622 and density_checking_switch < 640):
             # tbo_count = tbo_count + 1
             # AirOutTemp
@@ -2034,23 +2032,23 @@ def tbo_process(data):
 def bilang_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
-    
+
     del data['density_checking_switch_2']
     del data['brand']
-    df_ready = data 
+    df_ready = data
     # train_y = df_ready.M.values
-    
+
     train = df_ready.values
     # train_pred = np.expm1(model.predict(train))
     train_pred = data['f_m'] * 0.993588
 
     combine = np.column_stack((train_pred, train))
-   
+
     rows = combine.shape[0]
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
     for x in range(0, rows):
-        
+
         # if combine[x, 0] > 33 and (bl_count % bl_INTERVAL == 0):
         if (combine[x, 0] > 33 and combine[x, 2] >= 120 and density_checking_switch > 622 and density_checking_switch < 640):
             # bl_count = bl_count + 1
@@ -2188,8 +2186,3 @@ def bilang_process(data):
 
 
     return modified_res, train_pred
-
-
-
-
-
