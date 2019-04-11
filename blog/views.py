@@ -293,7 +293,7 @@ def jingbai(request):
     )
 
 def jingbai_two_vars(request):
-    # Handle file upload
+    # Handle file uploadht
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -1431,13 +1431,13 @@ def jingbai_process(data):
 
             if combine[x, 11] <= 34 or combine[x, 2] < 120:
                 if combine[x, 11] <= 35 and combine[x, 11] >=31:
-                    modified_res[x, 11] = combine[x, 11] - 1
+                    # modified_res[x, 11] = combine[x, 11] - 1
 
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
             if combine[x, 11] >= 36 and combine[x, 2] > 120:
-                modified_res[x, 11] = combine[x, 11] - 1
+                # modified_res[x, 11] = combine[x, 11] - 1
                 modified_res[x, 10] = combine[x, 10] - 1.4
                 modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
@@ -1445,7 +1445,7 @@ def jingbai_process(data):
                 modified_res[x, 12] = combine[x, 12] + 12
 
             if density_checking_switch > 620 and combine[x, 11] >=34:
-                modified_res[x, 11] = combine[x, 11] - 1
+                # modified_res[x, 11] = combine[x, 11] - 1
 
 
             if combine[x, 2] < 120:
@@ -1456,12 +1456,12 @@ def jingbai_process(data):
                 # modified_res[x, 12] = combine[x, 12] + 12
 
             if combine[x, 3] > 275  and modified_res[x, 11] < 37:
-                modified_res[x, 11] = combine[x, 11] - 1
+                # modified_res[x, 11] = combine[x, 11] - 1
                 modified_res[x, 10] = combine[x, 10] - 1.5
                 modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
             if combine[x, 3] < 257:
-                modified_res[x, 11] = combine[x, 11] + 1
+                # modified_res[x, 11] = combine[x, 11] + 1
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
@@ -1472,7 +1472,7 @@ def jingbai_process(data):
 
 
             if density_checking_switch >=610 and combine[x, 11] >= 34:
-                modified_res[x, 11] = combine[x, 11] - 1
+                # modified_res[x, 11] = combine[x, 11] - 1
 
             if density_checking_switch >=610 and combine[x, 11] <= 33:
                 modified_res[x, 12] = combine[x, 12] + 10
