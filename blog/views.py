@@ -1486,7 +1486,7 @@ def jingbai_process(data):
 
             # modified_res[x, 12] = combine[x, 12] - 10
 
-            indicator = 1
+
             # jb_tmp = modified_res
         # modified_res = jb_tmp
         elif combine[x, 2] < 105:
