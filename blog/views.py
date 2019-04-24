@@ -1451,8 +1451,7 @@ def jingbai_process(data):
 
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-
-                # modified_res[x, 12] = combine[x, 12] + 12
+                modified_res[x, 12] = combine[x, 12] + 5
 
             if combine[x, 3] > 275  and modified_res[x, 11] < 37:
                 # modified_res[x, 11] = combine[x, 11] - 1
