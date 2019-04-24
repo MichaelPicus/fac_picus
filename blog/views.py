@@ -1492,11 +1492,12 @@ def jingbai_process(data):
             # modified_res[x, 12] = combine[x, 12] - 10
             # jb_tmp = modified_res
         # modified_res = jb_tmp
-        elif combine[x, 2] < 116:
+        elif combine[x, 2] < 117:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 10] = combine[x, 10] + 1.3
             modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+            modified_res[x, 12] = combine[x, 12] + 6
         else :
             modified_res[x] = -1
             indicator = 1
