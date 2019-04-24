@@ -1241,8 +1241,6 @@ def jingbai_process(data):
 
     indicator = 1
 
-
-
     for x in range(0, rows):
 
         if ((combine[x, 0] > 36.8) and (combine[x, 2] >= 90) and (density_checking_switch > 530) and (density_checking_switch < 650)):
@@ -1488,10 +1486,10 @@ def jingbai_process(data):
             #     modified_res[x, 11] = 32
 
 
-            if combine[x, 2] <= 109 and modified_res[x, 9] == -1 and modified_res[x, 10] == -1:
+            if combine[x, 2] <= 108.5 and modified_res[x, 9] == -1 and modified_res[x, 10] == -1:
                 modified_res[x, 12] = combine[x, 12] + 7
 
-            if combine[x, 2] > 109 and density_checking_switch < 620:
+            if combine[x, 2] > 108.5 and density_checking_switch < 620:
                 modified_res[x, 12] = combine[x, 12] - 7
 
 
