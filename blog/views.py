@@ -1413,7 +1413,7 @@ def jingbai_process(data):
 
 
             ##conditioins
-            if combine[x, 2] < 112 and (combine[x, 11]==34 or combine[x, 11] == 35):
+            if combine[x, 2] < 117 and (combine[x, 11]==34 or combine[x, 11] == 35):
                 modified_res[x, 11] = combine[x, 11]
                 modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
@@ -1466,32 +1466,22 @@ def jingbai_process(data):
                 # modified_res[x, 12] = round(combine[x, 12] + 10, 2)
                 pass
 
-
             # if density_checking_switch >=610 and combine[x, 11] >= 34:
                 # modified_res[x, 11] = combine[x, 11] - 1
-
             if density_checking_switch >=610 and combine[x, 11] <= 33:
                 modified_res[x, 12] = combine[x, 12] + 6
-
-
-
-
 
             if combine[x, 3] < 260:
                 modified_res[x, 10] = combine[x, 10] - 1.5
                 modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
-
             # if combine[x, 2] > 110.0 and density_checking_switch < 635:
             #     modified_res[x, 11] = 32
-
-
-            if combine[x, 2] <= 108.5 and modified_res[x, 9] == -1 and modified_res[x, 10] == -1:
+            if combine[x, 2] <= 117.5 and modified_res[x, 9] == -1 and modified_res[x, 10] == -1:
                 modified_res[x, 12] = combine[x, 12] + 7
 
-            if combine[x, 2] > 108.5 and density_checking_switch < 620:
+            if combine[x, 2] > 117.5 and density_checking_switch < 620:
                 modified_res[x, 12] = combine[x, 12] - 7
-
 
             if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 118:
                 indicator = 1
@@ -1500,27 +1490,20 @@ def jingbai_process(data):
             if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 118:
                 modified_res[x, 12] = combine[x, 12] - 6
 
-
             # modified_res[x, 12] = combine[x, 12] - 10
-
-
             # jb_tmp = modified_res
         # modified_res = jb_tmp
-        elif combine[x, 2] < 107:
+        elif combine[x, 2] < 116:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 10] = combine[x, 10] + 1.3
             modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-
         else :
             modified_res[x] = -1
             indicator = 1
         if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and modified_res[x, 12] == -1 and modified_res[x, 9] == -1:
             indicator = 1
-
     return modified_res, indicator
-
-
 
 def jingbai_process_v2(data):
     print "------------------------------"
@@ -1539,8 +1522,6 @@ def jingbai_process_v2(data):
 
     train = df_ready.values
     # train_pred = np.expm1(model.predict(train))
-
-
     combine = np.column_stack((train_pred, train))
 
     rows = combine.shape[0]
@@ -1549,7 +1530,6 @@ def jingbai_process_v2(data):
     print "before modified"
     print modified_res
     for x in range(0, rows):
-
         if ((combine[x, 0] > 33) and (combine[x, 2] >= 100) and (density_checking_switch > 530) and (density_checking_switch < 650)):
             delta_airouttemp = combine[x, 1] * 0.001
             delta_basepowdertemp = combine[x, 2] * 0.00017
@@ -1597,13 +1577,10 @@ def jingbai_process_v2(data):
             arr12[x, 12] = arr12[x, 12] + delta_gasflow
 
             GAS_FLOW = arr12[x, 12]
-
-
             for item in range(20):
                 print "==========================================="
                 print "iterating item"
                 print item
-
                 print "before: "
                 print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
 
@@ -1638,7 +1615,6 @@ def jingbai_process_v2(data):
                 if arr3[x, 3] >= 279:
                     arr3[x, 3] = 278.5
 
-
                 if np.expm1(model.predict(np.reshape(arr4[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr4[x, 4] = arr4[x, 4] - 2 * delta_slurrytemp
                     if np.expm1(model.predict(np.reshape(arr4[x][1:], (-1, 12)))) >= combine[x, 0] :
@@ -1647,7 +1623,6 @@ def jingbai_process_v2(data):
                         arr4[x, 4] = arr4[x, 4] - delta_slurrytemp
                 else :
                     arr4[x, 4] = arr4[x, 4] + delta_slurrytemp
-
 
                 if np.expm1(model.predict(np.reshape(arr5[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr5[x, 5] = arr5[x, 5] - 2 * delta_ttnp
@@ -1667,7 +1642,6 @@ def jingbai_process_v2(data):
                 else :
                     arr6[x, 6] = arr6[x, 6] + delta_agingtankflow
 
-
                 if np.expm1(model.predict(np.reshape(arr7[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr7[x, 7] = arr7[x, 7] - 2 * delta_secinputairtemp
                     if np.expm1(model.predict(np.reshape(arr7[x][1:], (-1, 12)))) >= combine[x, 0] :
@@ -1676,7 +1650,6 @@ def jingbai_process_v2(data):
                         arr7[x, 7] = arr7[x, 7] - delta_secinputairtemp
                 else :
                     arr7[x, 7] = arr7[x, 7] + delta_secinputairtemp
-
 
                 if np.expm1(model.predict(np.reshape(arr8[x][1:], (-1, 12)))) >= combine[x, 0] :
                     arr8[x, 8] = arr8[x, 8] - 2 * delta_splllp
@@ -1705,9 +1678,6 @@ def jingbai_process_v2(data):
                 else :
                     arr9[x, 9] = arr9[x, 9] - delta_outairmotorfreq
                     # arr9[x, 10] = arr9[x, 10] - delta_secairmotorfreq
-
-
-
 
                 # if np.expm1(model.predict(np.reshape(arr10[x][1:], (-1, 12)))) >= combine[x, 0] :
                 #     arr10[x, 10] = arr10[x, 10] - 2 * delta_secairmotorfreq
@@ -1752,18 +1722,13 @@ def jingbai_process_v2(data):
                     arr02[x, 2] = 102.01
                     if arr11[x, 11] < 34:
                         arr11[x, 11] = arr11[x, 11] + 1
-
                     arr12[x, 12] = arr12[x, 12] + 2 * delta_gasflow
-
-
                 print "-------------------------------------------"
                 print "after: "
                 print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
                 print "==========================================="
-
             print "out of loop:"
             print arr1[x, 1], arr02[x, 2],arr3[x, 3] , arr4[x, 4], arr5[x, 5], arr6[x, 6] , arr7[x, 7], arr8[x, 8], arr9[x, 9],arr10[x, 10], arr11[x, 11], arr12[x, 12]
-
 
             # AirOutTemp
             if combine[x, 1] < 79 and combine[x, 1] > 70:
@@ -1777,16 +1742,11 @@ def jingbai_process_v2(data):
                     modified_res[x, 11] = modified_res[x, 11] + 1
                 modified_res[x, 10] = modified_res[x, 10] + 1
                 modified_res[x, 12] = modified_res[x, 12] + 8
-
-
             # AirInTemp_1#
             modified_res[x, 3] = round(arr3[x, 3], 2)
             # if AIR_IN_TEMP_1 > 279.0:
             #     modified_res[x, 3] = 279
             #     modified_res[x, 11] = modified_res[x, 11] - 1
-
-
-
             # SlurryTemp#
             modified_res[x, 4] = round(arr4[x, 4], 2)
             if modified_res[x, 4] > 71.0:
@@ -1819,9 +1779,7 @@ def jingbai_process_v2(data):
             else  :
                 modified_res[x, 10] = round(arr9[x, 10], 2)
 
-
             # HighPressurePumpFreq#
-
             RANDOM = randint(0, 1)
             if combine[x, 11] > 31 and combine[x, 11] < 34:
                 modified_res[x, 11] = round(arr11[x, 11], 2)
