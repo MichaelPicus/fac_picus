@@ -1539,7 +1539,7 @@ def jingbai_process(data):
             modified_res[x, 12] = combine[x, 12] + 6
             
         
-        if combine[x, 2] < bpt  and combine[x, 8] <= 58 and modified_res[x, 12] == -1 and indicator != -3:
+        if combine[x, 2] < bpt  or combine[x, 8] <= 58 and modified_res[x, 12] == -1 and indicator != -3:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] + 6
