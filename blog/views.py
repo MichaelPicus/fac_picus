@@ -1502,6 +1502,26 @@ def jingbai_process(data):
         # else :
         #     modified_res[x] = -1
         #     indicator = 1
+        if pre_hppf != combine[x, 11]:
+                pre_hppf = combine[x, 11]
+                indicator = -3
+                cnt = 150
+
+        if abs(float(pre_gasflow) - combine[x, 12]) >= combine[x, 12] * 0.01:
+                pre_gasflow = combine[x, 12]
+                indicator = -3
+                cnt = 150
+
+        if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
+                pre_second = combine[x, 10]
+                indicator = -3
+                cnt = 150
+
+        if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
+                pre_out_air =combine[x, 9]
+                indicator = -3
+                cnt = 150
+
 
         modified_res[x] = -1
         if combine[x, 2] < 110 and combine[x, 8] > 59:
@@ -1510,19 +1530,19 @@ def jingbai_process(data):
             modified_res[x, 10] = combine[x, 10] + 1.3
             modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
             modified_res[x, 12] = combine[x, 12] + 6
-            cnt = 150
+            
         
         if combine[x, 2] < 110 and combine[x, 8] <= 58 and modified_res[x, 12] == -1:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] + 6
-            cnt = 150
+            
         
         if combine[x, 2] >= 110 and combine[x, 8] > 58 and density_checking_switch < 619:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] - 7 
-            cnt = 150
+            
 
         if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and modified_res[x, 12] == -1 and modified_res[x, 9] == -1:
             indicator = 1
@@ -1531,13 +1551,13 @@ def jingbai_process(data):
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] - 7
-            cnt = 150
+           
 
         if density_checking_switch < 610 and combine[x, 2] >= 110 and combine[x, 8] >= 59 and combine[x, 11] < 34 :
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 11] = combine[x, 11] + 1
-            cnt = 150
+            
         
     return modified_res, indicator
 
