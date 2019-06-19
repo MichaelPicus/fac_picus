@@ -1523,12 +1523,12 @@ def jingbai_process(data):
                 cnt = 150
 
         if float(BPT) != 0.0:
-            BPT = float(BPT) + 2.0
+            BPT = float(BPT) 
         else:
             BPT = float(combine[x, 2]) + 1.5
         
         modified_res[x] = -1
-        if combine[x, 2] < BPT and combine[x, 8] > 59 and indicator != -3:
+        if combine[x, 2] < (BPT + 2.0)and combine[x, 8] > 59 and indicator != -3:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 10] = combine[x, 10] + 1.3
@@ -1536,13 +1536,13 @@ def jingbai_process(data):
             modified_res[x, 12] = combine[x, 12] + 6
             
         
-        if combine[x, 2] < BPT and combine[x, 8] <= 58 and modified_res[x, 12] == -1 and indicator != -3:
+        if combine[x, 2] < (BPT + 2.0) and combine[x, 8] <= 58 and modified_res[x, 12] == -1 and indicator != -3:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] + 6
             
         
-        if combine[x, 2] >= BPT and combine[x, 8] > 58 and density_checking_switch < 619 and indicator != -3:
+        if combine[x, 2] >= (BPT + 2.0) and combine[x, 8] > 58 and density_checking_switch < 619 and indicator != -3:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] - 7 
@@ -1551,18 +1551,18 @@ def jingbai_process(data):
         if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and modified_res[x, 12] == -1 and modified_res[x, 9] == -1 and indicator != -3:
             indicator = 1
 
-        if density_checking_switch < 610 and combine[x, 2] >= BPT and combine[x, 8] >= 59 and combine[x, 11] >= 34 and  modified_res[x, 12] == -1 and indicator != -3:
+        if density_checking_switch < 610 and combine[x, 2] >= (BPT + 2.0) and combine[x, 8] >= 59 and combine[x, 11] >= 34 and  modified_res[x, 12] == -1 and indicator != -3:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] - 7
            
 
-        if density_checking_switch < 619 and combine[x, 2] >= BPT and combine[x, 8] >= 59 and combine[x, 11] < 34 and indicator != -3 :
+        if density_checking_switch < 619 and combine[x, 2] >= (BPT + 2.0) and combine[x, 8] >= 59 and combine[x, 11] < 34 and indicator != -3 :
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 11] = combine[x, 11] + 1
 
-        if density_checking_switch >= 619 or combine[x, 2] < BPT and indicator != -3:
+        if density_checking_switch >= 619 or combine[x, 2] < (BPT + 2.0) and indicator != -3:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 12] = combine[x, 12] + 7
