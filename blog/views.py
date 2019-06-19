@@ -1233,6 +1233,8 @@ def jingbai_process(data):
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
 
+    modified_res[x] = -1
+
     if indicator == -3 and cnt > 0:
         cnt = cnt - 1
         modified_res = copy.deepcopy(combine)
@@ -1504,6 +1506,15 @@ def jingbai_process(data):
             indicator = 1
         if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and modified_res[x, 12] == -1 and modified_res[x, 9] == -1:
             indicator = 1
+
+        if density_checking_switch < 610 and combine[x, 2] >= 110 and combine[x, 8] >= 59 and combine[x, 11] >= 34 and modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1:
+            indicator = 2
+            modified_res[x, 12] = combine[x, 12] - 7
+
+        if density_checking_switch < 610 and combine[x, 2] >= 110 and combine[x, 8] >= 59 and combine[x, 11] < 34 and modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1:
+            indicator = 2
+            modified_res[x, 11] = combine[x, 11] + 1
+        
     return modified_res, indicator
 
 def jingbai_process_v2(data):
