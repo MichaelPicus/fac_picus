@@ -1557,6 +1557,11 @@ def jingbai_process(data):
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 11] = combine[x, 11] + 1
+
+        if density_checking_switch >= 619 or combine[x, 2] < 108:
+            modified_res[x] = -1
+            indicator = 2
+            modified_res[x, 12] = combine[x, 12] + 7
             
         
     return modified_res, indicator
