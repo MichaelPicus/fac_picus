@@ -1525,7 +1525,7 @@ def jingbai_process(data):
         if float(BPT) != 0.0:
             BPT = float(BPT) 
         else:
-            BPT = float(combine[x, 2]) + 1.5
+            BPT = float(combine[x, 2]) 
         
         print "BPT : "
         print BPT
