@@ -1570,7 +1570,7 @@ def jingbai_process(data):
             indicator = 2
             modified_res[x, 12] = combine[x, 12] + 7
             
-        if combine[x, 8] <=57 and combine[x, 11] <= 34:
+        if combine[x, 8] <56.5 and combine[x, 11] <= 34:
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 11] = combine[x, 11] + 1
