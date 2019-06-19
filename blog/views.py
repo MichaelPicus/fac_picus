@@ -1502,6 +1502,20 @@ def jingbai_process(data):
         else :
             modified_res[x] = -1
             indicator = 1
+
+
+        if combine[x, 2] < 110 and combine[x, 8] > 59:
+            modified_res[x] = -1
+            indicator = 2
+            modified_res[x, 10] = combine[x, 10] + 1.3
+            modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+            modified_res[x, 12] = combine[x, 12] + 6
+        
+        if combine[x, 2] < 110 and combine[x, 8] <= 59:
+            modified_res[x] = -1
+            indicator = 2
+            modified_res[x, 12] = combine[x, 12] + 6
+
         if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and modified_res[x, 12] == -1 and modified_res[x, 9] == -1:
             indicator = 1
 
