@@ -1195,7 +1195,7 @@ def jingbai_process_v3(data):
     pass
 
 indicator = ""
-cnt = 25
+cnt = 150
 
 def jingbai_process(data):
     global indicator
@@ -1349,9 +1349,6 @@ def jingbai_process(data):
             if combine[x, 9] < 79 and combine[x, 10] < 66.0:
                 modified_res[x, 9] = round(combine[x, 9] + 2 * 0.2, 2)
                 modified_res[x, 10] = round(combine[x, 10] + 2 * 0.5, 2)
-
-
-
             # SecondAirMotorFreq#
             # if combine[x, 10] > 88:
             #     modified_res[x, 10] = 87.99
@@ -1372,23 +1369,22 @@ def jingbai_process(data):
             if pre_hppf != combine[x, 11]:
                 pre_hppf = combine[x, 11]
                 indicator = -3
-                cnt = 25
+                cnt = 150
 
             if abs(float(pre_gasflow) - combine[x, 12]) >= combine[x, 12] * 0.01:
                 pre_gasflow = combine[x, 12]
                 indicator = -3
-                cnt = 25
+                cnt = 150
 
             if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
                 pre_second = combine[x, 10]
                 indicator = -3
-                cnt = 25
+                cnt = 150
 
             if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
                 pre_out_air =combine[x, 9]
                 indicator = -3
-                cnt = 25
-
+                cnt = 150
 
             RANDOM = randint(0, 1)
             # if combine[x, 11] > 30 and combine[x, 11] < 35:
@@ -1846,13 +1842,6 @@ def jingbai_process_v2(data):
 
     return modified_res, train_pred
 
-def tbo_process_v2(data):
-    pass
-
-def bilang_process_v2(data):
-    pass
-
-
 def tbo_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_tbo.pkl'))
     density_checking_switch = data.iloc[0]['density_checking_switch_2']
@@ -2003,10 +1992,6 @@ def tbo_process(data):
 
 
     return modified_res, train_pred
-
-# bl_INTERVAL = 120
-# bl_count = 0
-# bl_tmp = ""
 
 def bilang_process(data):
     model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_bilang.pkl'))
@@ -2162,6 +2147,4 @@ def bilang_process(data):
         # modified_res = bl_tmp
         elif combine[x, 2] < 107:
             modified_res[x] = -1
-
-
     return modified_res, train_pred
