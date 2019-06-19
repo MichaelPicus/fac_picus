@@ -1243,265 +1243,265 @@ def jingbai_process(data):
 
     for x in range(0, rows):
 
-        if ((combine[x, 0] > 35)  and (density_checking_switch > 530) and (density_checking_switch < 630)):
-            indicator = 2
-            # jb_count = jb_count + 1
-            # AirOutTemp
-            # if combine[x, 1] > 130 :
-            #     modified_res[x, 1] = 129.99
-            # elif combine[x, 1] < 76 :
-            #     modified_res[x, 1] = 76.001
-            # else:
-            #     modified_res[x, 1] = combine[x, 1]  * 0.993
-            if combine[x, 1] < 79 and combine[x, 1] > 70:
-                modified_res[x, 1] = round(combine[x, 1]  * 0.981, 2)
+        # if ((combine[x, 0] > 35)  and (density_checking_switch > 530) and (density_checking_switch < 630)):
+        #     indicator = 2
+        #     # jb_count = jb_count + 1
+        #     # AirOutTemp
+        #     # if combine[x, 1] > 130 :
+        #     #     modified_res[x, 1] = 129.99
+        #     # elif combine[x, 1] < 76 :
+        #     #     modified_res[x, 1] = 76.001
+        #     # else:
+        #     #     modified_res[x, 1] = combine[x, 1]  * 0.993
+        #     if combine[x, 1] < 79 and combine[x, 1] > 70:
+        #         modified_res[x, 1] = round(combine[x, 1]  * 0.981, 2)
 
 
-            # BasePowderTemp
-            # if combine[x, 2] > 166 :
-            #     modified_res[x, 2] = 165.99
-            # elif combine[x, 2] < 95 :
-            #     modified_res[x, 2] = 95.001
-            # else :
-            #     modified_res[x, 2] = combine[x, 2]  * 0.997
-            modified_res[x, 2] = round(combine[x, 2]  * 1.0035, 2)
-            if modified_res[x, 2] < 106:
-                modified_res[x, 2] = 106
+        #     # BasePowderTemp
+        #     # if combine[x, 2] > 166 :
+        #     #     modified_res[x, 2] = 165.99
+        #     # elif combine[x, 2] < 95 :
+        #     #     modified_res[x, 2] = 95.001
+        #     # else :
+        #     #     modified_res[x, 2] = combine[x, 2]  * 0.997
+        #     modified_res[x, 2] = round(combine[x, 2]  * 1.0035, 2)
+        #     if modified_res[x, 2] < 106:
+        #         modified_res[x, 2] = 106
 
 
-            # AirInTemp_1#
-            # if combine[x, 3] > 302 :
-            #     modified_res[x, 3] = 301.999
-            # elif combine[x, 3] < 238 :
-            #     modified_res[x, 3] = 238.001
-            # else:
-            #     modified_res[x, 3] = combine[x, 3]  * 1.0152
-            modified_res[x, 3] = round(combine[x, 3]  + randint(6, 15) * 1, 2)
-            if modified_res[x, 3] > 279.1:
-                modified_res[x, 3] = 279
+        #     # AirInTemp_1#
+        #     # if combine[x, 3] > 302 :
+        #     #     modified_res[x, 3] = 301.999
+        #     # elif combine[x, 3] < 238 :
+        #     #     modified_res[x, 3] = 238.001
+        #     # else:
+        #     #     modified_res[x, 3] = combine[x, 3]  * 1.0152
+        #     modified_res[x, 3] = round(combine[x, 3]  + randint(6, 15) * 1, 2)
+        #     if modified_res[x, 3] > 279.1:
+        #         modified_res[x, 3] = 279
 
-            # SlurryTemp#
-            # if combine[x, 4] > 894:
-            #     modified_res[x, 4] = 893.99
-            # elif combine[x, 4] < 0:
-            #     modified_res[x, 4] = 0.001
-            # else:
-            #     modified_res[x, 4] = combine[x, 4]  * 1.0226
-            modified_res[x, 4] = round(combine[x, 4]  + randint(4, 9) * 1, 2)
-            if modified_res[x, 4] > 71.0:
-                modified_res[x, 4] = 71
+        #     # SlurryTemp#
+        #     # if combine[x, 4] > 894:
+        #     #     modified_res[x, 4] = 893.99
+        #     # elif combine[x, 4] < 0:
+        #     #     modified_res[x, 4] = 0.001
+        #     # else:
+        #     #     modified_res[x, 4] = combine[x, 4]  * 1.0226
+        #     modified_res[x, 4] = round(combine[x, 4]  + randint(4, 9) * 1, 2)
+        #     if modified_res[x, 4] > 71.0:
+        #         modified_res[x, 4] = 71
 
-            # TowerTopNegativePressure
-            # if combine[x, 5] > 0:
-            #     modified_res[x, 5] = -0.000001
-            # elif combine[x, 5] < -30.0:
-            #     modified_res[x, 5] = -29.988
-            # else:
-            #     modified_res[x, 5] = combine[x, 5] * 0.9959
-            modified_res[x, 5] = round(combine[x, 5] * 0.9907, 2)
+        #     # TowerTopNegativePressure
+        #     # if combine[x, 5] > 0:
+        #     #     modified_res[x, 5] = -0.000001
+        #     # elif combine[x, 5] < -30.0:
+        #     #     modified_res[x, 5] = -29.988
+        #     # else:
+        #     #     modified_res[x, 5] = combine[x, 5] * 0.9959
+        #     modified_res[x, 5] = round(combine[x, 5] * 0.9907, 2)
 
-            # AgingTankFlow
-            # if combine[x, 6] > 27474:
-            #     modified_res[x, 6] = 27473.999
-            # elif combine[x, 6] < 17451:
-            #     modified_res[x, 6] = 17451.02
-            # else:
-            #     modified_res[x, 6] = combine[x, 6] * 1.02226
-            # modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(31.89 * randint(2, 4), 2)
+        #     # AgingTankFlow
+        #     # if combine[x, 6] > 27474:
+        #     #     modified_res[x, 6] = 27473.999
+        #     # elif combine[x, 6] < 17451:
+        #     #     modified_res[x, 6] = 17451.02
+        #     # else:
+        #     #     modified_res[x, 6] = combine[x, 6] * 1.02226
+        #     # modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(31.89 * randint(2, 4), 2)
 
-            # SecondInputAirTemp
-            # if combine[x, 7] > 68:
-            #     modified_res[x, 7] = 67.99
-            # elif combine[x, 7] < 0:
-            #     modified_res[x, 7] = -0.00001
-            # else:
-            #     modified_res[x, 7] = combine[x, 7] * 1.00078
-            modified_res[x, 7] = round(combine[x, 7] * 1.00158, 2)
+        #     # SecondInputAirTemp
+        #     # if combine[x, 7] > 68:
+        #     #     modified_res[x, 7] = 67.99
+        #     # elif combine[x, 7] < 0:
+        #     #     modified_res[x, 7] = -0.00001
+        #     # else:
+        #     #     modified_res[x, 7] = combine[x, 7] * 1.00078
+        #     modified_res[x, 7] = round(combine[x, 7] * 1.00158, 2)
 
-            # SlurryPipelineLowerLayerPressure
-            # if combine[x, 8] > 76:
-            #     modified_res[x, 8] = 75.999
-            # elif combine[x, 8] < 42:
-            #     modified_res[x, 8] = 42.0009
-            # else:
-            #     modified_res[x, 8] = combine[x, 8] * 1.0095
-            modified_res[x, 8] = round(combine[x, 8] * 1.0195, 2)
+        #     # SlurryPipelineLowerLayerPressure
+        #     # if combine[x, 8] > 76:
+        #     #     modified_res[x, 8] = 75.999
+        #     # elif combine[x, 8] < 42:
+        #     #     modified_res[x, 8] = 42.0009
+        #     # else:
+        #     #     modified_res[x, 8] = combine[x, 8] * 1.0095
+        #     modified_res[x, 8] = round(combine[x, 8] * 1.0195, 2)
 
-            # OutAirMotorFreq#
-            # if combine[x, 9] > 0.9:
-            #     modified_res[x, 9] = 0.899999
-            # elif combine[x, 9] < 0.6:
-            #     modified_res[x, 9] = 0.6001
-            # else:
-            #     modified_res[x, 9] = combine[x, 9] * 0.98817
-            if combine[x, 9] > 79 and combine[x, 10] > 66.0:
-                modified_res[x, 9] = round(combine[x, 9] - 1 * 0.2, 2)
-                modified_res[x, 10] = round(combine[x, 10] - 3 * 0.5, 2)
+        #     # OutAirMotorFreq#
+        #     # if combine[x, 9] > 0.9:
+        #     #     modified_res[x, 9] = 0.899999
+        #     # elif combine[x, 9] < 0.6:
+        #     #     modified_res[x, 9] = 0.6001
+        #     # else:
+        #     #     modified_res[x, 9] = combine[x, 9] * 0.98817
+        #     if combine[x, 9] > 79 and combine[x, 10] > 66.0:
+        #         modified_res[x, 9] = round(combine[x, 9] - 1 * 0.2, 2)
+        #         modified_res[x, 10] = round(combine[x, 10] - 3 * 0.5, 2)
 
-            if combine[x, 9] < 79 and combine[x, 10] > 66.0:
-                modified_res[x, 9] = round(combine[x, 9] + 3 * 0.2, 2)
-                modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
+        #     if combine[x, 9] < 79 and combine[x, 10] > 66.0:
+        #         modified_res[x, 9] = round(combine[x, 9] + 3 * 0.2, 2)
+        #         modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
 
-            if combine[x, 9] > 79 and combine[x, 10] < 66.0:
-                modified_res[x, 9] = round(combine[x, 9] - 1 * 0.2, 2)
-                modified_res[x, 10] = round(combine[x, 10] - 1 * 0.5, 2)
+        #     if combine[x, 9] > 79 and combine[x, 10] < 66.0:
+        #         modified_res[x, 9] = round(combine[x, 9] - 1 * 0.2, 2)
+        #         modified_res[x, 10] = round(combine[x, 10] - 1 * 0.5, 2)
 
-            if combine[x, 9] < 79 and combine[x, 10] < 66.0:
-                modified_res[x, 9] = round(combine[x, 9] + 2 * 0.2, 2)
-                modified_res[x, 10] = round(combine[x, 10] + 2 * 0.5, 2)
-            # SecondAirMotorFreq#
-            # if combine[x, 10] > 88:
-            #     modified_res[x, 10] = 87.99
-            # elif combine[x, 10] < 53:
-            #     modified_res[x, 10] = 53.001
-            # else:
-            #     modified_res[x, 10] = combine[x, 10] * 0.9941167
-            # if :
-            #     modified_res[x, 10] = round(combine[x, 10] - randint(3, 8) * 0.5, 2)
+        #     if combine[x, 9] < 79 and combine[x, 10] < 66.0:
+        #         modified_res[x, 9] = round(combine[x, 9] + 2 * 0.2, 2)
+        #         modified_res[x, 10] = round(combine[x, 10] + 2 * 0.5, 2)
+        #     # SecondAirMotorFreq#
+        #     # if combine[x, 10] > 88:
+        #     #     modified_res[x, 10] = 87.99
+        #     # elif combine[x, 10] < 53:
+        #     #     modified_res[x, 10] = 53.001
+        #     # else:
+        #     #     modified_res[x, 10] = combine[x, 10] * 0.9941167
+        #     # if :
+        #     #     modified_res[x, 10] = round(combine[x, 10] - randint(3, 8) * 0.5, 2)
 
-            # HighPressurePumpFreq#
-            # if combine[x, 11] > 37.6:
-            #     modified_res[x, 11] = 37.59
-            # elif combine[x, 11] < 8.6:
-            #     modified_res[x, 11] = 8.699
-            # else:
-            #     modified_res[x, 11] = combine[x, 11] * 1.018
-            if pre_hppf != combine[x, 11]:
-                pre_hppf = combine[x, 11]
-                indicator = -3
-                cnt = 150
+        #     # HighPressurePumpFreq#
+        #     # if combine[x, 11] > 37.6:
+        #     #     modified_res[x, 11] = 37.59
+        #     # elif combine[x, 11] < 8.6:
+        #     #     modified_res[x, 11] = 8.699
+        #     # else:
+        #     #     modified_res[x, 11] = combine[x, 11] * 1.018
+        #     if pre_hppf != combine[x, 11]:
+        #         pre_hppf = combine[x, 11]
+        #         indicator = -3
+        #         cnt = 150
 
-            if abs(float(pre_gasflow) - combine[x, 12]) >= combine[x, 12] * 0.01:
-                pre_gasflow = combine[x, 12]
-                indicator = -3
-                cnt = 150
+        #     if abs(float(pre_gasflow) - combine[x, 12]) >= combine[x, 12] * 0.01:
+        #         pre_gasflow = combine[x, 12]
+        #         indicator = -3
+        #         cnt = 150
 
-            if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
-                pre_second = combine[x, 10]
-                indicator = -3
-                cnt = 150
+        #     if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
+        #         pre_second = combine[x, 10]
+        #         indicator = -3
+        #         cnt = 150
 
-            if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
-                pre_out_air =combine[x, 9]
-                indicator = -3
-                cnt = 150
+        #     if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
+        #         pre_out_air =combine[x, 9]
+        #         indicator = -3
+        #         cnt = 150
 
-            RANDOM = randint(0, 1)
-            # if combine[x, 11] > 30 and combine[x, 11] < 35:
-            #     modified_res[x, 11] = round(combine[x, 11] + 1, 2)
-            #     modified_res[x, 0] = train_pred[x] * 0.9909
+        #     RANDOM = randint(0, 1)
+        #     # if combine[x, 11] > 30 and combine[x, 11] < 35:
+        #     #     modified_res[x, 11] = round(combine[x, 11] + 1, 2)
+        #     #     modified_res[x, 0] = train_pred[x] * 0.9909
 
-            modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
+        #     modified_res[x, 6] = round(combine[x, 6] * 1.0355, 2) + round(299 * RANDOM, 2) + 99
 
-            # GasFlow#
-            # if combine[x, 12] > 722:
-            #     modified_res[x, 12] = 721.99
-            # elif combine[x, 12] < 500:
-            #     modified_res[x, 12] = 500.001
-            # else:
-            #     modified_res[x, 12] = combine[x, 12] * 0.99857
-            if combine[x, 2] > 122 and density_checking_switch < 635 and density_checking_switch > 580:
-                modified_res[x, 12] = round(combine[x, 12] - randint(1, 8) * 2, 2)
-                modified_res[x, 0] = train_pred[x] * 0.9869
+        #     # GasFlow#
+        #     # if combine[x, 12] > 722:
+        #     #     modified_res[x, 12] = 721.99
+        #     # elif combine[x, 12] < 500:
+        #     #     modified_res[x, 12] = 500.001
+        #     # else:
+        #     #     modified_res[x, 12] = combine[x, 12] * 0.99857
+        #     if combine[x, 2] > 122 and density_checking_switch < 635 and density_checking_switch > 580:
+        #         modified_res[x, 12] = round(combine[x, 12] - randint(1, 8) * 2, 2)
+        #         modified_res[x, 0] = train_pred[x] * 0.9869
 
-            # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
-            # modified_res[x, 0] = train_pred[x] * 0.9869
-
-
-            ##conditioins
-            if combine[x, 2] < 117 and (combine[x, 11]==34 or combine[x, 11] == 35):
-                modified_res[x, 11] = combine[x, 11]
-                modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
-                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-                modified_res[x, 0] = train_pred[x] * 1.0123
+        #     # modified_res[x, 0] = np.expm1(model.predict(np.reshape(modified_res[x][1:], (-1, 12))))
+        #     # modified_res[x, 0] = train_pred[x] * 0.9869
 
 
-
-            if combine[x, 3] > 279:
-                modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
-                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-
-            modified_res[x] = -1
-
-            if combine[x, 11] <= 34 or combine[x, 2] < 120:
-                # if combine[x, 11] <= 35 and combine[x, 11] >=31:
-                    # modified_res[x, 11] = combine[x, 11] - 1
-
-                modified_res[x, 10] = combine[x, 10] + 1.3
-                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-
-            if combine[x, 11] >= 36 and combine[x, 2] > 120:
-                # modified_res[x, 11] = combine[x, 11] - 1
-                modified_res[x, 10] = combine[x, 10] - 1.4
-                modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
-
-            if density_checking_switch > 620 and combine[x, 11] <= 33:
-                # modified_res[x, 12] = combine[x, 12] + 12
-                pass
-
-            # if density_checking_switch > 620 and combine[x, 11] >=34:
-                # modified_res[x, 11] = combine[x, 11] - 1
+        #     ##conditioins
+        #     if combine[x, 2] < 117 and (combine[x, 11]==34 or combine[x, 11] == 35):
+        #         modified_res[x, 11] = combine[x, 11]
+        #         modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
+        #         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+        #         modified_res[x, 0] = train_pred[x] * 1.0123
 
 
-            if combine[x, 2] < 120:
 
-                modified_res[x, 10] = combine[x, 10] + 1.3
-                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-                modified_res[x, 12] = combine[x, 12] + 5
+        #     if combine[x, 3] > 279:
+        #         modified_res[x, 10] = round(combine[x, 10] + 3 * 0.5, 2)
+        #         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
 
-            if combine[x, 3] > 275  and modified_res[x, 11] < 37:
-                # modified_res[x, 11] = combine[x, 11] - 1
-                modified_res[x, 10] = combine[x, 10] - 1.5
-                modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+        #     modified_res[x] = -1
+
+        #     if combine[x, 11] <= 34 or combine[x, 2] < 120:
+        #         # if combine[x, 11] <= 35 and combine[x, 11] >=31:
+        #             # modified_res[x, 11] = combine[x, 11] - 1
+
+        #         modified_res[x, 10] = combine[x, 10] + 1.3
+        #         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+
+        #     if combine[x, 11] >= 36 and combine[x, 2] > 120:
+        #         # modified_res[x, 11] = combine[x, 11] - 1
+        #         modified_res[x, 10] = combine[x, 10] - 1.4
+        #         modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+
+        #     if density_checking_switch > 620 and combine[x, 11] <= 33:
+        #         # modified_res[x, 12] = combine[x, 12] + 12
+        #         pass
+
+        #     # if density_checking_switch > 620 and combine[x, 11] >=34:
+        #         # modified_res[x, 11] = combine[x, 11] - 1
 
 
-            if combine[x, 2] < float(BPT) and modified_res[x, 10] == -1 and modified_res[x, 9] == -1:
-                # modified_res[x, 10] = combine[x, 10] + 1.3
-                # modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-                # modified_res[x, 12] = round(combine[x, 12] + 10, 2)
-                pass
+        #     if combine[x, 2] < 120:
+
+        #         modified_res[x, 10] = combine[x, 10] + 1.3
+        #         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+        #         modified_res[x, 12] = combine[x, 12] + 5
+
+        #     if combine[x, 3] > 275  and modified_res[x, 11] < 37:
+        #         # modified_res[x, 11] = combine[x, 11] - 1
+        #         modified_res[x, 10] = combine[x, 10] - 1.5
+        #         modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+
+
+        #     if combine[x, 2] < float(BPT) and modified_res[x, 10] == -1 and modified_res[x, 9] == -1:
+        #         # modified_res[x, 10] = combine[x, 10] + 1.3
+        #         # modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+        #         # modified_res[x, 12] = round(combine[x, 12] + 10, 2)
+        #         pass
 
             # if density_checking_switch >=610 and combine[x, 11] >= 34:
                 # modified_res[x, 11] = combine[x, 11] - 1
-            if density_checking_switch >=610 and combine[x, 11] <= 33:
-                modified_res[x, 12] = combine[x, 12] + 6
+        #     if density_checking_switch >=610 and combine[x, 11] <= 33:
+        #         modified_res[x, 12] = combine[x, 12] + 6
 
-            if combine[x, 3] < 260:
-                modified_res[x, 10] = combine[x, 10] - 1.5
-                modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+        #     if combine[x, 3] < 260:
+        #         modified_res[x, 10] = combine[x, 10] - 1.5
+        #         modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
 
-            # if combine[x, 2] > 110.0 and density_checking_switch < 635:
-            #     modified_res[x, 11] = 32
-            if combine[x, 2] <= 115 and modified_res[x, 9] == -1 and modified_res[x, 10] == -1:
-                modified_res[x, 12] = combine[x, 12] + 7
+        #     # if combine[x, 2] > 110.0 and density_checking_switch < 635:
+        #     #     modified_res[x, 11] = 32
+        #     if combine[x, 2] <= 115 and modified_res[x, 9] == -1 and modified_res[x, 10] == -1:
+        #         modified_res[x, 12] = combine[x, 12] + 7
 
-            if combine[x, 2] > 115 and density_checking_switch < 620:
-                modified_res[x, 12] = combine[x, 12] - 7
+        #     if combine[x, 2] > 115 and density_checking_switch < 620:
+        #         modified_res[x, 12] = combine[x, 12] - 7
 
-            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 115:
-                indicator = 1
-                return modified_res, indicator
+        #     if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 115:
+        #         indicator = 1
+        #         return modified_res, indicator
 
-            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 115:
-                modified_res[x, 12] = combine[x, 12] - 6
+        #     if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 115:
+        #         modified_res[x, 12] = combine[x, 12] - 6
 
-            # modified_res[x, 12] = combine[x, 12] - 10
-            # jb_tmp = modified_res
-        # modified_res = jb_tmp
-        elif combine[x, 2] < 115 and combine[x, 8] > 59:
-            modified_res[x] = -1
-            indicator = 2
-            modified_res[x, 10] = combine[x, 10] + 1.3
-            modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-            modified_res[x, 12] = combine[x, 12] + 6
+        #     # modified_res[x, 12] = combine[x, 12] - 10
+        #     # jb_tmp = modified_res
+        # # modified_res = jb_tmp
+        # elif combine[x, 2] < 115 and combine[x, 8] > 59:
+        #     modified_res[x] = -1
+        #     indicator = 2
+        #     modified_res[x, 10] = combine[x, 10] + 1.3
+        #     modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+        #     modified_res[x, 12] = combine[x, 12] + 6
 
-        elif combine[x, 2] < 115 and combine[x, 8] < 59:
-            modified_res[x] = -1
-            indicator = 2
-            modified_res[x, 12] = combine[x, 12] + 6
-        else :
-            modified_res[x] = -1
-            indicator = 1
+        # elif combine[x, 2] < 115 and combine[x, 8] < 59:
+        #     modified_res[x] = -1
+        #     indicator = 2
+        #     modified_res[x, 12] = combine[x, 12] + 6
+        # else :
+        #     modified_res[x] = -1
+        #     indicator = 1
 
 
         if combine[x, 2] < 110 and combine[x, 8] > 59:
