@@ -1243,7 +1243,7 @@ def jingbai_process(data):
 
     for x in range(0, rows):
 
-        if ((combine[x, 0] > 36.8) and (combine[x, 2] >= 90) and (density_checking_switch > 530) and (density_checking_switch < 650)):
+        if ((combine[x, 0] > 35)  and (density_checking_switch > 530) and (density_checking_switch < 630)):
             indicator = 2
             # jb_count = jb_count + 1
             # AirOutTemp
@@ -1478,11 +1478,11 @@ def jingbai_process(data):
             if combine[x, 2] > 115 and density_checking_switch < 620:
                 modified_res[x, 12] = combine[x, 12] - 7
 
-            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 118:
+            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 115:
                 indicator = 1
                 return modified_res, indicator
 
-            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 118:
+            if modified_res[x, 10] == -1 and modified_res[x, 11] == -1 and  modified_res[x, 12] == -1 and density_checking_switch < 610 and combine[x, 2] >= 115:
                 modified_res[x, 12] = combine[x, 12] - 6
 
             # modified_res[x, 12] = combine[x, 12] - 10
