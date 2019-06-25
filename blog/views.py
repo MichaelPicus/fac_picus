@@ -1505,22 +1505,28 @@ def jingbai_process(data):
         if pre_hppf != combine[x, 11]:
                 pre_hppf = combine[x, 11]
                 indicator = -3
-                cnt = 150
+                if cnt == 0:
+                    cnt = 150
 
         if abs(float(pre_gasflow) - combine[x, 12]) >= 3.5:
                 pre_gasflow = combine[x, 12]
                 indicator = -3
-                cnt = 150
+                if cnt == 0:
+                    cnt = 150
 
         if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
                 pre_second = combine[x, 10]
                 indicator = -3
-                cnt = 150
+
+                if cnt == 0 :
+                    cnt = 150
 
         if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
                 pre_out_air =combine[x, 9]
                 indicator = -3
-                cnt = 150
+
+                if cnt == 0:
+                    cnt = 150
 
         if float(BPT) != 0.0:
             BPT = float(BPT) 
