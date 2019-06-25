@@ -1508,7 +1508,7 @@ def jingbai_process(data):
                 if cnt == 0:
                     cnt = 150
 
-        if abs(float(pre_gasflow) - combine[x, 12]) >= 3.5:
+        if abs(float(pre_gasflow) - combine[x, 12]) >= 4.0:
                 pre_gasflow = combine[x, 12]
                 indicator = -3
                 if cnt == 0:
