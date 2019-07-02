@@ -1289,7 +1289,7 @@ def jingbai_release_v1(data):
         bpt = BPT + 0.0
         modified_res[x] = -1
 
-        if ((combine[x, 9] >= 79) and (combine[x, 10] >= 88)):
+        if ((combine[x, 9] >= 79) or (combine[x, 10] >= 88)):
             modified_res[x] = -1
             indicator = 2
             modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
