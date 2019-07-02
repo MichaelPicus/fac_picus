@@ -1258,7 +1258,7 @@ def jingbai_release_v1(data):
                 modified_res[x] = -1
                 print "pre_gasflow"
                
-        if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.015:
+        if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.02:
                 pre_second = combine[x, 10]
                 indicator = -3
                 if cnt == 0:
@@ -1266,7 +1266,7 @@ def jingbai_release_v1(data):
                 modified_res[x] = -1
                 print "pre_second"
                 
-        if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.015:
+        if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.02:
                 pre_out_air =combine[x, 9]
                 indicator = -3
                 if cnt == 0:
