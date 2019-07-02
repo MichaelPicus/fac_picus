@@ -1242,7 +1242,7 @@ def jingbai_release_v1(data):
     indicator = 1
 
     for x in range(0, rows):
-        if pre_hppf != combine[x, 11]:
+        if abs(float(pre_hppf) - combine[x, 11]) >= 2.0:
                 pre_hppf = combine[x, 11]
                 indicator = -3
                 if cnt == 0 :
@@ -1294,6 +1294,23 @@ def jingbai_release_v1(data):
             indicator = 2
             modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
             modified_res[x, 10] = combine[x, 10] - 1.3
+            return modified_res, indicator
+        
+        if combine[x, 3] < 256:
+            indicator = 2
+            if combine[x, 11] < 35:
+                modified_res[x, 11] = combine[x, 11] + 1
+            else:
+                modified_res[x, 12] = combine[x, 12] + 7
+            return modified_res, indicator
+            
+        if combine[x, 3] > 278:
+            indicator = 2
+            if combine[x, 11] > 30:
+                modified_res[x, 11] = combine[x, 11] - 1
+            else:
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+                modified_res[x, 10] = combine[x, 10] + 1.3
             return modified_res, indicator
 
         if combine[x, 2] <= bpt:
