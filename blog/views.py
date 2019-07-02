@@ -1351,7 +1351,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 35 and combine[x, 0] < 36:
-                    if combine[x, 11] <= 35:
+                    if combine[x, 11] <= 35 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
@@ -1371,7 +1371,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
                 
                 if combine[x, 0] >= 36.5 and combine[x, 0] < 37:
-                    if combine[x, 11] <= 35:
+                    if combine[x, 11] <= 35 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
@@ -1406,7 +1406,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
                 
                 if combine[x, 0] >= 39 and combine[x, 0] < 39.5:
-                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5:
+                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
@@ -1439,7 +1439,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 40.5 and combine[x, 0] < 41:
-                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5:
+                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
@@ -1459,7 +1459,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 41.5 and combine[x, 0] < 42:
-                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5:
+                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
