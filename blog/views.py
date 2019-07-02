@@ -1377,12 +1377,12 @@ def jingbai_release_v1(data):
                         modified_res[x, 11] = combine[x, 11] + 1
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
                 
                 if combine[x, 0] >= 37 and combine[x, 0] < 37.5:
                     modified_res[x] = -1
-                    indicator = -3
+                    indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 37.5 and combine[x, 0] < 38:
@@ -1392,7 +1392,7 @@ def jingbai_release_v1(data):
                         modified_res[x, 12] = combine[x, 12] - 5
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 38 and combine[x, 0] < 39:
@@ -1402,7 +1402,7 @@ def jingbai_release_v1(data):
                         modified_res[x, 12] = combine[x, 12] - 5
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
                 
                 if combine[x, 0] >= 39 and combine[x, 0] < 39.5:
@@ -1412,7 +1412,7 @@ def jingbai_release_v1(data):
                         modified_res[x, 11] = combine[x, 11] + 1
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
                 
                 if combine[x, 0] >= 39.5 and combine[x, 0] < 40:
@@ -1422,7 +1422,7 @@ def jingbai_release_v1(data):
                         modified_res[x, 12] = combine[x, 12] - 7
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 40 and combine[x, 0] < 40.5:
@@ -1435,7 +1435,7 @@ def jingbai_release_v1(data):
                         modified_res[x, 12] = combine[x, 12] - 4.5
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 40.5 and combine[x, 0] < 41:
@@ -1445,7 +1445,7 @@ def jingbai_release_v1(data):
                         modified_res[x, 11] = combine[x, 11] + 1
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 41 and combine[x, 0] < 41.5:
@@ -1455,7 +1455,7 @@ def jingbai_release_v1(data):
                         modified_res[x, 12] = combine[x, 12] - 9
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 41.5 and combine[x, 0] < 42:
@@ -1465,12 +1465,12 @@ def jingbai_release_v1(data):
                         modified_res[x, 11] = combine[x, 11] + 1
                     else:
                         modified_res[x] = -1
-                        indicator = -3
+                        indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 42:
                     modified_res[x] = -1
-                    indicator = -3
+                    indicator = 1
                     return modified_res, indicator
     return modified_res, indicator
 
