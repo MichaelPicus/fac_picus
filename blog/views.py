@@ -1233,7 +1233,7 @@ def jingbai_release_v1(data):
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
 
-    if cnt > 0:
+    if indicator == -3 and cnt > 0:
         cnt = cnt - 1
         indicator = -3
         modified_res = copy.deepcopy(combine)
@@ -1247,7 +1247,7 @@ def jingbai_release_v1(data):
         if pre_hppf != combine[x, 11]:
                 pre_hppf = combine[x, 11]
                 indicator = -3
-                if cnt == 0 or cnt < 50:
+                if cnt == 0 :
                     cnt = 150
                 modified_res[x] = -1
                 return modified_res, indicator
@@ -1256,7 +1256,7 @@ def jingbai_release_v1(data):
         if abs(float(pre_gasflow) - combine[x, 12]) >= 4.0:
                 pre_gasflow = combine[x, 12]
                 indicator = -3
-                if cnt == 0 or cnt < 50:
+                if cnt == 0 :
                      cnt = 150
                 modified_res[x] = -1
                 return modified_res, indicator
@@ -1265,7 +1265,7 @@ def jingbai_release_v1(data):
                 pre_second = combine[x, 10]
                 indicator = -3
 
-                if cnt == 0 or cnt < 50:
+                if cnt == 0:
                     cnt = 150
 
                 modified_res[x] = -1
@@ -1275,7 +1275,7 @@ def jingbai_release_v1(data):
                 pre_out_air =combine[x, 9]
                 indicator = -3
 
-                if cnt == 0 or cnt < 50:
+                if cnt == 0:
                     cnt = 150
 
                 modified_res[x] = -1
