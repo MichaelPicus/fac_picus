@@ -1168,18 +1168,18 @@ def value_data_process(request, format=None):
 def data_process(data):
     if data['brand'][0] == 2.0:
                 print "processing jingbai!"
-                res, pred_m= jingbai_process(data)
+                res, pred_m= jingbai_release_v1(data)
     elif data['brand'][0] == 3.0:
                 print "processing bilang!"
-                res, pred_m = jingbai_process(data)
+                res, pred_m = jingbai_release_v1(data)
                 # res, pred_m =jingbai_process_v3(data) # for testing
     elif data['brand'][0] == 4.0:
                 print "processing tbo !"
-                res, pred_m= jingbai_process(data)
+                res, pred_m= jingbai_release_v1(data)
 
     elif data['brand'][0] == 1.0:
                 print "chukou jifen"
-                res, pred_m = jingbai_process(data)
+                res, pred_m = jingbai_release_v1(data)
 
     return res, pred_m
 
@@ -1196,6 +1196,285 @@ def jingbai_process_v3(data):
 
 indicator = ""
 cnt = 150
+
+def jingbai_release_v1(data):
+    global indicator
+    global pre_hppf
+    global pre_gasflow
+    global pre_second
+    global pre_out_air
+    global cnt
+
+    print "cnt : "
+    print cnt
+
+    global BPT
+    print("Base powder temp baseline:")
+    print(BPT)
+
+    model = joblib.load(os.path.join(BASE_DIR, 'ml_models/model_gboost_jingbai.pkl'))
+    density_checking_switch = data.iloc[0]['density_checking_switch_2']
+    print "------------------------------"
+    print data['density_checking_switch_2']
+    print density_checking_switch
+    print density_checking_switch > 504
+    print "------------------------------"
+    del data['density_checking_switch_2']
+    del data['brand']
+    df_ready = data
+
+    train = df_ready.values
+    # train_pred = np.expm1(model.predict(train))
+    train_pred = data['f_m'] * 0.993588
+    print train_pred
+    combine = np.column_stack((train_pred, train))
+
+    rows = combine.shape[0]
+    cols = combine.shape[1]
+    modified_res = copy.deepcopy(combine)
+
+    if cnt > 0:
+        cnt = cnt - 1
+        indicator = -3
+        modified_res = copy.deepcopy(combine)
+
+        return modified_res, indicator
+
+    indicator = 1
+
+    for x in range(0, rows):
+
+        if pre_hppf != combine[x, 11]:
+                pre_hppf = combine[x, 11]
+                indicator = -3
+                if cnt == 0 or cnt < 50:
+                    cnt = 150
+                modified_res[x] = -1
+                return modified_res, indicator
+
+
+        if abs(float(pre_gasflow) - combine[x, 12]) >= 4.0:
+                pre_gasflow = combine[x, 12]
+                indicator = -3
+                if cnt == 0 or cnt < 50:
+                     cnt = 150
+                modified_res[x] = -1
+                return modified_res, indicator
+
+        if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
+                pre_second = combine[x, 10]
+                indicator = -3
+
+                if cnt == 0 or cnt < 50:
+                    cnt = 150
+
+                modified_res[x] = -1
+                return modified_res, indicator
+
+        if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
+                pre_out_air =combine[x, 9]
+                indicator = -3
+
+                if cnt == 0 or cnt < 50:
+                    cnt = 150
+
+                modified_res[x] = -1
+                return modified_res, indicator
+
+        if float(BPT) != 0.0:
+            BPT = float(BPT) 
+        else:
+            BPT = float(combine[x, 2]) 
+        
+        print "BPT : "
+        print BPT
+        bpt = BPT + 0.0
+        modified_res[x] = -1
+
+        if ((combine[x, 9] >= 79) and (combine[x, 10] >= 88)):
+            modified_res[x] = -1
+            indicator = 2
+            modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+            modified_res[x, 10] = combine[x, 10] - 1.3
+            return modified_res, indicator
+
+        if combine[x, 2] <= bpt:
+            modified_res[x] = -1
+            indicator = 2
+            if (combine[x, 2] - bpt) >= 3:
+                modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+                modified_res[x, 10] = combine[x, 10] + 1.3
+                modified_res[x, 12] = combine[x, 12] + 7
+            else:
+                modified_res[x, 12] = combine[x, 12] + 8.5
+            return modified_res, indicator
+        else:
+            if density_checking_switch > 630:
+                modified_res[x] = -1
+                indicator = 2
+                modified_res[x, 12] = combine[x, 12] + 7
+                return modified_res, indicator
+            else:
+                if density_checking_switch < 560:
+                    modified_res[x] = -1
+                    indicator = 2
+                    modified_res[x, 12] = combine[x, 12] - 9
+                    return modified_res, indicator
+
+                if combine[x, 8] <56.5 and combine[x, 11] <= 35:
+                    modified_res[x] = -1
+                    indicator = 2
+                    modified_res[x, 11] = combine[x, 11] + 1
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 33 and combine[x, 0] < 34:
+                    modified_res[x] = -1
+                    indicator = 1
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 34 and combine[x, 0] < 34.5:
+                    if (combine[x, 2] - bpt) >= 1.0:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 12] = combine[x, 12] - 4.5 
+                    else:
+                        modified_res[x] = -1
+                        indicator = 1  
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 34.5 and combine[x, 0] < 35:
+                    if (combine[x, 2] - bpt) >= 2.0:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 12] = combine[x, 12] - 6 
+                    else:
+                        modified_res[x] = -1
+                        indicator = 1
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 35 and combine[x, 0] < 36:
+                    if combine[x, 11] <= 35:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 11] = combine[x, 11] + 1
+                    else:
+                        modified_res[x] = -1
+                        indicator = 1
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 36 and combine[x, 0] < 36.5:
+                    if (combine[x, 2] - bpt) >= 1.5:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 12] = combine[x, 12] - 5.5
+                    else:
+                        modified_res[x] = -1
+                        indicator = 1
+                    return modified_res, indicator
+                
+                if combine[x, 0] >= 36.5 and combine[x, 0] < 37:
+                    if combine[x, 11] <= 35:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 11] = combine[x, 11] + 1
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+                
+                if combine[x, 0] >= 37 and combine[x, 0] < 37.5:
+                    modified_res[x] = -1
+                    indicator = -3
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 37.5 and combine[x, 0] < 38:
+                    if (combine[x, 2] - bpt) >= 1.5:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 12] = combine[x, 12] - 5
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 38 and combine[x, 0] < 39:
+                    if (combine[x, 2] - bpt) >= 2.5:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 12] = combine[x, 12] - 5
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+                
+                if combine[x, 0] >= 39 and combine[x, 0] < 39.5:
+                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 1.5:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 11] = combine[x, 11] + 1
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+                
+                if combine[x, 0] >= 39.5 and combine[x, 0] < 40:
+                    if (combine[x, 2] - bpt) >= 1.5:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 12] = combine[x, 12] - 7
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 40 and combine[x, 0] < 40.5:
+                    if (combine[x, 2] - bpt) >= 1.0:
+                        modified_res[x] = -1
+                        indicator = 2
+                        if ((combine[x, 9] > 66 and combine[x, 9] < 79) and (combine[x, 10] > 53 and combine[x, 10] < 88)):
+                            modified_res[x, 9] = round(combine[x, 9] - 5 * 0.2, 2)
+                            modified_res[x, 10] = combine[x, 10] - 1
+                        modified_res[x, 12] = combine[x, 12] - 4.5
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 40.5 and combine[x, 0] < 41:
+                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 1.0:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 11] = combine[x, 11] + 1
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 41 and combine[x, 0] < 41.5:
+                    if (combine[x, 2] - bpt) >= 1.5:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 12] = combine[x, 12] - 9
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 41.5 and combine[x, 0] < 42:
+                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 1.5:
+                        modified_res[x] = -1
+                        indicator = 2
+                        modified_res[x, 11] = combine[x, 11] + 1
+                    else:
+                        modified_res[x] = -1
+                        indicator = -3
+                    return modified_res, indicator
+
+                if combine[x, 0] >= 42:
+                    modified_res[x] = -1
+                    indicator = -3
+                    return modified_res, indicator
+    return modified_res, indicator
 
 def jingbai_process(data):
     global indicator
