@@ -1195,7 +1195,7 @@ def jingbai_process_v3(data):
     pass
 
 indicator = ""
-cnt = 150
+cnt = 0
 
 def jingbai_release_v1(data):
     global indicator
@@ -1250,7 +1250,8 @@ def jingbai_release_v1(data):
                 if cnt == 0 :
                     cnt = 150
                 modified_res[x] = -1
-                return modified_res, indicator
+                print "hppf"
+                
 
 
         if abs(float(pre_gasflow) - combine[x, 12]) >= 4.0:
@@ -1259,7 +1260,8 @@ def jingbai_release_v1(data):
                 if cnt == 0 :
                      cnt = 150
                 modified_res[x] = -1
-                return modified_res, indicator
+                print "pre_gasflow"
+               
 
         if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
                 pre_second = combine[x, 10]
@@ -1269,7 +1271,8 @@ def jingbai_release_v1(data):
                     cnt = 150
 
                 modified_res[x] = -1
-                return modified_res, indicator
+                print "pre_second"
+                
 
         if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
                 pre_out_air =combine[x, 9]
@@ -1279,7 +1282,12 @@ def jingbai_release_v1(data):
                     cnt = 150
 
                 modified_res[x] = -1
-                return modified_res, indicator
+                print "pre_out_air"
+        
+        if indicator == -3:
+            modified_res[x] = -1
+            return modified_res, indicator
+
 
         if float(BPT) != 0.0:
             BPT = float(BPT) 
