@@ -1348,7 +1348,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 34 and combine[x, 0] < 34.5:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 4.5 
@@ -1358,7 +1358,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 34.5 and combine[x, 0] < 35:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 6 
@@ -1378,7 +1378,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 36 and combine[x, 0] < 36.5:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 5.5
@@ -1397,13 +1397,13 @@ def jingbai_release_v1(data):
                         indicator = 1
                     return modified_res, indicator
                 
-                if combine[x, 0] >= 37 and combine[x, 0] < 37.5:
-                    modified_res[x] = -1
-                    indicator = 1
-                    return modified_res, indicator
+                # if combine[x, 0] >= 37 and combine[x, 0] < 37.5:
+                #     modified_res[x] = -1
+                #     indicator = 1
+                #     return modified_res, indicator
 
-                if combine[x, 0] >= 37.5 and combine[x, 0] < 38:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                if combine[x, 0] >= 37.0 and combine[x, 0] < 38:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 5
@@ -1413,7 +1413,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 38 and combine[x, 0] < 39:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 5
@@ -1423,7 +1423,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
                 
                 if combine[x, 0] >= 39 and combine[x, 0] < 39.5:
-                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
+                    if combine[x, 11] <= 35 and abs(combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
@@ -1433,7 +1433,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
                 
                 if combine[x, 0] >= 39.5 and combine[x, 0] < 40:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 7
@@ -1443,7 +1443,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 40 and combine[x, 0] < 40.5:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         if ((combine[x, 9] > 66 and combine[x, 9] < 79) and (combine[x, 10] > 53 and combine[x, 10] < 88)):
@@ -1456,7 +1456,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 40.5 and combine[x, 0] < 41:
-                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
+                    if combine[x, 11] <= 35 and abs(combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
@@ -1466,7 +1466,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 41 and combine[x, 0] < 41.5:
-                    if (combine[x, 2] - bpt) >= 0.5:
+                    if abs(combine[x, 2] - bpt) >= 0.5:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 9
@@ -1476,7 +1476,7 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 41.5 and combine[x, 0] < 42:
-                    if combine[x, 11] <= 35 and (combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
+                    if combine[x, 11] <= 35 and abs(combine[x, 2] - bpt) >= 0.5 and combine[x, 8] < 65:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 11] = combine[x, 11] + 1
