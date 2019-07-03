@@ -1346,7 +1346,7 @@ def jingbai_release_v1(data):
                     modified_res[x, 12] = combine[x, 12] - 9
                     return modified_res, indicator
 
-                if combine[x, 8] <56.5 and combine[x, 11] <= 35:
+                if combine[x, 8] <56.5 and combine[x, 11] <= 36:
                     modified_res[x] = -1
                     indicator = 2
                     modified_res[x, 11] = combine[x, 11] + 1
