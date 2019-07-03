@@ -1191,7 +1191,7 @@ pre_hppf = 0.0
 pre_gasflow = 0.0
 pre_second = 0.0
 pre_out_air = 0.0
-# flag_interupt = 0
+flag_interupt = 0
 def jingbai_process_v3(data):
     pass
 
@@ -1205,7 +1205,7 @@ def jingbai_release_v1(data):
     global pre_second
     global pre_out_air
     global cnt
-    # global flag_interupt
+    global flag_interupt
 
     print "cnt : "
     print cnt
@@ -1235,7 +1235,7 @@ def jingbai_release_v1(data):
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
 
-    if indicator == -3 and cnt > 0 :
+    if indicator == -3 and cnt > 0 and flag_interupt == 0 :
         cnt = cnt - 1
         indicator = -3
         modified_res = copy.deepcopy(combine)
@@ -1260,7 +1260,7 @@ def jingbai_release_v1(data):
                 modified_res[x] = -1
                 print "pre_gasflow"
                
-        if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.02:
+        if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
                 pre_second = combine[x, 10]
                 indicator = -3
                 if cnt == 0:
@@ -1268,7 +1268,7 @@ def jingbai_release_v1(data):
                 modified_res[x] = -1
                 print "pre_second"
                 
-        if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.02:
+        if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
                 pre_out_air =combine[x, 9]
                 indicator = -3
                 if cnt == 0:
@@ -1276,7 +1276,7 @@ def jingbai_release_v1(data):
                 modified_res[x] = -1
                 print "pre_out_air"
         
-        if indicator == -3 :
+        if indicator == -3  and flag_interupt == 0:
             modified_res[x] = -1
             return modified_res, indicator
 
@@ -1318,7 +1318,7 @@ def jingbai_release_v1(data):
         if combine[x, 2] <= bpt:
             modified_res[x] = -1
             indicator = 2
-            # flag_interupt = 1
+            flag_interupt = 1
             cnt = 0
             if abs(combine[x, 2] - bpt) >= 3.0:
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
@@ -1328,7 +1328,7 @@ def jingbai_release_v1(data):
                 modified_res[x, 12] = combine[x, 12] + 8.5
             return modified_res, indicator
         else:
-            # flag_interupt = 0
+            flag_interupt = 0
             if density_checking_switch > 630:
                 modified_res[x] = -1
                 indicator = 2
