@@ -1309,7 +1309,7 @@ def jingbai_release_v1(data):
             
         if combine[x, 3] > 278:
             indicator = 2
-            if combine[x, 11] > 30:
+            if combine[x, 11] > 28:
                 modified_res[x, 11] = combine[x, 11] - 1
             else:
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
@@ -1325,6 +1325,8 @@ def jingbai_release_v1(data):
                 modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
                 modified_res[x, 10] = combine[x, 10] + 1.3
                 modified_res[x, 12] = combine[x, 12] + 7
+                if combine[x, 11] > 28 and abs(combine[x, 2] - bpt) >= 4.5:
+                    modified_res[x, 11] = combine[x, 11] - 1
             else:
                 modified_res[x, 12] = combine[x, 12] + 8.5
             return modified_res, indicator
@@ -1369,6 +1371,8 @@ def jingbai_release_v1(data):
                         modified_res[x, 10] = combine[x, 10] + 1.3
                         if  abs(combine[x, 2] - bpt) <= 1.0:
                             modified_res[x, 12] = combine[x, 12] + 5
+                            if combine[x, 11] > 32:
+                                modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1  
@@ -1388,6 +1392,8 @@ def jingbai_release_v1(data):
                         modified_res[x, 10] = combine[x, 10] + 1.3
                         if  abs(combine[x, 2] - bpt) <= 1.0:
                             modified_res[x, 12] = combine[x, 12] + 4.5
+                            if combine[x, 11] > 32:
+                                modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
@@ -1417,6 +1423,8 @@ def jingbai_release_v1(data):
                         modified_res[x, 10] = combine[x, 10] + 1.3
                         if  abs(combine[x, 2] - bpt) <=1.0:
                             modified_res[x, 12] = combine[x, 12] + 4
+                            if combine[x, 11] > 34:
+                                modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
@@ -1451,6 +1459,8 @@ def jingbai_release_v1(data):
                         modified_res[x, 10] = combine[x, 10] + 1.3
                         if  abs(combine[x, 2] - bpt) <= 1.0:
                             modified_res[x, 12] = combine[x, 12] + 4
+                            if combine[x, 11] > 34:
+                                modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
@@ -1477,6 +1487,8 @@ def jingbai_release_v1(data):
                             modified_res[x, 10] = combine[x, 10] + 1.3
                             if  abs(combine[x, 2] - bpt) <= 1.0:
                                 modified_res[x, 12] = combine[x, 12] + 4
+                                if combine[x, 11] > 34:
+                                    modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
@@ -1496,6 +1508,8 @@ def jingbai_release_v1(data):
                         modified_res[x, 10] = combine[x, 10] + 1.3
                         if  abs(combine[x, 2] - bpt) <= 1.0:
                             modified_res[x, 12] = combine[x, 12] + 4
+                            if combine[x, 11] > 34:
+                                modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
@@ -1515,6 +1529,8 @@ def jingbai_release_v1(data):
                         modified_res[x, 10] = combine[x, 10] + 1.3
                         if  abs(combine[x, 2] - bpt) <=0.5:
                             modified_res[x, 12] = combine[x, 12] + 4
+                            if combine[x, 11] > 35:
+                                modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
