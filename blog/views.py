@@ -1254,6 +1254,7 @@ def jingbai_release_v1(data):
 
         if abs(float(pre_gasflow) - combine[x, 12]) >= 4.0:
                 pre_gasflow = combine[x, 12]
+                flag_interupt = 0
                 indicator = -3
                 if cnt == 0 :
                      cnt = 150
@@ -1359,6 +1360,9 @@ def jingbai_release_v1(data):
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 4.5 
+                        if abs(combine[x, 2] - bpt) >= 5  and combine[x, 11] <= 35:
+                            modified_res[x, 11] = combine[x, 11] + 1
+                            modified_res[x, 12] = combine[x, 12] - 4.5
                     elif ((combine[x, 9] < 78.5) and  (combine[x, 10] < 87.5)):
                         indicator = 2
                         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
@@ -1375,6 +1379,9 @@ def jingbai_release_v1(data):
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 6 
+                        if abs(combine[x, 2] - bpt) >= 5  and combine[x, 11] <= 35:
+                            modified_res[x, 11] = combine[x, 11] + 1
+                            modified_res[x, 12] = combine[x, 12] - 4.5
                     elif ((combine[x, 9] < 78.5) and  (combine[x, 10] < 87.5)):
                         indicator = 2
                         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
@@ -1401,6 +1408,9 @@ def jingbai_release_v1(data):
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 5.5
+                        if abs(combine[x, 2] - bpt) >= 5  and combine[x, 11] <= 35:
+                            modified_res[x, 11] = combine[x, 11] + 1
+                            modified_res[x, 12] = combine[x, 12] - 4.5
                     elif ((combine[x, 9] < 78.5) and  (combine[x, 10] < 87.5)):
                         indicator = 2
                         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
@@ -1432,6 +1442,9 @@ def jingbai_release_v1(data):
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 5
+                        if abs(combine[x, 2] - bpt) >= 5  and combine[x, 11] <= 35:
+                            modified_res[x, 11] = combine[x, 11] + 1
+                            modified_res[x, 12] = combine[x, 12] - 4.5
                     elif ((combine[x, 9] < 78.5) and  (combine[x, 10] < 87.5)):
                         indicator = 2
                         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
@@ -1474,6 +1487,9 @@ def jingbai_release_v1(data):
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 7
+                        if abs(combine[x, 2] - bpt) >= 5  and combine[x, 11] <= 35:
+                            modified_res[x, 11] = combine[x, 11] + 1
+                            modified_res[x, 12] = combine[x, 12] - 4.5
                     elif ((combine[x, 9] < 78.5) and  (combine[x, 10] < 87.5)):
                         indicator = 2
                         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
