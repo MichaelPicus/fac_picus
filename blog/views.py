@@ -1320,6 +1320,20 @@ def jingbai_release_v1(data):
                 modified_res[x, 12] = combine[x, 12] - 4.5
             return modified_res, indicator
 
+        if density_checking_switch > 630:
+                flag_interupt = 1
+                modified_res[x] = -1
+                indicator = 2
+                modified_res[x, 12] = combine[x, 12] + 7
+                return modified_res, indicator
+        else:
+                if density_checking_switch < 560:
+                    flag_interupt = 1
+                    modified_res[x] = -1
+                    indicator = 2
+                    modified_res[x, 12] = combine[x, 12] - 9
+                    return modified_res, indicator
+
         if combine[x, 2] <= bpt:
             modified_res[x] = -1
             indicator = 2
@@ -1357,63 +1371,67 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 33 and combine[x, 0] < 34.5:
-                    if abs(combine[x, 2] - bpt) >= 2.0:
+                    if abs(combine[x, 2] - bpt) >= 1.0:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 4.5 
                         if abs(combine[x, 2] - bpt) >= 5.5  and combine[x, 11] <= 38 and combine[x, 8] < 63:
                             modified_res[x, 11] = combine[x, 11] + 1
                             modified_res[x, 12] = combine[x, 12] - 5
-                    elif ((combine[x, 9] < 90) and  (combine[x, 10] < 88)):
-                        indicator = 2
-                        modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-                        modified_res[x, 10] = combine[x, 10] + 1.3
-                        if  abs(combine[x, 2] - bpt) <= 1.0:
-                            modified_res[x, 12] = combine[x, 12] + 4
-                            if combine[x, 11] > 30 and combine[x, 8] > 58:
-                                modified_res[x, 11] = combine[x, 11] - 1
+                    # elif ((combine[x, 9] < 90) and  (combine[x, 10] < 88)):
+                    #     indicator = 2
+                    #     modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+                    #     modified_res[x, 10] = combine[x, 10] + 1.3
+                    #     if  abs(combine[x, 2] - bpt) <= 1.0:
+                    #         modified_res[x, 12] = combine[x, 12] + 4
+                    #         if combine[x, 11] > 30 and combine[x, 8] > 58:
+                    #             modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1  
                     return modified_res, indicator
 
                 if combine[x, 0] >= 34.5 and combine[x, 0] < 35:
-                    if abs(combine[x, 2] - bpt) >= 2.0:
+                    if abs(combine[x, 2] - bpt) >= 1.0:
                         modified_res[x] = -1
                         indicator = 2
-                        modified_res[x, 12] = combine[x, 12] - 6 
-                        if abs(combine[x, 2] - bpt) >= 5.5  and combine[x, 11] <= 38 and combine[x, 8] < 63:
+                        modified_res[x, 12] = combine[x, 12] - 4 
+                        if abs(combine[x, 2] - bpt) >= 5.5  and combine[x, 11] <= 32 and combine[x, 8] < 63:
                             modified_res[x, 11] = combine[x, 11] + 1
+
+                        if abs(combine[x, 2] - bpt) >= 5.5:
                             modified_res[x, 12] = combine[x, 12] - 4.5
-                    elif ((combine[x, 9] < 90) and  (combine[x, 10] < 88)):
-                        indicator = 2
-                        modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-                        modified_res[x, 10] = combine[x, 10] + 1.3
-                        if  abs(combine[x, 2] - bpt) <= 1.0:
-                            modified_res[x, 12] = combine[x, 12] + 4.5
-                            if combine[x, 11] > 30 and combine[x, 8] > 58:
-                                modified_res[x, 11] = combine[x, 11] - 1
+                    # elif ((combine[x, 9] < 90) and  (combine[x, 10] < 88)):
+                    #     indicator = 2
+                    #     modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+                    #     modified_res[x, 10] = combine[x, 10] + 1.3
+                    #     if  abs(combine[x, 2] - bpt) <= 1.0:
+                    #         modified_res[x, 12] = combine[x, 12] + 4.5
+                    #         if combine[x, 11] > 30 and combine[x, 8] > 58:
+                    #             modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
                     return modified_res, indicator
 
                 if combine[x, 0] >= 35 and combine[x, 0] < 36.5:
-                    if abs(combine[x, 2] - bpt) >= 2:
+                    if abs(combine[x, 2] - bpt) >= 1.0:
                         modified_res[x] = -1
                         indicator = 2
                         modified_res[x, 12] = combine[x, 12] - 5.5
-                        if abs(combine[x, 2] - bpt) >= 6.0  and combine[x, 11] <= 38 and combine[x, 8] < 63:
-                            modified_res[x, 11] = combine[x, 11] + 1
+                        if abs(combine[x, 2] - bpt) >= 6.0:
                             modified_res[x, 12] = combine[x, 12] - 4.5
-                    elif ((combine[x, 9] < 90) and  (combine[x, 10] < 87.5)):
-                        indicator = 2
-                        modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-                        modified_res[x, 10] = combine[x, 10] + 1.3
-                        if  abs(combine[x, 2] - bpt) <=1.0:
-                            modified_res[x, 12] = combine[x, 12] + 4
-                            if combine[x, 11] > 30 and combine[x, 8] > 58:
-                                modified_res[x, 11] = combine[x, 11] - 1
+
+                        if abs(combine[x, 2] - bpt) >= 6.0 and combine[x, 11] <= 34 and combine[x, 8] < 63:
+                            modified_res[x, 11] = combine[x, 11] + 1
+                    # elif ((combine[x, 9] < 90) and  (combine[x, 10] < 87.5)):
+                    #     indicator = 2
+                    #     modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+                    #     modified_res[x, 10] = combine[x, 10] + 1.3
+                    #     if  abs(combine[x, 2] - bpt) <=1.0:
+                    #         modified_res[x, 12] = combine[x, 12] + 4
+                    #         if combine[x, 11] > 30 and combine[x, 8] > 58:
+                    #             modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
@@ -1431,10 +1449,10 @@ def jingbai_release_v1(data):
                         indicator = 2
                         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
                         modified_res[x, 10] = combine[x, 10] + 1.3
-                        if  abs(combine[x, 2] - bpt) <= 1.0:
+                        if  abs(combine[x, 2] - bpt) <= 0.8:
                             modified_res[x, 12] = combine[x, 12] + 4
-                            if combine[x, 11] > 30 and combine[x, 8] > 58:
-                                modified_res[x, 11] = combine[x, 11] - 1
+                            # if combine[x, 11] > 30 and combine[x, 8] > 58:
+                            #     modified_res[x, 11] = combine[x, 11] - 1
                     else:
                         modified_res[x] = -1
                         indicator = 1
