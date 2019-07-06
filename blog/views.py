@@ -1191,7 +1191,7 @@ pre_hppf = 0.0
 pre_gasflow = 0.0
 pre_second = 0.0
 pre_out_air = 0.0
-flag_interupt = 0
+flag_interupt = 1
 def jingbai_process_v3(data):
     pass
 
@@ -1235,17 +1235,61 @@ def jingbai_release_v1(data):
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
 
-    if indicator == -3 and cnt > 0 and flag_interupt == 0 :
-        cnt = cnt - 1
-        indicator = -3
-        modified_res = copy.deepcopy(combine)
-        return modified_res, indicator
-
     indicator = 1
 
     for x in range(0, rows):
+        if indicator == -3 and cnt > 0 and flag_interupt == 0 :
+            cnt = cnt - 1
+            indicator = -3
+            modified_res = copy.deepcopy(combine)
+            if ((combine[x, 9] > 90) or (combine[x, 10] >= 88)):
+                modified_res[x] = -1
+                indicator = 2
+                flag_interupt = 1
+                cnt = 0
+                modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+                modified_res[x, 10] = combine[x, 10] - 1.3
+            
+            if combine[x, 3] < 256:
+                indicator = 2
+                flag_interupt = 1
+                cnt = 0
+                if combine[x, 11] >= 30 and combine[x, 8] > 58:
+                    modified_res[x, 11] = combine[x, 11] - 1
+                else:
+                    modified_res[x, 12] = combine[x, 12] + 7
+            if combine[x, 3] > 278:
+                indicator = 2
+                flag_interupt = 1
+                cnt = 0
+                if combine[x, 11] > 28 and combine[x, 8] < 63:
+                    modified_res[x, 11] = combine[x, 11] + 1
+                else:
+                    modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+                    modified_res[x, 10] = combine[x, 10] + 1.3
+                    modified_res[x, 12] = combine[x, 12] - 4.5
+            
+            if density_checking_switch > 630:
+                flag_interupt = 1
+                cnt = 0
+                modified_res[x] = -1
+                indicator = 2
+                modified_res[x, 12] = combine[x, 12] + 7
+                # return modified_res, indicator
+            else:
+                if density_checking_switch < 560:
+                    flag_interupt = 1
+                    cnt = 0
+                    modified_res[x] = -1
+                    indicator = 2
+                    modified_res[x, 12] = combine[x, 12] - 9
+                    # return modified_res, indicator
+
+            return modified_res, indicator
+
         if abs(float(pre_hppf) - combine[x, 11]) >= 2.0:
                 pre_hppf = combine[x, 11]
+                flag_interupt = 0
                 indicator = -3
                 if cnt == 0 :
                     cnt = 150
@@ -1263,6 +1307,7 @@ def jingbai_release_v1(data):
                
         if abs(float(pre_second) - combine[x, 10]) >= combine[x, 10] * 0.01:
                 pre_second = combine[x, 10]
+                flag_interupt = 0
                 indicator = -3
                 if cnt == 0:
                     cnt = 150
@@ -1271,6 +1316,7 @@ def jingbai_release_v1(data):
                 
         if abs(float(pre_out_air) - combine[x, 9]) >= combine[x, 9] * 0.01:
                 pre_out_air =combine[x, 9]
+                flag_interupt = 0
                 indicator = -3
                 if cnt == 0:
                     cnt = 150
@@ -1296,6 +1342,7 @@ def jingbai_release_v1(data):
             modified_res[x] = -1
             indicator = 2
             flag_interupt = 1
+            cnt = 0
             modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
             modified_res[x, 10] = combine[x, 10] - 1.3
             return modified_res, indicator
@@ -1303,6 +1350,7 @@ def jingbai_release_v1(data):
         if combine[x, 3] < 256:
             indicator = 2
             flag_interupt = 1
+            cnt = 0
             if combine[x, 11] >= 30 and combine[x, 8] > 58:
                 modified_res[x, 11] = combine[x, 11] - 1
             else:
@@ -1312,6 +1360,7 @@ def jingbai_release_v1(data):
         if combine[x, 3] > 278:
             indicator = 2
             flag_interupt = 1
+            cnt = 0
             if combine[x, 11] > 28 and combine[x, 8] < 63:
                 modified_res[x, 11] = combine[x, 11] + 1
             else:
@@ -1322,6 +1371,7 @@ def jingbai_release_v1(data):
 
         if density_checking_switch > 630:
                 flag_interupt = 1
+                cnt = 0
                 modified_res[x] = -1
                 indicator = 2
                 modified_res[x, 12] = combine[x, 12] + 7
@@ -1329,6 +1379,7 @@ def jingbai_release_v1(data):
         else:
                 if density_checking_switch < 560:
                     flag_interupt = 1
+                    cnt = 0
                     modified_res[x] = -1
                     indicator = 2
                     modified_res[x, 12] = combine[x, 12] - 9
@@ -1349,9 +1400,10 @@ def jingbai_release_v1(data):
                 modified_res[x, 12] = combine[x, 12] + 8.5
             return modified_res, indicator
         else:
-            flag_interupt = 0
+            # flag_interupt = 0
             if density_checking_switch > 630:
                 flag_interupt = 1
+                cnt = 0
                 modified_res[x] = -1
                 indicator = 2
                 modified_res[x, 12] = combine[x, 12] + 7
@@ -1359,6 +1411,7 @@ def jingbai_release_v1(data):
             else:
                 if density_checking_switch < 560:
                     flag_interupt = 1
+                    cnt = 0
                     modified_res[x] = -1
                     indicator = 2
                     modified_res[x, 12] = combine[x, 12] - 9
