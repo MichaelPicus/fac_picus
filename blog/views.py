@@ -1484,7 +1484,7 @@ def jingbai_release_v1(data):
                         if abs(combine[x, 2] - bpt) >= 6.0 and density_checking_switch < 610:
                             modified_res[x, 12] = combine[x, 12] - 7
 
-                        if abs(combine[x, 2] - bpt) >= 6.0 and combine[x, 11] <= 34 and combine[x, 8] < 63 and density_checking_switch < 615:
+                        if abs(combine[x, 2] - bpt) >= 6.0 and combine[x, 11] <= 34 and combine[x, 8] < 63 and density_checking_switch < 605:
                             modified_res[x, 11] = combine[x, 11] + 1
                     # elif ((combine[x, 9] < 90) and  (combine[x, 10] < 87.5)):
                     #     indicator = 2
@@ -1507,7 +1507,7 @@ def jingbai_release_v1(data):
                             modified_res[x, 12] = combine[x, 12] - 5
                         else:
                             modified_res[x, 12] = combine[x, 12] + 4.5
-                        if abs(combine[x, 2] - bpt) >= 5.5  and combine[x, 11] <= 38 and combine[x, 8] < 63 and density_checking_switch < 610:
+                        if abs(combine[x, 2] - bpt) >= 5.5  and combine[x, 11] <= 38 and combine[x, 8] < 63 and density_checking_switch < 605:
                             modified_res[x, 11] = combine[x, 11] + 1
                             modified_res[x, 12] = combine[x, 12] - 4.5
                     elif ((combine[x, 9] < 88.5) and  (combine[x, 10] < 87.5)):
