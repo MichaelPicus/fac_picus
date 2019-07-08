@@ -1468,12 +1468,12 @@ def jingbai_release_v1(data):
                     return modified_res, indicator
 
                 if combine[x, 0] >= 35 and combine[x, 0] < 36.5:
-                    if abs(combine[x, 2] - bpt) >= 1.0:
+                    if abs(combine[x, 2] - bpt) >= 2.0:
                         modified_res[x] = -1
                         indicator = 2
-                        modified_res[x, 12] = combine[x, 12] - 5.5
+                        modified_res[x, 12] = combine[x, 12] - 5
                         if abs(combine[x, 2] - bpt) >= 6.0:
-                            modified_res[x, 12] = combine[x, 12] - 4.5
+                            modified_res[x, 12] = combine[x, 12] - 7
 
                         if abs(combine[x, 2] - bpt) >= 6.0 and combine[x, 11] <= 34 and combine[x, 8] < 63:
                             modified_res[x, 11] = combine[x, 11] + 1
