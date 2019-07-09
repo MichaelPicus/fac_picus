@@ -945,7 +945,7 @@ def getlatest(request, format=None):
         if serializer.is_valid():
             BPT = serializer.data.get("base_powder_temp")
             if(BPT == -2):
-                BPT = ""
+                BPT = 0.0
                 flag_BPT = ""
             else:
                 flag_BPT = 1
@@ -1426,7 +1426,7 @@ def jingbai_release_v1(data):
                     modified_res[x] = -1
                     indicator = 1  
                     return modified_res, indicator
-                    
+
                 if combine[x, 0] >= 33 and combine[x, 0] < 34.5:
                     if abs(combine[x, 2] - bpt) >= 1.0:
                         modified_res[x] = -1
