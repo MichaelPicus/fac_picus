@@ -1422,7 +1422,11 @@ def jingbai_release_v1(data):
                     indicator = 2
                     modified_res[x, 11] = combine[x, 11] + 1
                     return modified_res, indicator
-
+                if combine[x, 0] < 33:
+                    modified_res[x] = -1
+                    indicator = 1  
+                    return modified_res, indicator
+                    
                 if combine[x, 0] >= 33 and combine[x, 0] < 34.5:
                     if abs(combine[x, 2] - bpt) >= 1.0:
                         modified_res[x] = -1
