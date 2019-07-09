@@ -1300,8 +1300,7 @@ def jingbai_release_v1(data):
                 pre_gasflow = combine[x, 12]
                 flag_interupt = 0
                 indicator = -3
-                if cnt == 0 :
-                     cnt = 150
+                cnt = 150
                 modified_res[x] = -1
                 print "pre_gasflow"
                
