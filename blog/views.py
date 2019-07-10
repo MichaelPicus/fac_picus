@@ -1235,7 +1235,7 @@ def jingbai_release_v1(data):
     cols = combine.shape[1]
     modified_res = copy.deepcopy(combine)
 
-    indicator = 1
+    indicator = -3
 
     for x in range(0, rows):
         if indicator == -3 and cnt > 0 and flag_interupt == 0 :
