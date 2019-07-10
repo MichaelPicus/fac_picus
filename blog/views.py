@@ -1322,9 +1322,9 @@ def jingbai_release_v1(data):
                 modified_res[x] = -1
                 print "pre_out_air"
         
-        if indicator == -3  and flag_interupt == 0:
-            modified_res[x] = -1
-            return modified_res, indicator
+        # if indicator == -3  and flag_interupt == 0:
+        #     modified_res[x] = -1
+        #     return modified_res, indicator
 
 
         if float(BPT) != 0.0:
