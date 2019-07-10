@@ -1242,48 +1242,48 @@ def jingbai_release_v1(data):
             cnt = cnt - 1
             indicator = -3
             modified_res = copy.deepcopy(combine)
-            if ((combine[x, 9] > 90) or (combine[x, 10] >= 88)):
-                modified_res[x] = -1
-                indicator = 2
-                flag_interupt = 1
-                cnt = 0
-                modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
-                modified_res[x, 10] = combine[x, 10] - 1.3
+            # if ((combine[x, 9] > 90) or (combine[x, 10] >= 88)):
+            #     modified_res[x] = -1
+            #     indicator = 2
+            #     flag_interupt = 1
+            #     cnt = 0
+            #     modified_res[x, 9] = round(combine[x, 9] - 4 * 0.2, 2)
+            #     modified_res[x, 10] = combine[x, 10] - 1.3
             
-            if combine[x, 3] < 256:
-                indicator = 2
-                flag_interupt = 1
-                cnt = 0
-                if combine[x, 11] >= 30 and combine[x, 8] > 58:
-                    modified_res[x, 11] = combine[x, 11] - 1
-                else:
-                    modified_res[x, 12] = combine[x, 12] + 7
-            if combine[x, 3] > 278:
-                indicator = 2
-                flag_interupt = 0
-                cnt = 0
-                if combine[x, 11] > 28 and combine[x, 8] < 63:
-                    modified_res[x, 11] = combine[x, 11] + 1
-                else:
-                    modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
-                    modified_res[x, 10] = combine[x, 10] + 1.3
-                    modified_res[x, 12] = combine[x, 12] - 4.5
+            # if combine[x, 3] < 256:
+            #     indicator = 2
+            #     flag_interupt = 1
+            #     cnt = 0
+            #     if combine[x, 11] >= 30 and combine[x, 8] > 58:
+            #         modified_res[x, 11] = combine[x, 11] - 1
+            #     else:
+            #         modified_res[x, 12] = combine[x, 12] + 7
+            # if combine[x, 3] > 278:
+            #     indicator = 2
+            #     flag_interupt = 0
+            #     cnt = 0
+            #     if combine[x, 11] > 28 and combine[x, 8] < 63:
+            #         modified_res[x, 11] = combine[x, 11] + 1
+            #     else:
+            #         modified_res[x, 9] = round(combine[x, 9] + 4 * 0.2, 2)
+            #         modified_res[x, 10] = combine[x, 10] + 1.3
+            #         modified_res[x, 12] = combine[x, 12] - 4.5
             
-            if density_checking_switch > 630:
-                flag_interupt = 0
-                cnt = 0
-                modified_res[x] = -1
-                indicator = 2
-                modified_res[x, 12] = combine[x, 12] + 7
-                # return modified_res, indicator
-            else:
-                if density_checking_switch < 560:
-                    flag_interupt = 0
-                    cnt = 0
-                    modified_res[x] = -1
-                    indicator = 2
-                    modified_res[x, 12] = combine[x, 12] - 9
-                    # return modified_res, indicator
+            # if density_checking_switch > 630:
+            #     flag_interupt = 0
+            #     cnt = 0
+            #     modified_res[x] = -1
+            #     indicator = 2
+            #     modified_res[x, 12] = combine[x, 12] + 7
+            #     # return modified_res, indicator
+            # else:
+            #     if density_checking_switch < 560:
+            #         flag_interupt = 0
+            #         cnt = 0
+            #         modified_res[x] = -1
+            #         indicator = 2
+            #         modified_res[x, 12] = combine[x, 12] - 9
+            #         # return modified_res, indicator
 
             return modified_res, indicator
 
